@@ -20,3 +20,4 @@ These are all Rails console commands for now.
 - `p = Page.find(<zooniverse_id>)` where <zooniverse_id> is anyhting from Talk or main DB, e.g. "AWD0000upc".
 - `p.activities` lists all activities tagge don page.
 - `p.date_means` shows all dates tagged on page with average y-axis positions.
+- `p.people.first.consensus_date` or `p.places.first.consensus_date` shows the averaged, consensus date that most likely relates to that person/activity/weather/place
