@@ -6,5 +6,5 @@ class Person < ActiveRecord::Base
   	self.page.previous_date(self.y)
   end
 
-  attr_accessible :first, :page_id, :rank, :reason, :surname, :x, :y, :user_id
+  attr_accessible :first, :page_id, :rank, :reason, :surname, :x, :y, :user_id, :created_at
 end

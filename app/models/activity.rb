@@ -6,5 +6,5 @@ class Activity < ActiveRecord::Base
   	self.page.previous_date(self.y)
   end
 
-  attr_accessible :page_id, :type, :user_id, :x, :y, :category
+  attr_accessible :page_id, :type, :user_id, :x, :y, :category, :created_at
 end

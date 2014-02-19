@@ -52,6 +52,7 @@ class MongoClassification
   key :user_name, String, :optional
   key :annotations, Array
   key :subjects, Array
+  key :created_at, Date
 
   def subject_id
     subjects.first["id"]
@@ -63,12 +64,26 @@ class MongoClassification
 
 end
 
-total = MongoClassification.size
+puts "Finding timestamp of most recently added annotations..."
+most_recent_annotation = DiaryDate.count>0 ? DiaryDate.order("created_at").last.created_at : "2000-01-01 00:00:00"
+most_recent_date = Time.parse(most_recent_annotation.to_s)
+
+if most_recent_annotation==="2000-01-01 00:00:00"
+	puts "...found no records - starting from scratch."
+else
+	puts "...found records up to #{most_recent_date} - picking up from there."
+end
+
+pending_classifications = MongoClassification.where(:created_at.gte => Time.parse(most_recent_date.to_s)).sort(:created_at.asc)
+total = pending_classifications.size
+puts "#{total} of #{MongoClassification.size} classifications to process. Go!"
+
 counter = 0
-MongoClassification.each do |c|
+pending_classifications.each do |c|
 	counter+=1
-	puts "Processing classification #{counter} or #{total}" if counter%1000==0 && counter>1
+	puts "Processed #{counter}/#{total} classifications" if counter%1000==0 && counter>1
 	if c.try(:annotations)
+		@started_at = c.annotations.select{|a| a["started_at"] if a["started_at"]}.first["started_at"]
 		c.annotations.each do |a|
 			# begin
 				if a["type"]
@@ -81,7 +96,8 @@ MongoClassification.each do |c|
 					  :first => a["note"]["first"],
 					  :surname => a["note"]["surname"],
 					  :rank => a["note"]["rank"],
-					  :reason => a["note"]["reason"]
+					  :reason => a["note"]["reason"],
+					  :created_at => @started_at
 					}) if a["type"] == "person" && a["note"]
 
 					place = Place.create({
@@ -93,7 +109,8 @@ MongoClassification.each do |c|
 					  :geocoded_name => a["note"]["name"],
 					  :lat => a["note"]["lat"],
 					  :lon => a["note"]["long"],
-					  :at_location => a["note"]["location"]
+					  :at_location => a["note"]["location"],
+					  :created_at => @started_at
 					}) if a["type"] == "place" && a["note"]
 
 					diary_date = DiaryDate.create({
@@ -101,7 +118,8 @@ MongoClassification.each do |c|
 					  :y => a["coords"][1],
 					  :page_id => c.zooniverse_id,
 					  :user_id => c.user_name,
-					  :date => a["note"]
+					  :date => a["note"],
+					  :created_at => @started_at
 					}) if a["type"] == "diaryDate" && a["note"]
 
 					activity = Activity.create({
@@ -109,7 +127,8 @@ MongoClassification.each do |c|
 					  :y => a["coords"][1],
 					  :page_id => c.zooniverse_id,
 					  :user_id => c.user_name,
-					  :category => a["note"]
+					  :category => a["note"],
+					  :created_at => @started_at
 					}) if a["type"] == "activity" && a["note"]
 
 					weather = Weather.create({
@@ -117,7 +136,8 @@ MongoClassification.each do |c|
 					  :y => a["coords"][1],
 					  :page_id => c.zooniverse_id,
 					  :user_id => c.user_name,
-					  :category => a["note"]
+					  :category => a["note"],
+					  :created_at => @started_at
 					}) if a["type"] == "weather" && a["note"]
 
 				end
