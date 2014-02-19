@@ -5,7 +5,7 @@ WD3 is a Rails app to process and view data from the Zooniverse project 'Operati
 
 Get Going:
 ----------
-- Initialise the database using Rails or simply clone the most recent, empty version included in the project root as wd3-dd-mm-yyyy.sql.gz.
+- Initialise the database using Rails or simply import the most recent, empty version included in the project root as wd3-dd-mm-yyyy.sql.gz (if you're lazy like me).
 - Adjust database.yml as needed and ensure that you have a recent Mongo dump of the OWD database.
 - Import Subjects with `rails runner script/import_subjects.rb`
 - Import classifications `rails runner script/import_subjects.rb`
