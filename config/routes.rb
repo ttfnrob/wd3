@@ -1,4 +1,11 @@
 PageProcessor::Application.routes.draw do
+  get "activities/index"
+
+  get "activities/summary"
+
+  get "home/index"
+  get "home/stats"
+
   # get "pages/index"
 
   match 'pages/:zoo_id' => 'pages#show'
