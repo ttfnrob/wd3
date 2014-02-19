@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  first: MyString
+  surname: MyString
+  rank: MyString
+  reason: MyString
+  x: 1
+  y: 1
+  page_id: MyString
+
+two:
+  first: MyString
+  surname: MyString
+  rank: MyString
+  reason: MyString
+  x: 1
+  y: 1
+  page_id: MyString

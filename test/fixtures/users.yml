@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  id: MyString
+  ip: MyString
+  classification_count: 1
+
+two:
+  id: MyString
+  ip: MyString
+  classification_count: 1

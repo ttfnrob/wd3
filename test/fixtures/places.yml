@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  page_id: MyString
+  x: 1
+  y: 1
+  lat: 9.99
+  lon: 9.99
+  geocoded_name: MyString
+  at_location: false
+
+two:
+  page_id: MyString
+  x: 1
+  y: 1
+  lat: 9.99
+  lon: 9.99
+  geocoded_name: MyString
+  at_location: false
