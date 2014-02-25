@@ -6,5 +6,9 @@ class Person < ActiveRecord::Base
   	self.page.previous_date(self.y)
   end
 
+  def similar(n=3)
+	Person.find(:all, :conditions => ["page_id LIKE ? AND user_id NOT LIKE ? AND x BETWEEN ? AND ? AND y BETWEEN ? AND ? AND surname LIKE ?", self.page_id, self.user_id, self.x-n, self.x+n, self.y-n, self.y+n, self.surname])
+  end
+
   attr_accessible :first, :page_id, :rank, :reason, :surname, :x, :y, :user_id, :created_at
 end
