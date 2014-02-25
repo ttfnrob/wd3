@@ -14,7 +14,7 @@
     <circle cx="<%= w.x * 10 %>" cy="<%= w.y * 6 %>" r="12" fill="#000000" stroke="#00ffff" fill-opacity="0" stroke-width="2" tabindex="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: <%= 0.33+w.similar.size/3.0 %>;"></circle>
     <% end %>
     <% @p.places.each do |p| %>
-    <circle cx="<%= p.x * 10 %>" cy="<%= p.y * 6 %>" r="12" fill="#000000" stroke="#ffff00" fill-opacity="0" stroke-width="2" tabindex="0" opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1;"></circle>
+    <circle cx="<%= p.x * 10 %>" cy="<%= p.y * 6 %>" r="12" fill="#000000" stroke="#ffff00" fill-opacity="0" stroke-width="2" tabindex="0" opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: <%= 0.33+p.similar.size/3.0 %>;"></circle>
     <% end %>
 </svg>
 <div id="catalogue-info">
