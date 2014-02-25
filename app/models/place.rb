@@ -6,5 +6,5 @@ class Place < ActiveRecord::Base
   	self.page.previous_date(self.y)
   end
 
-  attr_accessible :at_location, :geocoded_name, :lat, :lon, :page_id, :x, :y, :user_id, :typed_name, :created_at
+  attr_accessible :at_location, :geocoded_name, :lat, :lon, :page_id, :x, :y, :user_id, :typed_name, :created_at, :note
 end

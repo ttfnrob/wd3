@@ -110,6 +110,7 @@ pending_classifications.each do |c|
 					  :lat => a["note"]["lat"],
 					  :lon => a["note"]["long"],
 					  :at_location => a["note"]["location"],
+					  :note => a["note"],
 					  :created_at => @started_at
 					}) if a["type"] == "place" && a["note"]
 
@@ -119,6 +120,7 @@ pending_classifications.each do |c|
 					  :page_id => c.zooniverse_id,
 					  :user_id => c.user_name,
 					  :date => a["note"],
+					  :note => a["note"],
 					  :created_at => @started_at
 					}) if a["type"] == "diaryDate" && a["note"]
 
