@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140218150812) do
+ActiveRecord::Schema.define(:version => 20140225113034) do
 
   create_table "activities", :force => true do |t|
     t.string   "category"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(:version => 20140218150812) do
     t.string   "user_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "note"
   end
 
   create_table "pages", :force => true do |t|
@@ -60,14 +61,15 @@ ActiveRecord::Schema.define(:version => 20140218150812) do
     t.string   "page_id"
     t.integer  "x"
     t.integer  "y"
-    t.decimal  "lat",           :precision => 10, :scale => 0
-    t.decimal  "lon",           :precision => 10, :scale => 0
+    t.decimal  "lat",           :precision => 10, :scale => 7
+    t.decimal  "lon",           :precision => 10, :scale => 7
     t.string   "geocoded_name"
     t.boolean  "at_location"
     t.datetime "created_at",                                   :null => false
     t.datetime "updated_at",                                   :null => false
     t.string   "user_id"
     t.string   "typed_name"
+    t.string   "note"
   end
 
   create_table "users", :force => true do |t|
