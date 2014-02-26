@@ -13,6 +13,10 @@ class Place < ActiveRecord::Base
   def type
   	"place"
   end
+  
+  def label
+    self.typed_name
+  end
 
   attr_accessible :at_location, :geocoded_name, :lat, :lon, :page_id, :x, :y, :user_id, :typed_name, :created_at, :note
 end

@@ -13,6 +13,10 @@ class Weather < ActiveRecord::Base
   def type
   	"weather"
   end
+  
+  def label
+    self.category
+  end
 
   attr_accessible :page_id, :type, :user_id, :x, :y, :category, :created_at
 end

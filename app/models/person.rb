@@ -13,6 +13,10 @@ class Person < ActiveRecord::Base
   def type
   	"person"
   end
+  
+  def label
+    "#{self.rank} #{self.surname}"
+  end
 
   attr_accessible :first, :page_id, :rank, :reason, :surname, :x, :y, :user_id, :created_at
 end

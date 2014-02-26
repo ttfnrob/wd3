@@ -11,4 +11,9 @@ class DiaryDate < ActiveRecord::Base
   def type
   	"diary_date"
   end
+  
+  def label
+    self.note
+  end
+  
 end
