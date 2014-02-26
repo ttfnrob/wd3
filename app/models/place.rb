@@ -10,5 +10,9 @@ class Place < ActiveRecord::Base
 	Place.find(:all, :conditions => ["page_id LIKE ? AND user_id NOT LIKE ? AND x BETWEEN ? AND ? AND y BETWEEN ? AND ? AND typed_name LIKE ?", self.page_id, self.user_id, self.x-n, self.x+n, self.y-n, self.y+n, self.typed_name])
   end
 
+  def type
+  	"place"
+  end
+
   attr_accessible :at_location, :geocoded_name, :lat, :lon, :page_id, :x, :y, :user_id, :typed_name, :created_at, :note
 end
