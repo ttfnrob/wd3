@@ -6,6 +6,43 @@ class Page < ActiveRecord::Base
   has_many :activities
   has_many :people
 
+  def all_tags
+    self.diary_dates + self.places + self.people + self.activities + self.weathers
+  end
+
+  def users
+    self.all_tags.map{|t|t.user_id}.uniq
+  end
+
+  def clusterize
+  clustered_tags = []
+  completed = []
+  user_count = self.users.count
+  
+  self.all_tags.each do |d|
+    set = d.similar #can use d.similar(n) to loosencup similary if needed - n is perecentage page diotance, try 5
+    tag_count = set.size
+    if set.count > 0 && completed.include?(d)==false
+      # Find averaged tag centre and select nearest real tag to that
+      cx = set.map{|i| i.x}.inject{|sum,x| sum + x } / tag_count
+      cy = set.map{|i| i.y}.inject{|sum,y| sum + y } / tag_count
+      closest = set.sort_by{|i| (i.x-cx)**2 + (i.y-cy)**2}.reverse.first    
+      # Add to set and record they are all done - i.e. don't duplicate process for tags in set
+      clustered_tags << {"type" => d.type, "tag" => closest, "hit_rate" => (tag_count+1.0)/user_count}
+      completed << d
+      set.each{|i| completed << i}
+    elsif set.count > 0 && completed.include?(d)==true
+      #do nothing
+    else  
+      #Single tags still go in
+      clustered_tags << {"type" => d.type, "tag" => d, "hit_rate" => 1.0/user_count}
+      completed << d
+    end
+  end
+
+  return clustered_tags
+  end
+
   # Sorting dates and grouping them
 
   def date_means

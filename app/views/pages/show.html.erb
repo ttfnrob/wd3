@@ -1,16 +1,7 @@
 <svg height="600" version="1.1" width="1000" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" preserveAspectRatio="xMinYMin" style="overflow: hidden; position: relative;">
   <image xlink:href="<%= @p.url %>" preserveAspectRatio="xMidYMid meet" width="1000" height="600"/>
-    <% @p.diary_dates.each do |d| %>
-    <circle cx="<%= d.x * 10 %>" cy="<%= d.y * 6 %>" r="12" fill="#000000" stroke="#ff0000" fill-opacity="0" stroke-width="2" tabindex="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: <%= 0.33+d.similar.size/3.0 %>;"></circle>
-    <% end %>
-    <% @p.activities.each do |a| %>
-    <circle cx="<%= a.x * 10 %>" cy="<%= a.y * 6 %>" r="12" fill="#000000" stroke="#00ff00" fill-opacity="0" stroke-width="2" tabindex="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: <%= 0.33+a.similar.size/3.0 %>;"></circle>
-    <% end %>
-    <% @p.people.each do |p| %>
-    <circle cx="<%= p.x * 10 %>" cy="<%= p.y * 6 %>" r="12" fill="#000000" stroke="#0000ff" fill-opacity="0" stroke-width="2" tabindex="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: <%= 0.33+p.similar.size/3.0 %>;"></circle>
-    <% end %>
-    <% @p.weathers.each do |w| %>
-    <circle cx="<%= w.x * 10 %>" cy="<%= w.y * 6 %>" r="12" fill="#000000" stroke="#00ffff" fill-opacity="0" stroke-width="2" tabindex="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: <%= 0.33+w.similar.size/3.0 %>;"></circle>
+    <% @tags.each do |d| %>
+    <circle cx="<%= d["tag"].x * 10 %>" cy="<%= d["tag"].y * 6 %>" r="12" fill="#000000" stroke="<%= @hex[d["type"]] %>" fill-opacity="0" stroke-width="2" tabindex="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: <%= d["hit_rate"]+0.2 %>;"></circle>
     <% end %>
 </svg>
 <div id="catalogue-info">
@@ -23,6 +14,7 @@
 </div>
 <div id="computed-info">
     <ul>
+        <li><span class="key">Volunteers</span>: <%= @p.users.count %> (<%= @p.users.join(", ") %>)</li>
         <li><span class="key">Diary Dates</span>: <%= @p.diary_dates.count %></li>
         <li><span class="key">Places</span>: <%= @p.places.count %></li>
         <li><span class="key">People</span>: <%= @p.people.count %></li>
