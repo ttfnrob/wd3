@@ -1,7 +1,7 @@
 <% width = 1300 %>
 <% height = 780 %>
-<svg height="780" version="1.1" width="1300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 780" preserveAspectRatio="xMinYMin" style="overflow: hidden; position: relative;">
-  <image xlink:href="<%= @p.url %>" preserveAspectRatio="xMidYMid meet" width="1300" height="780"/>
+<svg height="<%= height %>" version="1.1" width="<%= width %>" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 780" preserveAspectRatio="xMinYMin" style="overflow: hidden; position: relative;">
+  <image xlink:href="<%= @p.url %>" preserveAspectRatio="xMidYMid meet" width="<%= width %>" height="<%= height %>"/>
     <% @tags.each do |d| %>
       <% if d['type'] == 'diary_date' %>
         <path fill="#000000" stroke="#ff0000" d="M0,<%= d["tag"].y * height / 100 %>C0,<%= d["tag"].y * height / 100 %>,<%= width %>,<%= d["tag"].y * height /100 %>,<%= width %>,<%= d["tag"].y * height / 100 %>" stroke-width="1" opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: <%= d["hit_rate"]+0.2 %>;"></path>
