@@ -1,6 +1,6 @@
 <% width = 1300 %>
 <% height = 780 %>
-<svg height="<%= height %>" version="1.1" width="<%= width %>" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 780" preserveAspectRatio="xMinYMin" style="overflow: hidden; position: relative;">
+<svg height="<%= height %>" version="1.1" width="<%= width %>" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 <%= width %> <%= height %>" preserveAspectRatio="xMinYMin" style="overflow: hidden; position: relative;">
   <image xlink:href="<%= @p.url %>" preserveAspectRatio="xMidYMid meet" width="<%= width %>" height="<%= height %>"/>
     <% @tags.each do |d| %>
       <% if d['type'] == 'diary_date' %>
