@@ -20,7 +20,7 @@ class Page < ActiveRecord::Base
   user_count = self.users.count
   
   self.all_tags.each do |d|
-    set = d.similar(0) #can use d.similar(n) to loosencup similary if needed - n is perecentage page diotance, try 5
+    set = d.similar #can use d.similar(n) to loosencup similary if needed - n is perecentage page diotance, try 5
     tag_count = set.size
     if set.count > 0 && completed.include?(d)==false
       # Find averaged tag centre and select nearest real tag to that
