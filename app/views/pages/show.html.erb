@@ -1,20 +1,20 @@
-<svg height="600" version="1.1" width="1000" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" preserveAspectRatio="xMinYMin" style="overflow: hidden; position: relative;">
-  <image xlink:href="<%= @p.url %>" preserveAspectRatio="xMidYMid meet" width="1000" height="600"/>
+<svg height="780" version="1.1" width="1300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 780" preserveAspectRatio="xMinYMin" style="overflow: hidden; position: relative;">
+  <image xlink:href="<%= @p.url %>" preserveAspectRatio="xMidYMid meet" width="1300" height="780"/>
     <% @p.diary_dates.each do |d| %>
-    <path fill="#000000" stroke="#ff0000" d="M0,<%= d.y * 6 %>C0,<%= d.y * 6 %>,1026,<%= d.y * 6 %>,1026,<%= d.y * 6 %>" stroke-width="1" opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: <%= 0.33+d.similar.size/3.0 %>;"></path>
-    <circle cx="<%= d.x * 10 %>" cy="<%= d.y * 6 %>" r="4" fill="#000000" stroke="#ff0000" fill-opacity="0" stroke-width="2" tabindex="0" opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: <%= 0.33+d.similar.size/3.0 %>;"></circle>
+    <path fill="#000000" stroke="#ff0000" d="M0,<%= d.y * 7.8 %>C0,<%= d.y * 7.8 %>,1026,<%= d.y * 7.8 %>,1026,<%= d.y * 7.8 %>" stroke-width="1" opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: <%= 0.33+d.similar.size/3.0 %>;"></path>
+    <circle cx="<%= d.x * 13 %>" cy="<%= d.y * 7.8 %>" r="4" fill="#000000" stroke="#ff0000" fill-opacity="0" stroke-width="2" tabindex="0" opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: <%= 0.33+d.similar.size/3.0 %>;"></circle>
     <% end %>
     <% @p.activities.each do |a| %>
-    <circle cx="<%= a.x * 10 %>" cy="<%= a.y * 6 %>" r="12" fill="#000000" stroke="#00ff00" fill-opacity="0" stroke-width="2" tabindex="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: <%= 0.33+a.similar.size/3.0 %>;"></circle>
+    <circle cx="<%= a.x * 13 %>" cy="<%= a.y * 7.8 %>" r="12" fill="#000000" stroke="#00ff00" fill-opacity="0" stroke-width="2" tabindex="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: <%= 0.33+a.similar.size/3.0 %>;"></circle>
     <% end %>
     <% @p.people.each do |p| %>
-    <circle cx="<%= p.x * 10 %>" cy="<%= p.y * 6 %>" r="12" fill="#000000" stroke="#0000ff" fill-opacity="0" stroke-width="2" tabindex="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: <%= 0.33+p.similar.size/3.0 %>;"></circle>
+    <circle cx="<%= p.x * 13 %>" cy="<%= p.y * 7.8 %>" r="12" fill="#000000" stroke="#0000ff" fill-opacity="0" stroke-width="2" tabindex="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: <%= 0.33+p.similar.size/3.0 %>;"></circle>
     <% end %>
     <% @p.weathers.each do |w| %>
-    <circle cx="<%= w.x * 10 %>" cy="<%= w.y * 6 %>" r="12" fill="#000000" stroke="#00ffff" fill-opacity="0" stroke-width="2" tabindex="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: <%= 0.33+w.similar.size/3.0 %>;"></circle>
+    <circle cx="<%= w.x * 13 %>" cy="<%= w.y * 7.8 %>" r="12" fill="#000000" stroke="#00ffff" fill-opacity="0" stroke-width="2" tabindex="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: <%= 0.33+w.similar.size/3.0 %>;"></circle>
     <% end %>
     <% @p.places.each do |p| %>
-    <circle cx="<%= p.x * 10 %>" cy="<%= p.y * 6 %>" r="12" fill="#000000" stroke="#ffff00" fill-opacity="0" stroke-width="2" tabindex="0" opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: <%= 0.33+p.similar.size/3.0 %>;"></circle>
+    <circle cx="<%= p.x * 13 %>" cy="<%= p.y * 7.8 %>" r="12" fill="#000000" stroke="#ffff00" fill-opacity="0" stroke-width="2" tabindex="0" opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: <%= 0.33+p.similar.size/3.0 %>;"></circle>
     <% end %>
 </svg>
 <div id="catalogue-info">
