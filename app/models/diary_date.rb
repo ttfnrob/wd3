@@ -5,7 +5,7 @@ class DiaryDate < ActiveRecord::Base
   belongs_to :page
 
   def similar(n=3)
-	DiaryDate.find(:all, :conditions => ["page_id LIKE ? AND user_id NOT LIKE ? AND x BETWEEN ? AND ? AND y BETWEEN ? AND ? AND date LIKE ?", self.page_id, self.user_id, self.x-n, self.x+n, self.y-n, self.y+n, self.date])
+	DiaryDate.find(:all, :conditions => ["page_id LIKE ? AND user_id NOT LIKE ? AND y BETWEEN ? AND ? AND date LIKE ?", self.page_id, self.user_id, self.y-n, self.y+n, self.date])
   end
 
   def type
