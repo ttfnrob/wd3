@@ -1,5 +1,6 @@
 <% width = 1300 %>
 <% height = 780 %>
+<a href="/pages/<%= @prev_page.id %>">Previous page</a>
 <svg height="<%= height %>" version="1.1" width="<%= width %>" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 <%= width %> <%= height %>" preserveAspectRatio="xMinYMin" style="overflow: hidden; position: relative;">
   <image xlink:href="<%= @p.url %>" preserveAspectRatio="xMidYMid meet" width="<%= width %>" height="<%= height %>"/>
     <% @tags.each do |d| %>
@@ -12,6 +13,7 @@
       <text opacity="1" fill="#000000" stroke="none" font="10px &quot;Arial&quot;" text-anchor="middle" y="<%= ( d["tag"].y - 1 ) * height / 100 %>" x="<%= d["tag"].x * width / 100 %>" style="text-anchor: middle; font: 10px &quot;Arial&quot;; opacity: 1;"><%= d["tag"].label %></text>
     <% end %>
 </svg>
+<a href="/pages/<%= @next_page.id %>">Next page</a>
 <div id="catalogue-info">
     <ul>
         <li><span class="key">Diary</span>: <%= @p.name %></li>
