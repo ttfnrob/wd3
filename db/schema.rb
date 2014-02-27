@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140225113034) do
+ActiveRecord::Schema.define(:version => 20140227111758) do
 
   create_table "activities", :force => true do |t|
     t.string   "category"
@@ -23,6 +23,8 @@ ActiveRecord::Schema.define(:version => 20140225113034) do
     t.datetime "updated_at", :null => false
   end
 
+  add_index "activities", ["page_id"], :name => "index_activities_on_page_id"
+
   create_table "diary_dates", :force => true do |t|
     t.date     "date"
     t.string   "page_id"
@@ -33,6 +35,8 @@ ActiveRecord::Schema.define(:version => 20140225113034) do
     t.datetime "updated_at", :null => false
     t.string   "note"
   end
+
+  add_index "diary_dates", ["page_id"], :name => "index_diary_dates_on_page_id"
 
   create_table "pages", :force => true do |t|
     t.string   "name"
@@ -57,6 +61,8 @@ ActiveRecord::Schema.define(:version => 20140225113034) do
     t.string   "user_id"
   end
 
+  add_index "people", ["page_id"], :name => "index_people_on_page_id"
+
   create_table "places", :force => true do |t|
     t.string   "page_id"
     t.integer  "x"
@@ -71,6 +77,8 @@ ActiveRecord::Schema.define(:version => 20140225113034) do
     t.string   "typed_name"
     t.string   "note"
   end
+
+  add_index "places", ["page_id"], :name => "index_places_on_page_id"
 
   create_table "users", :force => true do |t|
     t.string   "ip"
@@ -88,5 +96,7 @@ ActiveRecord::Schema.define(:version => 20140225113034) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  add_index "weathers", ["page_id"], :name => "index_weathers_on_page_id"
 
 end
