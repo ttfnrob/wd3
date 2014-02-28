@@ -7,7 +7,7 @@ class Activity < ActiveRecord::Base
   end
 
   def similar(n=3)
-	Activity.find(:all, :conditions => ["page_id LIKE ? AND user_id NOT LIKE ? AND x BETWEEN ? AND ? AND y BETWEEN ? AND ? AND category LIKE ?", self.page_id, self.user_id, self.x-n, self.x+n, self.y-n, self.y+n, self.category])
+	Activity.find(:all, :conditions => ["page_id LIKE ? AND user_id NOT LIKE ? AND x BETWEEN ? AND ? AND y BETWEEN ? AND ? AND category LIKE ?", self.page_id, self.user_id, self.x-4*n, self.x+4*n, self.y-n, self.y+n, self.category])
   end
 
   def type
