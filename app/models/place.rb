@@ -7,7 +7,7 @@ class Place < ActiveRecord::Base
   end
 
   def similar(n=3)
-	Place.find(:all, :conditions => ["page_id LIKE ? AND user_id NOT LIKE ? AND x BETWEEN ? AND ? AND y BETWEEN ? AND ? AND typed_name LIKE ?", self.page_id, self.user_id, self.x-n, self.x+n, self.y-n, self.y+n, self.typed_name])
+	Place.find(:all, :conditions => ["page_id LIKE ? AND user_id NOT LIKE ? AND x BETWEEN ? AND ? AND y BETWEEN ? AND ? AND typed_name LIKE ?", self.page_id, self.user_id, self.x-4*n, self.x+4*n, self.y-n, self.y+n, self.typed_name])
   end
 
   def type
