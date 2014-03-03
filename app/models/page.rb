@@ -42,6 +42,26 @@ class Page < ActiveRecord::Base
 
   return clustered_tags
   end
+  
+  def subject
+    Subject.find_by_zooniverse_id( self.id )
+  end
+  
+  def classifications
+    @s = self.subject
+    return @s.classifications
+  end
+  
+  def document_types
+    types = []
+    self.classifications.each do |c|
+      if c.try( :annotations )
+        type = c.annotations.select{|a| a["document"]}.first["document"]
+        types.push( type )
+      end
+    end
+    return types
+  end
 
   # Sorting dates and grouping them
 
