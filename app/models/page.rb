@@ -56,8 +56,9 @@ class Page < ActiveRecord::Base
     types = []
     self.classifications.each do |c|
       if c.try( :annotations )
-        type = c.annotations.select{|a| a["document"]}.first["document"]
-        types.push( type )
+        type = c.annotations.select{|a| a["document"]}.first
+        types.push type["document"] if type
+        logger.debug types
       end
     end
     return types
