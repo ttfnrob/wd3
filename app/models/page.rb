@@ -14,13 +14,13 @@ class Page < ActiveRecord::Base
     self.all_tags.map{|t|t.user_id}.uniq
   end
 
-  def clusterize
+  def clusterize(n=3)
   clustered_tags = []
   completed = []
   user_count = self.users.count
   
   self.all_tags.each do |d|
-    set = d.similar #can use d.similar(n) to loosencup similary if needed - n is perecentage page diotance, try 5
+    set = d.similar(n) #can use d.similar(n) to loosencup similary if needed - n is perecentage page diotance, try 5
     tag_count = set.size
     if set.count > 0 && completed.include?(d)==false
       # Find averaged tag centre and select nearest real tag to that
