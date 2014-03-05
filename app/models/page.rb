@@ -52,6 +52,10 @@ class Page < ActiveRecord::Base
     return @s.classifications
   end
   
+  def tags
+    self.classifications.map{|c|c.annotations}.flatten.select{|i|i["type"]}
+  end
+  
   def document_types
     types = []
     self.classifications.each do |c|
