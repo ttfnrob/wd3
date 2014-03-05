@@ -40,7 +40,7 @@ class Page < ActiveRecord::Base
     end
   end
 
-  return clustered_tags
+  return clustered_tags.sort_by{|i| [i['tag'].y, i['tag'].x]}
   end
   
   def subject
@@ -53,7 +53,7 @@ class Page < ActiveRecord::Base
   end
   
   def tags
-    self.classifications.map{|c|c.annotations}.flatten.select{|i|i["type"]}
+    self.classifications.map{|c|c.annotations}.flatten.select{|i|i["type"]}.sort_by{|i| [i['coords'][1], i['coords'][0]]}
   end
   
   def document_types
