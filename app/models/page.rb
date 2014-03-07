@@ -31,7 +31,7 @@ class Page < ActiveRecord::Base
       when 'reference'
         tag['label'] = note['reference']
       else
-        tag['label'] = note
+        tag['label'] = note.to_s
       end
     end
   
