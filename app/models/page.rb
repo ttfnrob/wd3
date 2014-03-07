@@ -20,6 +20,20 @@ class Page < ActiveRecord::Base
     user_count = self.users.count
     
     tags = self.tags
+    
+    tags.each do |tag|
+      note = tag['note']
+      case tag['type']
+      when 'person'
+        tag['label'] = "#{note['rank']} #{note['first']} #{note['surname']}"
+      when 'place'
+        tag['label'] = note['place']
+      when 'reference'
+        tag['label'] = note['reference']
+      else
+        tag['label'] = note
+      end
+    end
   
     tags.each do |tag|
       x = tag['coords'][0].to_i
@@ -41,7 +55,7 @@ class Page < ActiveRecord::Base
           else
             good = x_good && y_good
           end
-          set << t if t['type'] == tag['type'] && good
+          set << t if t['type'] == tag['type'] && t['label'] == tag['label'] && good
           set
         end
     
