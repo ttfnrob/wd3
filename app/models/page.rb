@@ -15,32 +15,49 @@ class Page < ActiveRecord::Base
   end
 
   def clusterize(n=3)
-  clustered_tags = []
-  completed = []
-  user_count = self.users.count
+    clustered_tags = []
+    completed = []
+    user_count = self.users.count
+    
+    tags = self.tags
   
-  self.all_tags.each do |d|
-    set = d.similar(n) #can use d.similar(n) to loosencup similary if needed - n is perecentage page diotance, try 5
-    tag_count = set.size
-    if set.count > 0 && completed.include?(d)==false
-      # Find averaged tag centre and select nearest real tag to that
-      cx = set.map{|i| i.x}.inject{|sum,x| sum + x } / tag_count
-      cy = set.map{|i| i.y}.inject{|sum,y| sum + y } / tag_count
-      closest = set.sort_by{|i| (i.x-cx)**2 + (i.y-cy)**2}.reverse.first    
-      # Add to set and record they are all done - i.e. don't duplicate process for tags in set
-      clustered_tags << {"type" => d.type, "tag" => closest, "hit_rate" => (tag_count+1.0)/user_count}
-      completed << d
-      set.each{|i| completed << i}
-    elsif set.count > 0 && completed.include?(d)==true
-      #do nothing
-    else  
-      #Single tags still go in
-      clustered_tags << {"type" => d.type, "tag" => d, "hit_rate" => 1.0/user_count}
-      completed << d
+    tags.each do |tag|
+      x = tag['coords'][0].to_i
+      y = tag['coords'][1].to_i
+      max_y = y + n
+      min_y = y - n
+      max_x = x + 4 * n
+      min_x = x - 4 * n
+      set = tags.inject([]) do |set, t|
+        tx = t['coords'][0].to_i
+        ty = t['coords'][1].to_i
+        x_good = tx <= max_x && tx >= min_x
+        y_good = ty <= max_y && ty >= min_y
+        set << t if x_good && y_good && t['type'] == tag['type']
+        set
+      end
+      tag_count = set.size
+      if set.count > 0 && completed.include?(tag) == false
+        # Find averaged tag centre and select nearest real tag to that
+        cx = set.map{|i| i['coords'][0].to_i}.inject{|sum,x| sum + x } / tag_count
+        cy = set.map{|i| i['coords'][1].to_i}.inject{|sum,y| sum + y } / tag_count
+        closest = set.sort_by{|i| (i['coords'][0].to_i-cx)**2 + (i['coords'][1].to_i-cy)**2}.reverse.first    
+        # Add to set and record they are all done - i.e. don't duplicate process for tags in set
+        clustered_tags << {"type" => tag['type'], "tag" => closest, "hit_rate" => (tag_count+1.0)/user_count}
+        completed << tag
+        set.each{|i| completed << i}
+      elsif set.count > 0 && completed.include?(tag)==true
+        #do nothing
+      else  
+        #Single tags still go in
+        clustered_tags << {"type" => tag['type'], "tag" => tag, "hit_rate" => 1.0/user_count}
+        completed << d
+      end
+      puts set
+      puts '---------'
     end
-  end
 
-  return clustered_tags.sort_by{|i| [i['tag'].y, i['tag'].x]}
+    return clustered_tags.sort_by{|i| [i['tag']['coords'][1].to_i, i['tag']['coords'][0].to_i]}
   end
   
   def subject
