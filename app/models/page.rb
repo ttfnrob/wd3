@@ -28,35 +28,40 @@ class Page < ActiveRecord::Base
       min_y = y - n
       max_x = x + 4 * n
       min_x = x - 4 * n
-      set = tags.inject([]) do |set, t|
-        tx = t['coords'][0].to_i
-        ty = t['coords'][1].to_i
-        x_good = tx <= max_x && tx >= min_x
-        y_good = ty <= max_y && ty >= min_y
-        if t['type'] == 'diaryDate'
-          good = y_good
-        else
-          good = x_good && y_good
+      
+      set = []
+      unless completed.include?(tag)
+        set = tags.inject([]) do |set, t|
+          tx = t['coords'][0].to_i
+          ty = t['coords'][1].to_i
+          x_good = tx <= max_x && tx >= min_x
+          y_good = ty <= max_y && ty >= min_y
+          if t['type'] == 'diaryDate'
+            good = y_good
+          else
+            good = x_good && y_good
+          end
+          set << t if t['type'] == tag['type'] && good
+          set
         end
-        set << t if t['type'] == tag['type'] && good
-        set
-      end
-      tag_count = set.size
-      if set.count > 0 && completed.include?(tag) == false
-        # Find averaged tag centre and select nearest real tag to that
-        cx = set.map{|i| i['coords'][0].to_i}.inject{|sum,x| sum + x } / tag_count
-        cy = set.map{|i| i['coords'][1].to_i}.inject{|sum,y| sum + y } / tag_count
-        closest = set.sort_by{|i| (i['coords'][0].to_i-cx)**2 + (i['coords'][1].to_i-cy)**2}.reverse.first    
-        # Add to set and record they are all done - i.e. don't duplicate process for tags in set
-        clustered_tags << {"type" => tag['type'], "tag" => closest, "hit_rate" => (tag_count+1.0)/user_count}
-        completed << tag
-        set.each{|i| completed << i}
-      elsif set.count > 0 && completed.include?(tag)==true
-        #do nothing
-      else  
-        #Single tags still go in
-        clustered_tags << {"type" => tag['type'], "tag" => tag, "hit_rate" => 1.0/user_count}
-        completed << tag
+    
+        if set.count > 0 && completed.include?(tag) == false
+          tag_count = set.size
+          # Find averaged tag centre and select nearest real tag to that
+          cx = set.map{|i| i['coords'][0].to_i}.inject{|sum,x| sum + x } / tag_count
+          cy = set.map{|i| i['coords'][1].to_i}.inject{|sum,y| sum + y } / tag_count
+          closest = set.sort_by{|i| (i['coords'][0].to_i-cx)**2 + (i['coords'][1].to_i-cy)**2}.reverse.first    
+          # Add to set and record they are all done - i.e. don't duplicate process for tags in set
+          clustered_tags << {"type" => tag['type'], "tag" => closest, "hit_rate" => (tag_count+1.0)/user_count}
+          completed << tag
+          set.each{|i| completed << i}
+        elsif set.count > 0 && completed.include?(tag)==true
+          #do nothing
+        else  
+          #Single tags still go in
+          clustered_tags << {"type" => tag['type'], "tag" => tag, "hit_rate" => 1.0/user_count}
+          completed << tag
+        end
       end
       puts set
       puts '---------'
