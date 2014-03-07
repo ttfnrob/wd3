@@ -56,13 +56,18 @@ class Page < ActiveRecord::Base
     self.classifications.map{|c|c.annotations}.flatten.select{|i|i["type"]}.sort_by{|i| [i['coords'][1], i['coords'][0]]}
   end
   
+  def comments
+    discussions = Discussion.where( :title => self.id ).first
+    return discussions['comments'] unless discussions.nil?
+    return []
+  end
+  
   def document_types
     types = []
     self.classifications.each do |c|
       if c.try( :annotations )
         type = c.annotations.select{|a| a["document"]}.first
         types.push type["document"] if type
-        logger.debug types
       end
     end
     return types

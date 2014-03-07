@@ -42,3 +42,9 @@
         <li><span class="key">Weathers</span>: <%= @p.weathers.count %></li>
     </ul>
 </div>
+<% @tags.each do |d| %>
+<%= d["tag"].label %>, 
+<% end %>
+<% @p.comments.each do |c|%>
+<p><%= c['body'] %></p>
+<% end %>
