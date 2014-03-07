@@ -38,6 +38,7 @@ class Page < ActiveRecord::Base
     tags.each do |tag|
       x = tag['coords'][0].to_i
       y = tag['coords'][1].to_i
+      label = tag['label'].to_s || ''
       max_y = y + n
       min_y = y - n
       max_x = x + 4 * n
@@ -48,14 +49,17 @@ class Page < ActiveRecord::Base
         set = tags.inject([]) do |set, t|
           tx = t['coords'][0].to_i
           ty = t['coords'][1].to_i
+          tlabel = t['label'].to_s || ''
           x_good = tx <= max_x && tx >= min_x
           y_good = ty <= max_y && ty >= min_y
           if t['type'] == 'diaryDate'
-            good = y_good
+            t_date = tlabel.split(' ')
+            tag_date = label.split(' ')
+            good = y_good && t_date[0] == tag_date[0] && t_date[1] == tag_date[1]
           else
-            good = x_good && y_good
+            good = x_good && y_good && t['label'] == tag['label']
           end
-          set << t if t['type'] == tag['type'] && t['label'] == tag['label'] && good
+          set << t if t['type'] == tag['type'] && good
           set
         end
     
@@ -77,8 +81,6 @@ class Page < ActiveRecord::Base
           completed << tag
         end
       end
-      puts set
-      puts '---------'
     end
 
     return clustered_tags.sort_by{|i| [i['tag']['coords'][1].to_i, i['tag']['coords'][0].to_i]}
