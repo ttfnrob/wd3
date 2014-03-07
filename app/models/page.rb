@@ -11,7 +11,7 @@ class Page < ActiveRecord::Base
   end
 
   def users
-    self.all_tags.map{|t|t.user_id}.uniq
+    self.classifications.map{|t|t.user_name}.uniq
   end
 
   def clusterize(n=3)
