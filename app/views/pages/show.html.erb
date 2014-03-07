@@ -19,7 +19,7 @@
       <% else %>
         <circle cx="<%= x %>" cy="<%= y %>" r="12" fill="#000000" stroke="<%= color %>" fill-opacity="0" stroke-width="2" tabindex="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: <%= o %>;"></circle>
       <% end %>
-      <text opacity="1" fill="#000000" stroke="none" font="10px &quot;Arial&quot;" text-anchor="middle" y="<%= y - 20 %>" x="<%= x %>" style="text-anchor: middle; font: 10px &quot;Arial&quot;; opacity: 1;"><%= d["tag"]['label'] %></text>
+      <text opacity="1" fill="#000000" stroke="none" font="10px &quot;Arial&quot;" text-anchor="middle" y="<%= y - 20 %>" x="<%= x %>" style="text-anchor: middle; font: 10px &quot;Arial&quot;; opacity: 1;"><%= d["tag"]['label'] %> (<%= d["count"] %>)</text>
     <% end %>
 </svg>
 <% unless @next_page.nil? %>
