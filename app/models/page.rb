@@ -38,7 +38,7 @@ class Page < ActiveRecord::Base
     tags.each do |tag|
       x = tag['coords'][0].to_i
       y = tag['coords'][1].to_i
-      label = tag['label'].to_s || ''
+      label = tag['label'] || ''
       max_y = y + n
       min_y = y - n
       max_x = x + 4 * n
@@ -49,7 +49,7 @@ class Page < ActiveRecord::Base
         set = tags.inject([]) do |set, t|
           tx = t['coords'][0].to_i
           ty = t['coords'][1].to_i
-          tlabel = t['label'].to_s || ''
+          tlabel = t['label'] || ''
           x_good = tx <= max_x && tx >= min_x
           y_good = ty <= max_y && ty >= min_y
           if t['type'] == 'diaryDate'
