@@ -33,7 +33,12 @@ class Page < ActiveRecord::Base
         ty = t['coords'][1].to_i
         x_good = tx <= max_x && tx >= min_x
         y_good = ty <= max_y && ty >= min_y
-        set << t if x_good && y_good && t['type'] == tag['type']
+        if t['type'] == 'diaryDate'
+          good = y_good
+        else
+          good = x_good && y_good
+        end
+        set << t if t['type'] == tag['type'] && good
         set
       end
       tag_count = set.size
@@ -51,7 +56,7 @@ class Page < ActiveRecord::Base
       else  
         #Single tags still go in
         clustered_tags << {"type" => tag['type'], "tag" => tag, "hit_rate" => 1.0/user_count}
-        completed << d
+        completed << tag
       end
       puts set
       puts '---------'
