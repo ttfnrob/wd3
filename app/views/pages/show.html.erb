@@ -43,7 +43,7 @@
     </ul>
 </div>
 <% @tags.each do |d| %>
-<%= d["tag"]['label'] %>, 
+<%= d["tag"]['label'] %> (<%= d["count"]%>), 
 <% end %>
 <% @p.comments.each do |c|%>
 <p><%= c['body'] %></p>
