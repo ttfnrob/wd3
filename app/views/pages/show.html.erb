@@ -1,10 +1,14 @@
-<% width = 1300 %>
-<% height = 780 %>
+<% width = 1000 %>
+<% height = 600 %>
 <% counts = {} %>
-<p><%= @p.document_types.join(",") %></p>
+<div>
 <% unless @prev_page.nil? %>
   <a href="/pages/<%= @prev_page.zooniverse_id %>">Previous page</a>
 <% end %>
+<% unless @next_page.nil? %>
+  <a href="/pages/<%= @next_page.zooniverse_id %>">Next page</a>
+<% end %>
+</div>
 <svg height="<%= height %>" version="1.1" width="<%= width %>" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 <%= width %> <%= height %>" preserveAspectRatio="xMinYMin" style="overflow: hidden; position: relative;">
   <image xlink:href="<%= @p.image %>" preserveAspectRatio="xMidYMid meet" width="<%= width %>" height="<%= height %>"/>
     <% @tags.each do |d| %>
@@ -23,12 +27,15 @@
       <% else %>
         <circle cx="<%= x %>" cy="<%= y %>" r="12" fill="#000000" stroke="<%= color %>" fill-opacity="0" stroke-width="2" tabindex="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: <%= o %>;"></circle>
       <% end %>
-      <text opacity="1" fill="#000000" stroke="none" font="10px &quot;Arial&quot;" text-anchor="middle" y="<%= y - 20 %>" x="<%= x %>" style="text-anchor: middle; font: 10px &quot;Arial&quot;; opacity: 1;"><%= d["tag"]['label'] %> (<%= d["count"] %>)</text>
+      <rect y="<%= y - 10 %>" x="<%= x - 50 %>" width="100" height="12" opacity=".5" fill="#ffffff"/>
+      <text opacity="1" fill="#000000" stroke="none" text-anchor="middle" y="<%= y %>" x="<%= x %>"><%= d["tag"]['label'] %> (<%= d["count"] %>)</text>
     <% end %>
 </svg>
-<% unless @next_page.nil? %>
-  <a href="/pages/<%= @next_page.zooniverse_id %>">Next page</a>
+<ul class="timeline">
+<% @tags.each do |d| %>
+<li class="<%=d ["type"] %>"><%= d["tag"]['label'] %> (<%= d["count"]%>)</li> 
 <% end %>
+</ul>
 <div id="catalogue-info">
     <ul>
         <li><span class="key">Diary</span>: <%= @p.group_name %></li>
@@ -40,11 +47,9 @@
 <div id="computed-info">
     <ul>
         <li><span class="key">Volunteers</span>: <%= @p.users.count %> (<%= @p.users.join(", ") %>)</li>
+        <li><span class="key">Page Type</span>: <%= @p.document_types.join(",") %></li>
     </ul>
 </div>
-<% @tags.each do |d| %>
-<%= d["tag"]['label'] %> (<%= d["count"]%>), 
-<% end %>
 <% @p.comments.each do |c|%>
 <p><%= c['body'] %></p>
 <% end %>
