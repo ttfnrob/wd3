@@ -34,6 +34,9 @@ ul.timeline li.place {
 ul.timeline li.person {
   background-color: #283f45;
 }
+ul.timeline li.activity {
+  background-color: #45815d;
+}
 span.key {
   font-weight: bold;
 }

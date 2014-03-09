@@ -8,7 +8,7 @@ class PagesController < ApplicationController
     n = params[:n] || 5
     threshold = params[:threshold] || 0
   	@tags = @p.clusterize( n.to_i, threshold.to_i )
-  	@hex = {"diaryDate" => "#ff0000", "person" => "#ff00ff", "place" => "#0000ff", "activity" => "#00ff00", "weather" => "#00ffff"}
+  	@hex = {"diaryDate" => "#38674c", "person" => "#283f45", "place" => "#4ea4ad", "activity" => "#45815d", "weather" => "#00ffff"}
     @next_page = Subject.where('metadata.page_number' => @p.page_number + 1, 'group.zooniverse_id' => @p.group_id).first
     @prev_page = Subject.where('metadata.page_number' => @p.page_number - 1, 'group.zooniverse_id' => @p.group_id).first
   end
