@@ -112,6 +112,24 @@ class Subject
  
   def tags
     @tags ||= self.classifications.map{|c|c.annotations}.flatten.select{|i|i["type"]}.sort_by{|i| [i['coords'][1], i['coords'][0]]}
+    
+    @tags.each do |tag|
+      note = tag['note']
+      case tag['type']
+      when 'person'
+        tag['label'] = "#{note['rank']} #{note['first']} #{note['surname']}"
+      when 'place'
+        tag['label'] = note['place']
+      when 'reference'
+        tag['label'] = note['reference']
+      when 'unit'
+        tag['label'] = note['name']
+      else
+        tag['label'] = note.to_s
+      end
+    end
+    
+    @tags
   end
   
   def comments
