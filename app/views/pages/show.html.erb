@@ -11,7 +11,7 @@
     <%
       x = d["tag"]['coords'][0].to_i * width / 100
       y = d["tag"]['coords'][1].to_i * height / 100
-      o = d["hit_rate"] + 0.2
+      o = d["hit_rate"]
       color = @hex[d["type"]] || '#ffffff'
       counts[ d["count"] ] ||= 0
       counts[ d["count"] ] += 1

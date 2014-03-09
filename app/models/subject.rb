@@ -91,7 +91,7 @@ class Subject
           cy = set.map{|i| i['coords'][1].to_i}.inject{|sum,y| sum + y } / tag_count
           closest = set.sort_by{|i| (i['coords'][0].to_i-cx)**2 + (i['coords'][1].to_i-cy)**2}.reverse.first    
           # Add to set and record they are all done - i.e. don't duplicate process for tags in set
-          clustered_tags << {"type" => tag['type'], "tag" => closest, "count" => tag_count, "hit_rate" => (tag_count+1.0)/user_count} if tag_count > threshold
+          clustered_tags << {"type" => tag['type'], "tag" => closest, "count" => tag_count, "hit_rate" => tag_count.to_f/user_count.to_f} if tag_count > threshold
           completed << tag
           set.each{|i| completed << i}
         elsif set.count > 0 && completed.include?(tag)==true
