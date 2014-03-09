@@ -40,26 +40,8 @@ class Subject
     clustered_tags = []
     completed = []
     user_count = self.users.count
-    
-    tags = self.tags
-    
-    tags.each do |tag|
-      note = tag['note']
-      case tag['type']
-      when 'person'
-        tag['label'] = "#{note['rank']} #{note['first']} #{note['surname']}"
-      when 'place'
-        tag['label'] = note['place']
-      when 'reference'
-        tag['label'] = note['reference']
-      when 'unit'
-        tag['label'] = note['name']
-      else
-        tag['label'] = note.to_s
-      end
-    end
   
-    tags.each do |tag|
+    self.tags.each do |tag|
       x = tag['coords'][0].to_i
       y = tag['coords'][1].to_i
       label = tag['label'] || ''
