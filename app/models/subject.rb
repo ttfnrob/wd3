@@ -10,6 +10,7 @@ class Subject
   key :metadata, Hash
   key :size, String
   key :zooniverse_id, String
+  key :group, Hash
   
   def classifications
     @classifications ||= Classification.where(:subject_ids => [Subject.find_by_zooniverse_id(self.zooniverse_id).id])
@@ -108,7 +109,7 @@ class Subject
   end
  
   def tags
-    self.classifications.map{|c|c.annotations}.flatten.select{|i|i["type"]}.sort_by{|i| [i['coords'][1], i['coords'][0]]}
+    @tags ||= self.classifications.map{|c|c.annotations}.flatten.select{|i|i["type"]}.sort_by{|i| [i['coords'][1], i['coords'][0]]}
   end
   
   def comments
@@ -129,7 +130,7 @@ class Subject
   end
   
   def users
-    self.classifications.map{|t|t.user_name}.uniq
+    @users ||= self.classifications.map{|t|t.user_name}.uniq
   end
   
   def image

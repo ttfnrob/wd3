@@ -3,7 +3,7 @@
 <% counts = {} %>
 <p><%= @p.document_types.join(",") %></p>
 <% unless @prev_page.nil? %>
-  <a href="/pages/<%= @prev_page.id %>">Previous page</a>
+  <a href="/pages/<%= @prev_page.zooniverse_id %>">Previous page</a>
 <% end %>
 <svg height="<%= height %>" version="1.1" width="<%= width %>" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 <%= width %> <%= height %>" preserveAspectRatio="xMinYMin" style="overflow: hidden; position: relative;">
   <image xlink:href="<%= @p.image %>" preserveAspectRatio="xMidYMid meet" width="<%= width %>" height="<%= height %>"/>
@@ -27,7 +27,7 @@
     <% end %>
 </svg>
 <% unless @next_page.nil? %>
-  <a href="/pages/<%= @next_page.id %>">Next page</a>
+  <a href="/pages/<%= @next_page.zooniverse_id %>">Next page</a>
 <% end %>
 <div id="catalogue-info">
     <ul>
