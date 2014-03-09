@@ -63,7 +63,7 @@ class Subject
             tag_date = label.split(' ')
             good = y_good && t_date[0] == tag_date[0] && t_date[1] == tag_date[1]
           else
-            good = x_good && y_good && t['label'] == tag['label']
+            good = x_good && y_good && t['label'].upcase == tag['label'].upcase
           end
           set << t if t['type'] == tag['type'] && good
           set
