@@ -121,7 +121,7 @@ class Subject
   end
   
   def document_types
-    @document_types ||= self.classifications.map{|c| c.annotations.select{|a| a['document']}.first.values}
+    @document_types ||= self.classifications.map{|c| c.annotations.select{|a| a['document']}.first}
   end
   
   def users
