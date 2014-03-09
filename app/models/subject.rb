@@ -52,6 +52,8 @@ class Subject
         tag['label'] = note['place']
       when 'reference'
         tag['label'] = note['reference']
+      when 'unit'
+        tag['label'] = note['name']
       else
         tag['label'] = note.to_s
       end
