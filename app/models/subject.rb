@@ -106,6 +106,8 @@ class Subject
         tag['label'] = note['reference']
       when 'unit'
         tag['label'] = note['name']
+      when 'casualties'
+        tag['label'] = note.reject{|k,v| v.to_i == 0}.map{|k,v| "#{k}: #{v}"}.join(', ')
       else
         tag['label'] = note.to_s
       end
