@@ -109,6 +109,7 @@ class Subject
       else
         tag['label'] = note.to_s
       end
+      tag['label'].strip!
     end
     
     @tags
