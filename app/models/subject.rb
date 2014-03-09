@@ -119,14 +119,7 @@ class Subject
   end
   
   def document_types
-    types = []
-    self.classifications.each do |c|
-      if c.try( :annotations )
-        type = c.annotations.select{|a| a["document"]}.first
-        types.push type["document"] if type
-      end
-    end
-    return types
+    @document_types ||= self.classifications.map{|c| c.annotations.select{|a| a['document']}.first.values}
   end
   
   def users
