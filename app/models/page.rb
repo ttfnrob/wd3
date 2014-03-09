@@ -14,11 +14,10 @@ class Page < ActiveRecord::Base
     self.classifications.map{|t|t.user_name}.uniq
   end
 
-  def clusterize(n=3)
+  def clusterize(n=3, threshold = 0)
     clustered_tags = []
     completed = []
     user_count = self.users.count
-    threshold = 0
     
     tags = self.tags
     
