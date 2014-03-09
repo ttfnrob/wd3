@@ -12,7 +12,7 @@ class Subject
   key :zooniverse_id, String
   
   def classifications
-    Classification.where(:subject_ids => [Subject.find_by_zooniverse_id(self.zooniverse_id).id])
+    @classifications ||= Classification.where(:subject_ids => [Subject.find_by_zooniverse_id(self.zooniverse_id).id])
   end
   
   def image
