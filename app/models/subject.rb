@@ -63,7 +63,7 @@ class Subject
             tag_date = label.split(' ')
             good = y_good && t_date[0] == tag_date[0] && t_date[1] == tag_date[1]
           else
-            good = x_good && y_good && t['label'].upcase == tag['label'].upcase
+            good = x_good && y_good && t['compare'] == tag['compare']
           end
           set << t if t['type'] == tag['type'] && good
           set
@@ -116,6 +116,7 @@ class Subject
         tag['label'] = note.to_s
       end
       tag['label'].strip!
+      tag['compare'] = tag['label'].upcase.gsub(/[^A-Z]/, '')
     end
     
     @tags
