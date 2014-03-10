@@ -29,6 +29,9 @@ ul.timeline li {
 ul.timeline li.diaryDate {
   background-color: #38674c;
 }
+ul.timeline li.time {
+  color: #8cd6db;
+}
 ul.timeline li.place {
   background-color: #4ea4ad;
 }
