@@ -1,0 +1,42 @@
+body {
+  font-size: 62.5%;
+  font-family: 'Open Sans', sans-serif;
+  background-color: #ffffff;
+  color: #181818;
+}
+svg {
+  float: left;
+  margin-right: 1em;
+  background-color: #4ea4ad;
+}
+svg text {
+  background-color: #fff;
+}
+ul.timeline {
+  margin: 0;
+  padding: 0;
+  text-indent: 0;
+  background-color: #181818;
+  color: #fff;
+  width: 20em;
+  margin-right: 1em;
+  float: left;
+}
+ul.timeline li {
+  padding: 0.5em 1em;
+}
+ul.timeline li.diaryDate {
+  background-color: #38674c;
+}
+ul.timeline li.place {
+  background-color: #4ea4ad;
+}
+ul.timeline li.person {
+  background-color: #283f45;
+}
+ul.timeline li.activity {
+  background-color: #45815d;
+}
+span.key {
+  font-weight: bold;
+}
