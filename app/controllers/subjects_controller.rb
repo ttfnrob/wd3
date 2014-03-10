@@ -1,5 +1,5 @@
 
-class PagesController < ApplicationController
+class SubjectsController < ApplicationController
   def index
   end
 
