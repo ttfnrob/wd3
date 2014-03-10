@@ -1,6 +1,7 @@
 <% width = 1000 %>
 <% height = 600 %>
 <% counts = {} %>
+<% types = {} %>
 <div>
 <% unless @prev_page.nil? %>
   <a href="/pages/<%= @prev_page.zooniverse_id %>">Previous page</a>
@@ -19,6 +20,8 @@
       color = @hex[d["type"]] || '#ffffff'
       counts[ d["count"] ] ||= 0
       counts[ d["count"] ] += 1
+      types[ d["type"] ] ||= 0
+      types[ d["type"] ] += 1
     %>
       <% if d['type'] == 'diaryDate' %>
         <% x = 60 %>
@@ -53,6 +56,12 @@
 <% @p.comments.each do |c|%>
 <p><%= c['body'] %></p>
 <% end %>
+<table>
+  <thead><th>Tag type</th><th>Count</th></thead>
+<% types.sort_by{|c| -1 * c[1]}.each do |c| %>
+<tr><td><%= c[0] %></td><td><%= c[1 ]%></td></tr>
+<% end %>
+</table>
 <table>
   <thead><th>Tag count</th><th>Frequency</th></thead>
 <% counts.sort_by{|c| c[0]}.each do |c| %>
