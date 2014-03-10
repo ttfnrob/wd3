@@ -36,7 +36,7 @@ class Subject
     self.metadata["page_number"]
   end
   
-  def clusterize(n=3, threshold = 0)
+  def clusterize(n=3, threshold = 1)
     clustered_tags = []
     completed = []
     user_count = self.users.count
@@ -76,7 +76,7 @@ class Subject
           cy = set.map{|i| i['coords'][1].to_i}.inject{|sum,y| sum + y } / tag_count
           closest = set.sort_by{|i| (i['coords'][0].to_i-cx)**2 + (i['coords'][1].to_i-cy)**2}.reverse.first    
           # Add to set and record they are all done - i.e. don't duplicate process for tags in set
-          clustered_tags << {"type" => tag['type'], "tag" => closest, "count" => tag_count, "hit_rate" => tag_count.to_f/user_count.to_f} if tag_count > threshold
+          clustered_tags << {"type" => tag['type'], "tag" => closest, "count" => tag_count, "hit_rate" => tag_count.to_f/user_count.to_f}
           completed << tag
           set.each{|i| completed << i}
         elsif set.count > 0 && completed.include?(tag)==true
@@ -88,8 +88,19 @@ class Subject
         end
       end
     end
+    
+    cleaned_tags = []
+    last_tag = {"type" => '', "tag" => {"compare" => ""}, "count" => 0, "hit_rate" => 0}
+    clustered_tags.sort_by{|i| [i['tag']['coords'][1].to_i, i['tag']['coords'][0].to_i]}.each do |tag|
+      if tag["type"] == last_tag["type"] && tag["tag"]["compare"] == last_tag["tag"]["compare"]
+        last_tag["count"] += tag["count"]
+      else
+        cleaned_tags << tag
+      end
+      last_tag = tag
+    end
 
-    return clustered_tags.sort_by{|i| [i['tag']['coords'][1].to_i, i['tag']['coords'][0].to_i]}
+    return cleaned_tags.reject{|tag| tag["count"] < threshold}
   end
  
   def tags
