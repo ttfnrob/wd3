@@ -107,7 +107,8 @@ class Subject
       when 'unit'
         tag['label'] = note['name']
       when 'casualties'
-        tag['label'] = note.reject{|k,v| v.to_i == 0}.map{|k,v| "#{k}: #{v}"}.join(', ')
+        labels = note.reject{|k,v| v.to_i == 0}.map{|k,v| "#{k}: #{v}"}
+        tag['label'] = labels.empty? ? 'casualties: 0' : labels.join(', ')
       else
         tag['label'] = note.to_s
       end
@@ -124,7 +125,7 @@ class Subject
   end
   
   def document_types
-    @document_types ||= self.classifications.map{|c| c.annotations.select{|a| a['document']}.first}
+    @document_types ||= self.classifications.map{|c| c.annotations.select{|a| a['document']}}
   end
   
   def users
