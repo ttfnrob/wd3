@@ -54,7 +54,8 @@
 <p><%= c['body'] %></p>
 <% end %>
 <table>
+  <thead><th>Tag count</th><th>Frequency</th></thead>
 <% counts.sort_by{|c| c[0]}.each do |c| %>
-<tr><th><%= c[0] %></th><td><%= c[1 ]%></td></tr>
+<tr><td><%= c[0] %></td><td><%= c[1 ]%></td></tr>
 <% end %>
 </table>
