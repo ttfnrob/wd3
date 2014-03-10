@@ -116,7 +116,7 @@ class Subject
         tag['label'] = note.to_s
       end
       tag['label'].strip!
-      tag['compare'] = tag['label'].upcase.gsub(/[^A-Z]/, '')
+      tag['compare'] = tag['label'].upcase.gsub(/[^A-Z0-9]/, '')
     end
     
     @tags
