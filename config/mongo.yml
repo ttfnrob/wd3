@@ -5,3 +5,6 @@ defaults: &defaults
 development:
   <<: *defaults
   database: war_diary
+
+production:
+    uri: <%= ENV['MONGOHQ_URL'] %>
