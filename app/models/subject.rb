@@ -53,7 +53,7 @@ class Subject
       set = []
       set << tag
       unless completed.include?(tag)
-        set = tags.inject([]) do |set, t|
+        set = tags.reject{|t| t == tag || t["type"] != tag["type"]}.inject(set) do |set, t|
           tx = t['coords'][0].to_i
           ty = t['coords'][1].to_i
           tlabel = t['label'] || ''
@@ -66,7 +66,7 @@ class Subject
           else
             good = x_good && y_good && t['compare'] == tag['compare']
           end
-          set << t if t['type'] == tag['type'] && good
+          set << t if good
           set
         end
     
