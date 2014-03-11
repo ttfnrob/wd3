@@ -14,8 +14,8 @@
   <image xlink:href="<%= @p.image %>" preserveAspectRatio="xMidYMid meet" width="<%= width %>" height="<%= height %>"/>
     <% @tags.each do |d| %>
     <%
-      x = d["tag"]['coords'][0].to_i * width / 100
-      y = d["tag"]['coords'][1].to_i * height / 100
+      x = d["x"].to_i * width / 100
+      y = d["y"].to_i * height / 100
       o = d["hit_rate"]
       color = @hex[d["type"]] || '#ffffff'
       counts[ d["count"] ] ||= 0
