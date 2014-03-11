@@ -53,7 +53,7 @@ class Subject
       set = []
       set << tag
       unless completed.include?(tag)
-        set = tags.reject{|t| t == tag || t["type"] != tag["type"]}.inject(set) do |set, t|
+        set = tags.reject{|t| t == tag || completed.include?(t) || t["type"] != tag["type"]}.inject(set) do |set, t|
           tx = t['coords'][0].to_i
           ty = t['coords'][1].to_i
           tlabel = t['label'] || ''
@@ -62,9 +62,9 @@ class Subject
           if t['type'] == 'diaryDate'
             t_date = tlabel.split(' ')
             tag_date = label.split(' ')
-            good = !completed.include?(t) && y_good && t_date[0] == tag_date[0] && t_date[1] == tag_date[1]
+            good = y_good && t_date[0] == tag_date[0] && t_date[1] == tag_date[1]
           else
-            good = !completed.include?(t) && x_good && y_good && t['compare'] == tag['compare']
+            good = x_good && y_good && t['compare'] == tag['compare']
           end
           set << t if good
           set
@@ -82,7 +82,6 @@ class Subject
         end
       end
     end
-    
     cleaned_tags = []
     initial_tag = {"type" => '', "tag" => {"compare" => ""}, "count" => 0, "hit_rate" => 0}
     clustered_tags.sort_by{|i| [i['y'], i['x']]}.inject(initial_tag) do |last_tag, tag|
