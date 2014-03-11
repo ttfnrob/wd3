@@ -90,8 +90,8 @@ class Subject
     end
     
     cleaned_tags = []
-    last_tag = {"type" => '', "tag" => {"compare" => ""}, "count" => 0, "hit_rate" => 0}
-    clustered_tags.sort_by{|i| [i['tag']['coords'][1].to_i, i['tag']['coords'][0].to_i]}.inject(last_tag) do |last_tag, tag|
+    initial_tag = {"type" => '', "tag" => {"compare" => ""}, "count" => 0, "hit_rate" => 0}
+    clustered_tags.sort_by{|i| [i['tag']['coords'][1].to_i, i['tag']['coords'][0].to_i]}.inject(initial_tag) do |last_tag, tag|
       if tag["type"] == last_tag["type"] && tag["tag"]["compare"] == last_tag["tag"]["compare"]
         last_tag["count"] += tag["count"]
       else
