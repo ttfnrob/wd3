@@ -41,7 +41,7 @@ class Subject
     completed = []
     user_count = self.users.count
   
-    self.tags.sort_by{|i| [i['coords'][1].to_i, i['coords'][0].to_i]}.each do |tag|
+    self.tags.each do |tag|
       x = tag['coords'][0].to_i
       y = tag['coords'][1].to_i
       label = tag['label'] || ''
@@ -127,7 +127,7 @@ class Subject
       tag['compare'] = tag['label'].upcase.gsub(/[^A-Z0-9]/, '')
     end
     
-    @tags
+    @tags.sort_by{|i| [i['coords'][1].to_i, i['coords'][0].to_i]}
   end
   
   def comments
