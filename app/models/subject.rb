@@ -70,7 +70,7 @@ class Subject
           set
         end
     
-        if set.count > 0 && completed.include?(tag) == false
+        if set.count > 0 && !completed.include?(tag)
           tag_count = set.size
           # Find averaged tag centre and select nearest real tag to that
           cx = set.map{|i| i['coords'][0].to_i}.inject{|sum,x| sum + x } / tag_count
@@ -79,7 +79,7 @@ class Subject
           # Add to set and record they are all done - i.e. don't duplicate process for tags in set
           clustered_tags << {"type" => tag['type'], "tag" => closest, "count" => tag_count, "hit_rate" => tag_count.to_f/user_count.to_f}
           set.each{|i| completed << i}
-        elsif set.count > 0 && completed.include?(tag)==true
+        elsif set.count > 0 && completed.include?(tag)
           #do nothing
         else  
           #Single tags still go in
