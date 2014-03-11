@@ -62,9 +62,9 @@ class Subject
           if t['type'] == 'diaryDate'
             t_date = tlabel.split(' ')
             tag_date = label.split(' ')
-            good = y_good && t_date[0] == tag_date[0] && t_date[1] == tag_date[1]
+            good = !completed.include?(t) && y_good && t_date[0] == tag_date[0] && t_date[1] == tag_date[1]
           else
-            good = x_good && y_good && t['compare'] == tag['compare']
+            good = !completed.include?(t) && x_good && y_good && t['compare'] == tag['compare']
           end
           set << t if good
           set
