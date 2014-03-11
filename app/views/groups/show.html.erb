@@ -1,1 +1,7 @@
+<h1><%= @g.name %></h1>
+<ul class="gallery">
+  <% @g.subjects.each do |subject| %>
+  <li><a href="/pages/<%= subject["zooniverse_id"] %>"><img src="<%= subject["location"]["standard"] %>"></a></li>
+  <% end %>
+</ul>
 <%= debug @g %>

@@ -60,3 +60,22 @@ ul.timeline li.activity {
 span.key {
   font-weight: bold;
 }
+ul.gallery {
+  list-style-type: none;
+}
+ul.gallery li {
+  display: inline-block;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  width: 200px;
+  height: 200px;
+  padding: 10px;
+  vertical-align: middle;
+  line-height: 200px;
+  text-align: center;
+}
+ul.gallery li img {
+  max-width: 200px;
+  max-height: 200px;
+  vertical-align: middle;
+}

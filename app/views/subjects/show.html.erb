@@ -41,7 +41,7 @@
 </ul>
 <div id="catalogue-info" class="info">
     <ul>
-        <li><span class="key">Diary</span>: <%= @p.group_name %></li>
+        <li><span class="key">Diary</span>: <a href="/diaries/<%= @p.group_id %>"><%= @p.group_name %></a></li>
         <li><span class="key">Zooniverse ID</span>: <a href="http://talk.operationwardiary.org/#/subjects/<%= @p.zooniverse_id %>" target="_blank"><%= @p.zooniverse_id %></a></li>
         <li><span class="key">TNA ID</span>: <%= @p.tna_id %></li>
         <li><span class="key">TNA Page #</span>: <%= @p.page_number %></li>
