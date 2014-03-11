@@ -36,7 +36,7 @@
 </svg>
 <ul class="timeline">
 <% @tags.each do |d| %>
-<li class="<%=d ["type"] %>"><%= d["tag"]['label'] %> (<%= d["count"]%>)</li> 
+<li class="<%=d ["type"] %>"><b><%= d["type"] %></b>: <%= d["tag"]['label'] %> (<%= d["count"]%>)</li> 
 <% end %>
 </ul>
 <div id="catalogue-info" class="info">
