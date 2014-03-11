@@ -51,6 +51,7 @@ class Subject
       min_x = x - 4 * n
       
       set = []
+      set << tag
       unless completed.include?(tag)
         set = tags.inject([]) do |set, t|
           tx = t['coords'][0].to_i
@@ -77,13 +78,12 @@ class Subject
           closest = set.sort_by{|i| (i['coords'][0].to_i-cx)**2 + (i['coords'][1].to_i-cy)**2}.reverse.first    
           # Add to set and record they are all done - i.e. don't duplicate process for tags in set
           clustered_tags << {"type" => tag['type'], "tag" => closest, "count" => tag_count, "hit_rate" => tag_count.to_f/user_count.to_f}
-          completed << tag
           set.each{|i| completed << i}
         elsif set.count > 0 && completed.include?(tag)==true
           #do nothing
         else  
           #Single tags still go in
-          clustered_tags << {"type" => tag['type'], "tag" => tag, "count" => 0, "hit_rate" => 1.0/user_count}
+          clustered_tags << {"type" => tag['type'], "tag" => tag, "count" => 1, "hit_rate" => 1.0/user_count}
           completed << tag
         end
       end
