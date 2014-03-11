@@ -41,7 +41,7 @@ class Subject
     completed = []
     user_count = self.users.count
   
-    self.tags.each do |tag|
+    self.tags.sort_by{|i| [i['coords'][1].to_i, i['coords'][0].to_i]}.each do |tag|
       x = tag['coords'][0].to_i
       y = tag['coords'][1].to_i
       label = tag['label'] || ''
@@ -85,13 +85,13 @@ class Subject
     
     cleaned_tags = []
     initial_tag = {"type" => '', "tag" => {"compare" => ""}, "count" => 0, "hit_rate" => 0}
-    clustered_tags.sort_by{|i| [i['tag']['coords'][1].to_i, i['tag']['coords'][0].to_i]}.inject(initial_tag) do |last_tag, tag|
+    clustered_tags.sort_by{|i| [i['y'], i['x']]}.inject(initial_tag) do |last_tag, tag|
       if tag["type"] == last_tag["type"] && tag["tag"]["compare"] == last_tag["tag"]["compare"]
         last_tag["count"] += tag["count"]
       else
         cleaned_tags << tag
       end
-      tag
+      cleaned_tags.last
     end
 
     return cleaned_tags.reject{|tag| tag["count"] < threshold}
