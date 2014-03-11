@@ -9,6 +9,8 @@ PageProcessor::Application.routes.draw do
   # get "pages/index"
 
   match 'pages/:zoo_id' => 'subjects#show'
+  
+  match 'diaries/:zoo_id' => 'groups#show'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
