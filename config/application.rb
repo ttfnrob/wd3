@@ -64,5 +64,18 @@ module PageProcessor
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+    
+    config.generators do |g|
+      g.orm :mongo_mapper
+    end
+
+    config.after_initialize do
+        Subject.ensure_index [[:zooniverse_id, 1]], :sparse => true
+        Subject.ensure_index [['group.zooniverse_id', 1]], :sparse => true
+        Group.ensure_index [[:zooniverse_id, 1]], :sparse => true
+        Group.ensure_index [[:name, 1]], :sparse => true
+        Classification.ensure_index [[:subject_ids, 1]], :sparse => true
+        Classification.ensure_index [[:title, 1]], :sparse => true
+    end
   end
 end
