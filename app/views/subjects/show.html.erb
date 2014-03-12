@@ -52,10 +52,10 @@
         <li><span class="key">Volunteers</span>: <%= @p.users.count %> (<%= @p.users.join(", ") %>)</li>
         <li><span class="key">Page Type</span>: <%= @p.document_types.join(",") %></li>
     </ul>
+    <% @p.comments.each do |c|%>
+      <p><%= c['body'] %></p>
+    <% end %>
 </div>
-<% @p.comments.each do |c|%>
-<p><%= c['body'] %></p>
-<% end %>
 <table>
   <thead><th>Tag type</th><th>Count</th></thead>
 <% types.sort_by{|c| -1 * c[1]}.each do |c| %>
