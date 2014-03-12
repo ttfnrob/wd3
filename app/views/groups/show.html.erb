@@ -1,4 +1,4 @@
-<h1><%= @g.name %></h1>
+<h1><a href="/">War Diaries Data Digger</a>: <%= @g.name %></h1>
 <ul class="gallery">
   <% @g.pages.each do |subject| %>
   <li><a href="/pages/<%= subject["zooniverse_id"] %>"><img src="<%= subject["location"]["standard"] %>"></a></li>
