@@ -1,15 +1,13 @@
 PageProcessor::Application.routes.draw do
-  get "activities/index"
-
-  get "activities/summary"
-
-  get "home/index"
-  get "home/stats"
+  root :to => "groups#index"
+  
+  get "groups/index"
 
   # get "pages/index"
 
   match 'pages/:zoo_id' => 'subjects#show'
   
+  match 'diaries/' => 'groups#index'
   match 'diaries/:zoo_id' => 'groups#show'
 
   # The priority is based upon order of creation:
