@@ -4,7 +4,7 @@ class SubjectsController < ApplicationController
   end
 
   def show
-  	@p = Subject.find_by_zooniverse_id(params[:zoo_id])
+  	@p ||= Subject.find_by_zooniverse_id(params[:zoo_id])
     n = params[:n] || 5
     threshold = params[:threshold] || 0
   	@tags = @p.clusterize( n.to_i, threshold.to_i )
