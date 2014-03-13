@@ -103,7 +103,7 @@ class Subject
       note = tag['note']
       case tag['type']
       when 'person'
-        tag['label'] = "#{note['rank']} #{note['first']} #{note['surname']} #{note["reason"]}"
+        tag['label'] = "#{note['rank']} #{note['first']} #{note['surname']}"
       when 'place'
         tag['label'] = "#{note['place']}"
       when 'reference'
