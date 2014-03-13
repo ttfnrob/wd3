@@ -105,7 +105,7 @@ class Subject
       when 'person'
         tag['label'] = "#{note['rank']} #{note['first']} #{note['surname']} #{note["reason"]}"
       when 'place'
-        tag['label'] = "#{note['place']} #{note['location']}"
+        tag['label'] = "#{note['place']}"
       when 'reference'
         tag['label'] = note['reference']
       when 'unit'
