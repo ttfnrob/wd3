@@ -59,11 +59,16 @@ class Subject
           when 'place'
             votes['name'] = self.gather_votes('place', set)
             votes['location'] = self.gather_votes('location', set)
+            votes['geonames'] = self.gather_votes('name', set)
+            votes['lat'] = self.gather_votes('lat', set)
+            votes['lon'] = self.gather_votes('long', set)
           when 'person'
             votes['initials'] = self.gather_votes('first', set)
             votes['surname'] = self.gather_votes('surname', set)
             votes['rank'] = self.gather_votes('rank', set)
+            votes['number'] = self.gather_votes('number', set)
             votes['reason'] = self.gather_votes('reason', set)
+            votes['unit'] = self.gather_votes('unit', set)
           end
           
           # Add to set and record they are all done - i.e. don't duplicate process for tags in set
