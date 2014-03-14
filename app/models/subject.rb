@@ -55,17 +55,11 @@ class Subject
           votes = {}
           case tag['type']
           when 'place'
-            vote_field = 'location'
+            votes = self.gather_votes('location', set)
           when 'person'
-            vote_field = 'reason'
+            votes = self.gather_votes('reason', set)
           end
           
-          unless vote_field.nil?
-            set.each do |t|
-              votes[ t['note'][vote_field] ] ||= 0
-              votes[ t['note'][vote_field] ] += 1
-            end
-          end
           # Add to set and record they are all done - i.e. don't duplicate process for tags in set
           clustered_tags << {"type" => tag['type'], "x" => cx, "y" => cy, "tag" => closest, "count" => tag_count, "hit_rate" => tag_count.to_f/user_count.to_f, "votes" => votes}
           set.each{|i| completed << i}
@@ -126,6 +120,15 @@ class Subject
       set << t if good
       set
     end
+  end
+  
+  def gather_votes(vote_field, set)
+    votes = {}
+    set.each do |t|
+      votes[ t['note'][vote_field] ] ||= 0
+      votes[ t['note'][vote_field] ] += 1
+    end
+    votes
   end
  
   def tags
