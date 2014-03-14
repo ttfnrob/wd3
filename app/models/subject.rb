@@ -57,6 +57,7 @@ class Subject
           when 'place'
             votes['location'] = self.gather_votes('location', set)
           when 'person'
+            votes['rank'] = self.gather_votes('rank', set)
             votes['reason'] = self.gather_votes('reason', set)
           end
           
@@ -128,8 +129,10 @@ class Subject
   def gather_votes(vote_field, set)
     votes = {}
     set.each do |t|
-      votes[ t['note'][vote_field] ] ||= 0
-      votes[ t['note'][vote_field] ] += 1
+      label = t['note'][vote_field]
+      label = 'none' if label == ''
+      votes[ label ] ||= 0
+      votes[ label ] += 1
     end
     votes
   end
@@ -141,7 +144,7 @@ class Subject
       note = tag['note']
       case tag['type']
       when 'person'
-        tag['label'] = "#{note['rank']} #{note['first']} #{note['surname']}"
+        tag['label'] = "#{note['first']} #{note['surname']}"
       when 'place'
         tag['label'] = "#{note['place']}"
       when 'reference'
