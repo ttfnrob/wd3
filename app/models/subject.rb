@@ -51,9 +51,22 @@ class Subject
           # Find averaged tag centre and select nearest real tag to that
           cx = set.map{|i| i['coords'][0].to_i}.inject{|sum,x| sum + x } / tag_count
           cy = set.map{|i| i['coords'][1].to_i}.inject{|sum,y| sum + y } / tag_count
-          closest = set.sort_by{|i| (i['coords'][0].to_i-cx)**2 + (i['coords'][1].to_i-cy)**2}.reverse.first    
+          closest = set.sort_by{|i| (i['coords'][0].to_i-cx)**2 + (i['coords'][1].to_i-cy)**2}.reverse.first
+          votes = {}
+          case tag['type']
+          when 'place'
+            set.each do |t|
+              votes[ t['note']['location'] ] ||= 0
+              votes[ t['note']['location'] ] += 1
+            end
+          when 'person'
+            set.each do |t|
+              votes[ t['note']['reason'] ] ||= 0
+              votes[ t['note']['reason'] ] += 1
+            end
+          end
           # Add to set and record they are all done - i.e. don't duplicate process for tags in set
-          clustered_tags << {"type" => tag['type'], "x" => cx, "y" => cy, "tag" => closest, "count" => tag_count, "hit_rate" => tag_count.to_f/user_count.to_f}
+          clustered_tags << {"type" => tag['type'], "x" => cx, "y" => cy, "tag" => closest, "count" => tag_count, "hit_rate" => tag_count.to_f/user_count.to_f, "votes" => votes}
           set.each{|i| completed << i}
         end
       end
@@ -63,6 +76,8 @@ class Subject
     clustered_tags.sort_by{|i| [i['y'], i['x']]}.inject(initial_tag) do |last_tag, tag|
       if tag["type"] == last_tag["type"] && tag["tag"]["compare"] == last_tag["tag"]["compare"]
         last_tag["count"] += tag["count"]
+        votes = last_tag["votes"]
+        votes = votes.each{|k,v| votes[k] = v += tag["votes"][k]}
       else
         cleaned_tags << tag
       end
