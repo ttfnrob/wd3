@@ -55,14 +55,15 @@ class Subject
           votes = {}
           case tag['type']
           when 'place'
-            set.each do |t|
-              votes[ t['note']['location'] ] ||= 0
-              votes[ t['note']['location'] ] += 1
-            end
+            vote_field = 'location'
           when 'person'
+            vote_field = 'reason'
+          end
+          
+          unless vote_field.nil?
             set.each do |t|
-              votes[ t['note']['reason'] ] ||= 0
-              votes[ t['note']['reason'] ] += 1
+              votes[ t['note'][vote_field] ] ||= 0
+              votes[ t['note'][vote_field] ] += 1
             end
           end
           # Add to set and record they are all done - i.e. don't duplicate process for tags in set
