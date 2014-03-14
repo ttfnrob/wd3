@@ -70,7 +70,13 @@ class Subject
     cleaned_tags = []
     initial_tag = {"type" => '', "tag" => {"compare" => ""}, "count" => 0, "hit_rate" => 0}
     clustered_tags.sort_by{|i| [i['y'], i['x']]}.inject(initial_tag) do |last_tag, tag|
-      if tag["type"] == last_tag["type"] && tag["tag"]["compare"] == last_tag["tag"]["compare"]
+      case tag["type"]
+      when 'person', 'place'
+        match = Levenshtein.distance(tag['tag']['compare'], last_tag['tag']['compare']) < 3
+      else
+        match = tag["tag"]["compare"] == last_tag["tag"]["compare"]
+      end
+      if tag["type"] == last_tag["type"] && match
         last_tag["count"] += tag["count"]
         votes = last_tag["votes"]
         votes.each do |k,v|
