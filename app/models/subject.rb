@@ -72,7 +72,12 @@ class Subject
         end
       end
     end
-    cleaned_tags = self.merge_adjacent_tags( clustered_tags )
+    
+    if n == 0
+      cleaned_tags = clustered_tags
+    else
+      cleaned_tags = self.merge_adjacent_tags( clustered_tags )
+    end
     
     # decide on voted fields
     cleaned_tags.each do |t|
