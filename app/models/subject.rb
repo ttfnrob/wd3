@@ -44,8 +44,7 @@ class Subject
     self.tags.each do |tag|
       
       unless completed.include?(tag)
-        comparison = tags.reject{|t| t == tag || completed.include?(t) || t["type"] != tag["type"]}
-        set = self.build_set(comparison, tag, n)
+        set = self.build_set(completed, tag, n)
         
         unless set.count == 0
           tag_count = set.size
@@ -73,7 +72,10 @@ class Subject
     return cleaned_tags.reject{|tag| tag["count"] < threshold}
   end
   
-  def build_set(comparison, tag, n)
+  def build_set(completed, tag, n)
+    # all other tags of same type which are not completed yet.
+    comparison = tags.reject{|t| t == tag || completed.include?(t) || t["type"] != tag["type"]}
+    
     x = tag['coords'][0].to_i
     y = tag['coords'][1].to_i
     label = tag['label'] || ''
