@@ -12,6 +12,8 @@ class Subject
   key :zooniverse_id, String
   key :group, Hash
   
+  LEV_THRESHOLD = 4
+  
   def classifications
     @classifications ||= Classification.where(:subject_ids => [Subject.find_by_zooniverse_id(self.zooniverse_id).id])
   end
@@ -72,7 +74,7 @@ class Subject
     clustered_tags.sort_by{|i| [i['y'], i['x']]}.inject(initial_tag) do |last_tag, tag|
       case tag["type"]
       when 'person', 'place'
-        match = Levenshtein.distance(tag['tag']['compare'], last_tag['tag']['compare']) < 3
+        match = Levenshtein.distance(tag['tag']['compare'], last_tag['tag']['compare']) < LEV_THRESHOLD
       else
         match = tag["tag"]["compare"] == last_tag["tag"]["compare"]
       end
@@ -127,7 +129,7 @@ class Subject
         tag_date = label.split(' ')
         good = t_date[0] == tag_date[0] && t_date[1] == tag_date[1]
       when 'place', 'person'
-        good = Levenshtein.distance(t['compare'], tag['compare']) < 3
+        good = Levenshtein.distance(t['compare'], tag['compare']) < LEV_THRESHOLD
       else
         good = t['compare'] == tag['compare']
       end
