@@ -57,8 +57,11 @@ class Subject
           votes = {}
           case tag['type']
           when 'place'
+            votes['name'] = self.gather_votes('place', set)
             votes['location'] = self.gather_votes('location', set)
           when 'person'
+            votes['initials'] = self.gather_votes('first', set)
+            votes['surname'] = self.gather_votes('surname', set)
             votes['rank'] = self.gather_votes('rank', set)
             votes['reason'] = self.gather_votes('reason', set)
           end
