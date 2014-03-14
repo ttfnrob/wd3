@@ -69,26 +69,7 @@ class Subject
         end
       end
     end
-    cleaned_tags = []
-    initial_tag = {"type" => '', "tag" => {"compare" => ""}, "count" => 0, "hit_rate" => 0}
-    clustered_tags.sort_by{|i| [i['y'], i['x']]}.inject(initial_tag) do |last_tag, tag|
-      case tag["type"]
-      when 'person', 'place'
-        match = Levenshtein.distance(tag['tag']['compare'], last_tag['tag']['compare']) < LEV_THRESHOLD
-      else
-        match = tag["tag"]["compare"] == last_tag["tag"]["compare"]
-      end
-      if tag["type"] == last_tag["type"] && match
-        last_tag["count"] += tag["count"]
-        votes = last_tag["votes"]
-        votes.each do |k,v|
-          last_tag['votes'][k] = v.merge( tag['votes'][k] ){ |key, old, new| old + new }
-        end
-      else
-        cleaned_tags << tag
-      end
-      cleaned_tags.last
-    end
+    cleaned_tags = self.merge_adjacent_tags( clustered_tags )
     
     # decide on voted fields
     cleaned_tags.each do |t|
@@ -141,6 +122,30 @@ class Subject
       set << t if good
       set
     end
+  end
+  
+  def merge_adjacent_tags(clustered_tags)
+    cleaned_tags = []
+    initial_tag = {"type" => '', "tag" => {"compare" => ""}, "count" => 0, "hit_rate" => 0}
+    clustered_tags.sort_by{|i| [i['y'], i['x']]}.inject(initial_tag) do |last_tag, tag|
+      case tag["type"]
+      when 'person', 'place'
+        match = Levenshtein.distance(tag['tag']['compare'], last_tag['tag']['compare']) < LEV_THRESHOLD
+      else
+        match = tag["tag"]["compare"] == last_tag["tag"]["compare"]
+      end
+      if tag["type"] == last_tag["type"] && match
+        last_tag["count"] += tag["count"]
+        votes = last_tag["votes"]
+        votes.each do |k,v|
+          last_tag['votes'][k] = v.merge( tag['votes'][k] ){ |key, old, new| old + new }
+        end
+      else
+        cleaned_tags << tag
+      end
+      cleaned_tags.last
+    end
+    cleaned_tags
   end
   
   def gather_votes(vote_field, set)
