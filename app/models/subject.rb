@@ -42,34 +42,11 @@ class Subject
     user_count = self.users.count
   
     self.tags.each do |tag|
-      x = tag['coords'][0].to_i
-      y = tag['coords'][1].to_i
-      label = tag['label'] || ''
-      max_y = y + n
-      min_y = y - n
-      max_x = x + 4 * n
-      min_x = x - 4 * n
       
-      set = []
-      set << tag
       unless completed.include?(tag)
-        set = tags.reject{|t| t == tag || completed.include?(t) || t["type"] != tag["type"]}.inject(set) do |set, t|
-          tx = t['coords'][0].to_i
-          ty = t['coords'][1].to_i
-          tlabel = t['label'] || ''
-          x_good = tx <= max_x && tx >= min_x
-          y_good = ty <= max_y && ty >= min_y
-          if t['type'] == 'diaryDate'
-            t_date = tlabel.split(' ')
-            tag_date = label.split(' ')
-            good = y_good && t_date[0] == tag_date[0] && t_date[1] == tag_date[1]
-          else
-            good = x_good && y_good && t['compare'] == tag['compare']
-          end
-          set << t if good
-          set
-        end
-    
+        comparison = tags.reject{|t| t == tag || completed.include?(t) || t["type"] != tag["type"]}
+        set = self.build_set(comparison, tag, n)
+        
         unless set.count == 0 && completed.include?(tag)
           tag_count = set.size
           # Find averaged tag centre and select nearest real tag to that
@@ -94,6 +71,36 @@ class Subject
     end
 
     return cleaned_tags.reject{|tag| tag["count"] < threshold}
+  end
+  
+  def build_set(comparison, tag, n)
+    x = tag['coords'][0].to_i
+    y = tag['coords'][1].to_i
+    label = tag['label'] || ''
+    max_y = y + n
+    min_y = y - n
+    max_x = x + 4 * n
+    min_x = x - 4 * n
+    
+    set = []
+    set << tag
+    
+    set = comparison.inject(set) do |set, t|
+      tx = t['coords'][0].to_i
+      ty = t['coords'][1].to_i
+      tlabel = t['label'] || ''
+      x_good = tx <= max_x && tx >= min_x
+      y_good = ty <= max_y && ty >= min_y
+      if t['type'] == 'diaryDate'
+        t_date = tlabel.split(' ')
+        tag_date = label.split(' ')
+        good = y_good && t_date[0] == tag_date[0] && t_date[1] == tag_date[1]
+      else
+        good = x_good && y_good && t['compare'] == tag['compare']
+      end
+      set << t if good
+      set
+    end
   end
  
   def tags
