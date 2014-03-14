@@ -84,6 +84,13 @@ class Subject
       end
       cleaned_tags.last
     end
+    
+    # decide on voted fields
+    cleaned_tags.each do |t|
+      votes = t['votes']
+      max_vote = votes.values.max
+      t['votes'] = votes.select { |k, v| v == max_vote }
+    end
 
     return cleaned_tags.reject{|tag| tag["count"] < threshold}
   end
