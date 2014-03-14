@@ -46,7 +46,7 @@
 </li> 
 <% end %>
 </ul>
-<div id="catalogue-info" class="info">
+<div class="info">
     <ul>
         <li><span class="key">Diary</span>: <a href="/diaries/<%= @p.group_id %>"><%= @p.group_name %></a></li>
         <li><span class="key">Zooniverse ID</span>: <a href="http://talk.operationwardiary.org/#/subjects/<%= @p.zooniverse_id %>" target="_blank"><%= @p.zooniverse_id %></a></li>
@@ -63,13 +63,13 @@
       <p><%= c['body'] %></p>
     <% end %>
 </div>
-<table>
+<table class="info">
   <thead><th>Tag type</th><th>Count</th></thead>
 <% types.sort_by{|c| -1 * c[1]}.each do |c| %>
 <tr><td><%= c[0] %></td><td><%= c[1 ]%></td></tr>
 <% end %>
 </table>
-<table>
+<table class="info">
   <thead><th>Tag count</th><th>Frequency</th></thead>
 <% counts.sort_by{|c| c[0]}.each do |c| %>
 <tr><td><%= c[0] %></td><td><%= c[1 ]%></td></tr>
