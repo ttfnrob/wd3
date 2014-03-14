@@ -169,6 +169,7 @@ class Subject
       note = tag['note']
       case tag['type']
       when 'person'
+        note['first'] = note['first'].gsub(/[\. ]+/, ' ').strip
         tag['label'] = "#{note['first']} #{note['surname']}"
       when 'place'
         tag['label'] = "#{note['place']}"
