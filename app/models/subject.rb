@@ -72,7 +72,7 @@ class Subject
       if tag["type"] == last_tag["type"] && tag["tag"]["compare"] == last_tag["tag"]["compare"]
         last_tag["count"] += tag["count"]
         votes = last_tag["votes"]
-        votes = votes.each{|k,v| votes[k] = v += tag["votes"][k]}
+        last_tag['votes'] = votes.merge( tag['votes'] ){ |key, old, new| old + new }
       else
         cleaned_tags << tag
       end
