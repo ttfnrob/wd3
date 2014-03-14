@@ -114,12 +114,21 @@ class Subject
       tlabel = t['label'] || ''
       x_good = tx <= max_x && tx >= min_x
       y_good = ty <= max_y && ty >= min_y
-      if t['type'] == 'diaryDate'
+      
+      case tag['type']
+      when 'diaryDate'
         t_date = tlabel.split(' ')
         tag_date = label.split(' ')
-        good = y_good && t_date[0] == tag_date[0] && t_date[1] == tag_date[1]
+        good = t_date[0] == tag_date[0] && t_date[1] == tag_date[1]
+      when 'place', 'person'
+        good = Levenshtein.distance(t['compare'], tag['compare']) < 3
       else
-        good = x_good && y_good && t['compare'] == tag['compare']
+        good = t['compare'] == tag['compare']
+      end
+      if t['type'] == 'diaryDate'
+        good = y_good && good
+      else
+        good = x_good && y_good && good
       end
       set << t if good
       set
