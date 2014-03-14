@@ -55,9 +55,9 @@ class Subject
           votes = {}
           case tag['type']
           when 'place'
-            votes = self.gather_votes('location', set)
+            votes['location'] = self.gather_votes('location', set)
           when 'person'
-            votes = self.gather_votes('reason', set)
+            votes['reason'] = self.gather_votes('reason', set)
           end
           
           # Add to set and record they are all done - i.e. don't duplicate process for tags in set
@@ -81,9 +81,10 @@ class Subject
     
     # decide on voted fields
     cleaned_tags.each do |t|
-      votes = t['votes']
-      max_vote = votes.values.max
-      t['votes'] = votes.select { |k, v| v == max_vote }
+      t['votes'].each do |k,v|
+        max_vote = v.values.max
+        t['votes'][k] = v.select { |k, vote| vote == max_vote }
+      end
     end
 
     return cleaned_tags.reject{|tag| tag["count"] < threshold}

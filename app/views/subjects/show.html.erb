@@ -37,7 +37,13 @@
 </svg>
 <ul class="timeline">
 <% @tags.each do |d| %>
-<li class="<%=d ["type"] %>"><b><%= d["type"] %></b>: <%= d["tag"]['label'] %> (<%= d["count"]%>)<br><%= d["votes"] unless d["votes"] == {} %></li> 
+<li class="<%=d ["type"] %>">
+  <b><%= d["type"] %></b>:
+  <%= d["tag"]['label'] %> (<%= d["count"]%>)
+  <% d['votes'].each do |k,v| %>
+  <br><%= k %>: <%= v.keys.join(', ') %>
+  <% end %>
+</li> 
 <% end %>
 </ul>
 <div id="catalogue-info" class="info">
