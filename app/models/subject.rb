@@ -109,7 +109,7 @@ class Subject
         t_date = tlabel.split(' ')
         tag_date = label.split(' ')
         good = t_date[0] == tag_date[0] && t_date[1] == tag_date[1]
-      when 'place', 'person'
+      when 'place', 'person', 'unit'
         good = Levenshtein.distance(t['compare'], tag['compare']) < LEV_THRESHOLD
       else
         good = t['compare'] == tag['compare']
@@ -129,7 +129,7 @@ class Subject
     initial_tag = {"type" => '', "tag" => {"compare" => ""}, "count" => 0, "hit_rate" => 0}
     clustered_tags.sort_by{|i| [i['y'], i['x']]}.inject(initial_tag) do |last_tag, tag|
       case tag["type"]
-      when 'person', 'place'
+      when 'person', 'place', 'unit'
         match = Levenshtein.distance(tag['tag']['compare'], last_tag['tag']['compare']) < LEV_THRESHOLD
       else
         match = tag["tag"]["compare"] == last_tag["tag"]["compare"]
