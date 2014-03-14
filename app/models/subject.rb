@@ -171,7 +171,18 @@ class Subject
   end
   
   def document_types
-    @document_types ||= self.classifications.map{|c| c.annotations.select{|a| a['document']}}
+    @document_types ||= self.classifications.map{|c| c.annotations.select{|a| a['document']}}.flatten
+  end
+  
+  def document_type
+    votes = {}
+    self.document_types.each do |d|
+      puts d
+      votes[ d['document'] ] ||= 0
+      votes[ d['document'] ] += 1
+    end
+    max_vote = votes.values.max
+    votes.select{ |k,v| v == max_vote }
   end
   
   def users

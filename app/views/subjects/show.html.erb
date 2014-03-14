@@ -51,7 +51,7 @@
 <div id="computed-info" class="info">
     <ul>
         <li><span class="key">Volunteers</span>: <%= @p.users.count %> (<%= @p.users.join(", ") %>)</li>
-        <li><span class="key">Page Type</span>: <%= @p.document_types.join(",") %></li>
+        <li><span class="key">Page Type</span>: <%= @p.document_type.keys.join(', ') %></li>
     </ul>
     <% @p.comments.each do |c|%>
       <p><%= c['body'] %></p>
