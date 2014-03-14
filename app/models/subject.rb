@@ -180,7 +180,6 @@ class Subject
   def document_type
     votes = {}
     self.document_types.each do |d|
-      puts d
       votes[ d['document'] ] ||= 0
       votes[ d['document'] ] += 1
     end
