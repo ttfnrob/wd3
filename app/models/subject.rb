@@ -69,6 +69,9 @@ class Subject
             votes['number'] = self.gather_votes('number', set)
             votes['reason'] = self.gather_votes('reason', set)
             votes['unit'] = self.gather_votes('unit', set)
+          when 'unit'
+            votes['name'] = self.gather_votes('name', set)
+            votes['context'] = self.gather_votes('context', set)
           end
           
           # Add to set and record they are all done - i.e. don't duplicate process for tags in set
