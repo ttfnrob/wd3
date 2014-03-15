@@ -14,18 +14,22 @@ h1 a{
   text-decoration: none;
 }
 svg {
-  float: left;
   margin-right: 1em;
   background-color: #4ea4ad;
 }
 svg text {
   background-color: #fff;
 }
+.main {
+  float: left;
+  overflow: hidden;
+}
 dl.metadata {
   color: #fff;
   background-color: #283f45;
   width: 1000px;
-  margin-bottom: 0;
+  margin: 0;
+  text-indent: 0;
   font-size: 1.5em;
   padding: 0;
 }

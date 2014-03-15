@@ -11,40 +11,42 @@
   <a href="/pages/<%= @next_page.zooniverse_id %>">Next page</a>
 <% end %>
 </div>
-<dl class="metadata">
-  <dt>Page type</dt>
-  <dd><%= @p.document_type.keys.join(', ') %></dd>
-  <dt>Volunteers</dt>
-  <dd><%= @p.users.count %></dd>
-  <dt>TNA ID</dt>
-  <dd><%= @p.tna_id %></dd>
-  <dt>Page number</dt>
-  <dd><%= @p.page_number %></dd>
-</dl>
-<svg height="<%= height %>" version="1.1" width="<%= width %>" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 <%= width %> <%= height %>" preserveAspectRatio="xMinYMin" style="overflow: hidden; position: relative;">
-  <image xlink:href="<%= @p.image %>" preserveAspectRatio="xMidYMid meet" width="<%= width %>" height="<%= height %>"/>
-    <% @tags.each do |d| %>
-    <%
-      x = d["x"].to_i * width / 100
-      y = d["y"].to_i * height / 100
-      o = d["hit_rate"]
-      color = @hex[d["type"]] || '#ffffff'
-      counts[ d["count"] ] ||= 0
-      counts[ d["count"] ] += 1
-      types[ d["type"] ] ||= 0
-      types[ d["type"] ] += 1
-    %>
-      <% if d['type'] == 'diaryDate' %>
-        <% x = 60 %>
-        <path fill="#000000" stroke="<%= color %>" d="M0,<%= y %>C0,<%= y %>,<%= width %>,<%= y %>,<%= width %>,<%= y %>" stroke-width="1" opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: <%= o %>;"></path>
-        <circle cx="<%= x %>" cy="<%= y %>" r="4" fill="#000000" stroke="<%= color %>" fill-opacity="0" stroke-width="2" tabindex="0" opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: <%= o %>;"></circle>
-      <% else %>
-        <circle cx="<%= x %>" cy="<%= y %>" r="12" fill="#000000" stroke="<%= color %>" fill-opacity="0" stroke-width="2" tabindex="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: <%= o %>;"></circle>
+<div class="main">
+  <dl class="metadata">
+    <dt>Page type</dt>
+    <dd><%= @p.document_type.keys.join(', ') %></dd>
+    <dt>Volunteers</dt>
+    <dd><%= @p.users.count %></dd>
+    <dt>TNA ID</dt>
+    <dd><%= @p.tna_id %></dd>
+    <dt>Page number</dt>
+    <dd><%= @p.page_number %></dd>
+  </dl>
+  <svg height="<%= height %>" version="1.1" width="<%= width %>" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 <%= width %> <%= height %>" preserveAspectRatio="xMinYMin" style="overflow: hidden; position: relative;">
+    <image xlink:href="<%= @p.image %>" preserveAspectRatio="xMidYMid meet" width="<%= width %>" height="<%= height %>"/>
+      <% @tags.each do |d| %>
+      <%
+        x = d["x"].to_i * width / 100
+        y = d["y"].to_i * height / 100
+        o = d["hit_rate"]
+        color = @hex[d["type"]] || '#ffffff'
+        counts[ d["count"] ] ||= 0
+        counts[ d["count"] ] += 1
+        types[ d["type"] ] ||= 0
+        types[ d["type"] ] += 1
+      %>
+        <% if d['type'] == 'diaryDate' %>
+          <% x = 60 %>
+          <path fill="#000000" stroke="<%= color %>" d="M0,<%= y %>C0,<%= y %>,<%= width %>,<%= y %>,<%= width %>,<%= y %>" stroke-width="1" opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: <%= o %>;"></path>
+          <circle cx="<%= x %>" cy="<%= y %>" r="4" fill="#000000" stroke="<%= color %>" fill-opacity="0" stroke-width="2" tabindex="0" opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: <%= o %>;"></circle>
+        <% else %>
+          <circle cx="<%= x %>" cy="<%= y %>" r="12" fill="#000000" stroke="<%= color %>" fill-opacity="0" stroke-width="2" tabindex="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: <%= o %>;"></circle>
+        <% end %>
+        <rect y="<%= y - 10 %>" x="<%= x - 50 %>" width="100" height="12" opacity=".5" fill="#ffffff"/>
+        <text opacity="1" fill="#000000" stroke="none" text-anchor="middle" y="<%= y %>" x="<%= x %>"><%= d["tag"]['label'] %> (<%= d["count"] %>)</text>
       <% end %>
-      <rect y="<%= y - 10 %>" x="<%= x - 50 %>" width="100" height="12" opacity=".5" fill="#ffffff"/>
-      <text opacity="1" fill="#000000" stroke="none" text-anchor="middle" y="<%= y %>" x="<%= x %>"><%= d["tag"]['label'] %> (<%= d["count"] %>)</text>
-    <% end %>
-</svg>
+  </svg>
+</div>
 <ul class="timeline">
 <% @tags.each do |d| %>
 <li class="<%=d ["type"] %>">
