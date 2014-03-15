@@ -57,21 +57,11 @@ class Subject
           votes = {}
           case tag['type']
           when 'place'
-            votes['name'] = self.gather_votes('place', set)
-            votes['location'] = self.gather_votes('location', set)
-            votes['geonames'] = self.gather_votes('name', set)
-            votes['lat'] = self.gather_votes('lat', set)
-            votes['lon'] = self.gather_votes('long', set)
+            votes = self.gather_votes(['place', 'location', 'name', 'lat', 'long'], set)
           when 'person'
-            votes['initials'] = self.gather_votes('first', set)
-            votes['surname'] = self.gather_votes('surname', set)
-            votes['rank'] = self.gather_votes('rank', set)
-            votes['number'] = self.gather_votes('number', set)
-            votes['reason'] = self.gather_votes('reason', set)
-            votes['unit'] = self.gather_votes('unit', set)
+            votes = self.gather_votes(['first', 'surname', 'rank', 'number', 'reason', 'unit'], set)
           when 'unit'
-            votes['name'] = self.gather_votes('name', set)
-            votes['context'] = self.gather_votes('context', set)
+            votes = self.gather_votes(['name', 'context'], set)
           end
           
           # Add to set and record they are all done - i.e. don't duplicate process for tags in set
@@ -164,13 +154,16 @@ class Subject
     cleaned_tags
   end
   
-  def gather_votes(vote_field, set)
+  def gather_votes(fields, set)
     votes = {}
     set.each do |t|
-      label = t['note'][vote_field]
-      label = 'none' if label == ''
-      votes[ label ] ||= 0
-      votes[ label ] += 1
+      fields.each do |f|
+        votes[f] ||= {}
+        label = t['note'][f]
+        label = 'none' if label == ''
+        votes[ f ][ label ] ||= 0
+        votes[ f ][ label ] += 1
+      end
     end
     votes
   end
