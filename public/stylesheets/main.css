@@ -21,6 +21,26 @@ svg {
 svg text {
   background-color: #fff;
 }
+dl.metadata {
+  color: #fff;
+  background-color: #283f45;
+  width: 1000px;
+  margin-bottom: 0;
+  font-size: 1.5em;
+  padding: 0;
+}
+dl.metadata dd, dl.metadata dt {
+  display: inline-block;
+  padding: .5em;
+  margin: 0;
+  text-indent: 0;
+}
+dl.metadata dt:after {
+  content: ':';
+}
+dl.metadata dd {
+  padding-right: 3em;
+}
 ul.timeline {
   list-style-type: none;
   margin: 0;
