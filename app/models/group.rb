@@ -5,6 +5,15 @@ class Group
   key :id, ObjectId
   key :zooniverse_id, String
   key :stats, Hash
+  key :metadata, Hash
+  
+  def start_date
+    Time.at self.metadata["start_date"]
+  end
+  
+  def end_date
+    Time.at self.metadata["end_date"]
+  end
   
   def pages
     @pages ||= []

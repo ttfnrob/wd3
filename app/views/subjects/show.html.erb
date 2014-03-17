@@ -1,4 +1,4 @@
-<h1><a href="/">War Diaries Data Digger</a>: <a href="/diaries/<%= @p.group_id %>"><%= @p.group_name %></a>: page <%= @p.page_number %></h1>
+<h1><a href="/">War Diaries Data Digger</a>: <a href="/diaries/<%= @p.group_id %>"><%= @p.group_name %></a> (<%= @g.start_date.strftime('%-d %b %Y') %> — <%= @g.end_date.strftime('%-d %b %Y') %>): page <%= @p.page_number %></h1>
 <% width = 1000 %>
 <% height = 600 %>
 <% counts = {} %>
