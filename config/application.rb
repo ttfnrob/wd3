@@ -72,6 +72,7 @@ module PageProcessor
     config.after_initialize do
         Subject.ensure_index [[:zooniverse_id, 1]], :sparse => true
         Subject.ensure_index [['group.zooniverse_id', 1]], :sparse => true
+        Subject.ensure_index [[:state, 1]], :sparse => true
         Group.ensure_index [[:zooniverse_id, 1]], :sparse => true
         Group.ensure_index [[:name, 1]], :sparse => true
         Classification.ensure_index [[:subject_ids, 1]], :sparse => true
