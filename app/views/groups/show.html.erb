@@ -1,7 +1,18 @@
 <h1><a href="/">War Diaries Data Digger</a>: <%= @g.name %></h1>
 <p><%= @g.stats['complete'] %>/<%= @g.stats['total'] %> pages complete.</p>
-<ul class="gallery">
+<ul class="gallery" style="width: 800px; float:left;">
   <% @g.pages.each do |subject| %>
   <li><a href="/pages/<%= subject["zooniverse_id"] %>"><img src="<%= subject["location"]["standard"] %>"></a></li>
   <% end %>
+</ul>
+<ul class="timeline" style="width: 400px;">
+<% @tags.each do |d| %>
+<li class="<%=d ["type"] %>">
+  <b><%= d["type"] %></b>:
+  <%= d["tag"]['label'] %> (<%= d["count"]%>)
+  <% d['votes'].each do |k,v| %>
+  <br><%= k %>: <%= v.keys.join(', ') %>
+  <% end %>
+</li> 
+<% end %>
 </ul>
