@@ -4,12 +4,10 @@ class GroupsController < ApplicationController
   end
 
   def show
+    n = params[:n] || 5
+    threshold = params[:threshold] || 0
   	@g ||= Group.find_by_zooniverse_id(params[:zoo_id])
-    @tags = []
-    @g.pages.each do |p|
-      type = p.document_type.keys.join(',')
-      @tags.push(*p.clusterize(5,0)) if type == 'diary'
-    end
+    @tags = @g.tags n.to_i, threshold.to_i
   end
 
 end
