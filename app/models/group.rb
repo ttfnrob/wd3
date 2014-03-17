@@ -7,7 +7,13 @@ class Group
   key :stats, Hash
   
   def pages
-    @pages ||= Subject.where('group.zooniverse_id' => self.zooniverse_id ).fields(:zooniverse_id, :location).sort('metadata.page_number').limit(20)
+    @pages ||= []
+    if @pages.empty?
+      Subject.where('group.zooniverse_id' => self.zooniverse_id ).fields(:zooniverse_id, :location).sort('metadata.page_number').limit(20).each do |g|
+        @pages << g
+      end
+    end
+    @pages
   end
   
   def completed
