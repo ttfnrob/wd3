@@ -69,9 +69,7 @@ class Subject
           votes = self.gather_votes(['name', 'context'], set)
         end
         
-        # Add to set and record they are all done - i.e. don't duplicate process for tags in set
         clustered_tags << {"type" => tag['type'], "x" => cx, "y" => cy, "tag" => closest, "count" => tag_count, "hit_rate" => tag_count.to_f/user_count.to_f, "votes" => votes}
-        set.each{|i| i['completed'] == true}
       end
     end
     
@@ -130,6 +128,7 @@ class Subject
         good = x_good && y_good && good
       end
       set << t if good
+      t['completed'] = true if good
       set
     end
     
