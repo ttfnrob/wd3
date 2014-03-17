@@ -54,26 +54,24 @@ class Subject
       unless completed.include?(tag)
         set = self.build_set(completed, tag, n)
         
-        unless set.count == 0
-          tag_count = set.size
-          # Find averaged tag centre and select nearest real tag to that
-          cx = set.map{|i| i['coords'][0].to_i}.inject{|sum,x| sum + x } / tag_count
-          cy = set.map{|i| i['coords'][1].to_i}.inject{|sum,y| sum + y } / tag_count
-          closest = set.sort_by{|i| (i['coords'][0].to_i-cx)**2 + (i['coords'][1].to_i-cy)**2}.reverse.first
-          votes = {}
-          case tag['type']
-          when 'place'
-            votes = self.gather_votes(['place', 'location', 'name', 'lat', 'long'], set)
-          when 'person'
-            votes = self.gather_votes(['first', 'surname', 'rank', 'number', 'reason', 'unit'], set)
-          when 'unit'
-            votes = self.gather_votes(['name', 'context'], set)
-          end
-          
-          # Add to set and record they are all done - i.e. don't duplicate process for tags in set
-          clustered_tags << {"type" => tag['type'], "x" => cx, "y" => cy, "tag" => closest, "count" => tag_count, "hit_rate" => tag_count.to_f/user_count.to_f, "votes" => votes}
-          set.each{|i| completed << i}
+        tag_count = set.size
+        # Find averaged tag centre and select nearest real tag to that
+        cx = set.map{|i| i['coords'][0].to_i}.inject{|sum,x| sum + x } / tag_count
+        cy = set.map{|i| i['coords'][1].to_i}.inject{|sum,y| sum + y } / tag_count
+        closest = set.sort_by{|i| (i['coords'][0].to_i-cx)**2 + (i['coords'][1].to_i-cy)**2}.reverse.first
+        votes = {}
+        case tag['type']
+        when 'place'
+          votes = self.gather_votes(['place', 'location', 'name', 'lat', 'long'], set)
+        when 'person'
+          votes = self.gather_votes(['first', 'surname', 'rank', 'number', 'reason', 'unit'], set)
+        when 'unit'
+          votes = self.gather_votes(['name', 'context'], set)
         end
+        
+        # Add to set and record they are all done - i.e. don't duplicate process for tags in set
+        clustered_tags << {"type" => tag['type'], "x" => cx, "y" => cy, "tag" => closest, "count" => tag_count, "hit_rate" => tag_count.to_f/user_count.to_f, "votes" => votes}
+        set.each{|i| completed << i}
       end
     end
     
@@ -109,7 +107,7 @@ class Subject
     set = []
     set << tag
     
-    set = comparison.inject(set) do |set, t|
+    comparison.inject(set) do |set, t|
       tx = t['coords'][0].to_i
       ty = t['coords'][1].to_i
       tlabel = t['label'] || ''
@@ -134,6 +132,8 @@ class Subject
       set << t if good
       set
     end
+    
+    set
   end
   
   def merge_adjacent_tags(clustered_tags)
