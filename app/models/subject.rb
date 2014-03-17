@@ -51,8 +51,8 @@ class Subject
   
     self.cached_tags.each do |tag|
       
-      unless completed.include?(tag)
-        set = self.build_set(completed, tag, n)
+      unless tag['completed']
+        set = self.build_set(tag, n)
         
         tag_count = set.size
         # Find averaged tag centre and select nearest real tag to that
@@ -71,7 +71,7 @@ class Subject
         
         # Add to set and record they are all done - i.e. don't duplicate process for tags in set
         clustered_tags << {"type" => tag['type'], "x" => cx, "y" => cy, "tag" => closest, "count" => tag_count, "hit_rate" => tag_count.to_f/user_count.to_f, "votes" => votes}
-        set.each{|i| completed << i}
+        set.each{|i| i['completed'] == true}
       end
     end
     
@@ -92,9 +92,9 @@ class Subject
     return cleaned_tags.reject{|tag| tag["count"] < threshold}
   end
   
-  def build_set(completed, tag, n)
+  def build_set(tag, n)
     # all other tags of same type which are not completed yet.
-    comparison = self.tags_by_type( tag[ 'type' ] ).reject{|t| completed.include?(t) || t == tag }
+    comparison = self.tags_by_type( tag[ 'type' ] ).reject{|t| t['completed'] || t == tag }
     
     x = tag['coords'][0].to_i
     y = tag['coords'][1].to_i
@@ -203,6 +203,7 @@ class Subject
       end
       tag['label'].strip!
       tag['compare'] = tag['label'].upcase.gsub(/[^A-Z0-9]/, '')
+      tag['completed'] = false
     end
     
     tags.sort_by{|i| [i['coords'][1].to_i, i['coords'][0].to_i]}
