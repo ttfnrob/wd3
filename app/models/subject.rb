@@ -94,7 +94,7 @@ class Subject
   
   def build_set(completed, tag, n)
     # all other tags of same type which are not completed yet.
-    comparison = self.cached_tags.reject{|t| t["type"] != tag["type"] || completed.include?(t) || t == tag }
+    comparison = self.tags_by_type( tag[ 'type' ] ).reject{|t| completed.include?(t) || t == tag }
     
     x = tag['coords'][0].to_i
     y = tag['coords'][1].to_i
@@ -217,6 +217,12 @@ class Subject
     end
     
     @tags
+  end
+  
+  def tags_by_type( type )
+    @tags_by_type ||= {}
+    @tags_by_type[ type ] ||= self.cached_tags.select{ |t| t['type'] == type }
+    @tags_by_type[ type ]
   end
   
   def comments
