@@ -49,7 +49,7 @@ class Subject
     completed = []
     user_count = self.users.count
   
-    self.tags.each do |tag|
+    self.cached_tags.each do |tag|
       
       unless completed.include?(tag)
         set = self.build_set(completed, tag, n)
@@ -94,7 +94,7 @@ class Subject
   
   def build_set(completed, tag, n)
     # all other tags of same type which are not completed yet.
-    comparison = tags.reject{|t| t == tag || completed.include?(t) || t["type"] != tag["type"]}
+    comparison = self.cached_tags.reject{|t| t["type"] != tag["type"] || completed.include?(t) || t == tag }
     
     x = tag['coords'][0].to_i
     y = tag['coords'][1].to_i
@@ -113,7 +113,7 @@ class Subject
       tlabel = t['label'] || ''
       x_good = tx <= max_x && tx >= min_x
       y_good = ty <= max_y && ty >= min_y
-      
+    
       case tag['type']
       when 'diaryDate'
         t_date = tlabel.split(' ')
@@ -175,9 +175,9 @@ class Subject
   end
  
   def tags
-    @tags ||= self.classifications.map{|c|c.annotations}.flatten.select{|i|i["type"]}.sort_by{|i| [i['coords'][1], i['coords'][0]]}
+    tags = self.classifications.map{|c|c.annotations}.flatten.select{|i|i["type"]}.sort_by{|i| [i['coords'][1], i['coords'][0]]}
     
-    @tags.each do |tag|
+    tags.each do |tag|
       note = tag['note']
       case tag['type']
       when 'person'
@@ -205,7 +205,18 @@ class Subject
       tag['compare'] = tag['label'].upcase.gsub(/[^A-Z0-9]/, '')
     end
     
-    @tags.sort_by{|i| [i['coords'][1].to_i, i['coords'][0].to_i]}
+    tags.sort_by{|i| [i['coords'][1].to_i, i['coords'][0].to_i]}
+  end
+  
+  def cached_tags
+    @tags ||= []
+    if @tags.empty?
+      self.tags.each do |t|
+        @tags << t
+      end
+    end
+    
+    @tags
   end
   
   def comments
