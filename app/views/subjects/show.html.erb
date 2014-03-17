@@ -17,6 +17,8 @@
     <dd><%= @p.document_type.keys.join(', ') %></dd>
     <dt>Volunteers</dt>
     <dd><%= @p.users.count %></dd>
+    <dt>Classifications</dt>
+    <dd><%= @p.classifications.count %></dd>
     <dt>TNA ID</dt>
     <dd><%= @p.tna_id %></dd>
     <dt>Page number</dt>
@@ -71,6 +73,7 @@
 <div id="computed-info" class="info">
     <ul>
         <li><span class="key">Volunteers</span>: <%= @p.users.count %> (<%= @p.users.join(", ") %>)</li>
+        <li><span class="key">Classifications</span> <%= @p.classifications.count %></li>
         <li><span class="key">Page Type</span>: <%= @p.document_type.keys.join(', ') %></li>
     </ul>
     <% @p.comments.each do |c|%>
