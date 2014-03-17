@@ -15,7 +15,13 @@ class Subject
   LEV_THRESHOLD = 4
   
   def classifications
-    @classifications ||= Classification.where(:subject_ids => [Subject.find_by_zooniverse_id(self.zooniverse_id).id])
+    @classifications ||= []
+    if @classifications.empty?
+      Classification.where(:subject_ids => [self.id]).each do |c|
+        @classifications << c
+      end
+    end
+    @classifications
   end
   
   def image
