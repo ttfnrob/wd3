@@ -1,0 +1,15 @@
+<table>
+  <thead><th>Type</th><th>Label</th><th>Count</th><th>Data</th></thead>
+  <% @tags.each do |d| %>
+  <tr class="<%=d ["type"] %>">
+    <td><%= d["type"] %></td>
+    <td><%= d["tag"]['label'] %></td>
+    <td><%= d["count"] %></td>
+    <td>
+      <% d['votes'].each do |k,v| %>
+      <br><%= k %>: <%= v.keys.join(', ') %>
+      <% end %>
+    </td>
+  </tr>
+  <% end %>
+</table>
