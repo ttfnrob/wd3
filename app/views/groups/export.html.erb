@@ -19,9 +19,9 @@
     <% n += 1 %>
     <% case d["type"] %>
     <% when "diaryDate" %>
-    <% date = d["tag"]["label"] %>
+    <% date = d["label"] %>
     <% when "place" %>
-    <% place = d["tag"]["label"] if d["votes"]["location"].keys == ['true'] %>
+    <% place = d["label"] if d["votes"]["location"].keys == ['true'] %>
     <% end %>
     <tr>
       <td><%= n %></td>
@@ -31,7 +31,7 @@
       <td><%= date %></td>
       <td><%= place %></td>
       <td><%= d["type"] %></td>
-      <td><%= d["tag"]['label'] %></td>
+      <td><%= d['label'] %></td>
       <td>
         <% d['votes'].each do |k,v| %>
         <%= k %>: <%= v.keys.join(', ') %>

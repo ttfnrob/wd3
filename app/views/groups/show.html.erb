@@ -9,7 +9,7 @@
 <% @tags.each do |d| %>
 <li class="<%=d ["type"] %>">
   <b><%= d["type"] %></b>:
-  <%= d["tag"]['label'] %> (<%= d["count"]%>)
+  <%= d['label'] %> (<%= d["count"]%>)
   <% d['votes'].each do |k,v| %>
   <br><%= k %>: <%= v.keys.join(', ') %>
   <% end %>

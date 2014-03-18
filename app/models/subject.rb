@@ -86,6 +86,16 @@ class Subject
         max_vote = v.values.max
         t['votes'][k] = v.select { |k, vote| vote == max_vote }
       end
+      case t["type"]
+      when 'place'
+        t['label'] = t['votes']['place'].keys.join(',')
+      when 'person'
+        t['label'] = "#{t['votes']['rank'].keys.join(',')} #{t['votes']['first'].keys.join(',')} #{t['votes']['surname'].keys.join(',')}"
+      when 'unit'
+        t['label'] = t['votes']['name'].keys.join(',')
+      else
+        t['label'] = t['tag']['label']
+      end
     end
 
     return cleaned_tags.reject{|tag| tag["count"] < threshold}
