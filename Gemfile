@@ -13,6 +13,10 @@ gem 'bson_ext'
 gem 'd3_rails'
 gem "levenshtein", "~> 0.2.2"
 
+group :development do
+  gem "better_errors"
+end
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
