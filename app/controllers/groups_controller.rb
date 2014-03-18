@@ -12,7 +12,7 @@ class GroupsController < ApplicationController
   
   def export
     n = params[:n] || 5
-    threshold = params[:threshold] || 0
+    threshold = params[:threshold] || 2
   	@g ||= Group.find_by_zooniverse_id(params[:zoo_id])
     @tags = @g.tags n.to_i, threshold.to_i
   end
