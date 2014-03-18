@@ -45,7 +45,6 @@ class Subject
   end
   
   def clusterize(n=3, threshold = 1)
-    puts self.metadata
     clustered_tags = []
     completed = []
     user_count = self.users.count
