@@ -46,13 +46,15 @@ dl.metadata dt:after {
 dl.metadata dd {
   padding-right: 3em;
 }
+.timeline {
+  background-color: #181818;
+  color: #fff;
+}
 ul.timeline {
   list-style-type: none;
   margin: 0;
   padding: 0;
   text-indent: 0;
-  background-color: #181818;
-  color: #fff;
   width: 20em;
   margin-right: 1em;
   float: left;
@@ -62,19 +64,19 @@ ul.timeline {
 ul.timeline li {
   padding: 0.5em 1em;
 }
-ul.timeline li.diaryDate {
+.diaryDate {
   background-color: #38674c;
 }
-ul.timeline li.time {
+.time {
   color: #8cd6db;
 }
-ul.timeline li.place {
+.place {
   background-color: #4ea4ad;
 }
-ul.timeline li.person {
+.person {
   background-color: #283f45;
 }
-ul.timeline li.activity {
+.activity {
   background-color: #45815d;
 }
 .info {
