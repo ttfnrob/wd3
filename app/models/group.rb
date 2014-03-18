@@ -29,7 +29,7 @@ class Group
     @tags = []
     
     if @tags.empty?
-      Subject.where('group.zooniverse_id' => self.zooniverse_id ).fields(:zooniverse_id).sort('metadata.page_number').all().each do |p|
+      Subject.where('group.zooniverse_id' => self.zooniverse_id ).fields(:zooniverse_id, :metadata).sort('metadata.page_number').all().each do |p|
         type = p.document_type.keys.join(',')
         @tags.push(*p.clusterize( n, threshold )) if type == 'diary'
       end

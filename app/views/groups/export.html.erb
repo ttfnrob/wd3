@@ -1,13 +1,28 @@
-<table>
-  <thead><th>Type</th><th>Label</th><th>Count</th><th>Data</th></thead>
+<% 
+  n = 0 
+%>
+<table class="timeline">
+  <thead>
+    <th>Tag</th>
+    <th>Page</th>
+    <th>Page number</th>
+    <th>Type</th>
+    <th>Label</th>
+    <th>Count</th>
+    <th>Data</th>
+  </thead>
   <% @tags.each do |d| %>
-  <tr class="<%=d ["type"] %>">
+  <% n += 1 %>
+  <tr class="<%= d["type"] %>">
+    <td><%= n %></td>
+    <td><%= d["page"] %></td>
+    <td><%= d["page_number"] %></td>
     <td><%= d["type"] %></td>
     <td><%= d["tag"]['label'] %></td>
     <td><%= d["count"] %></td>
     <td>
       <% d['votes'].each do |k,v| %>
-      <br><%= k %>: <%= v.keys.join(', ') %>
+      <%= k %>: <%= v.keys.join(', ') %>
       <% end %>
     </td>
   </tr>
