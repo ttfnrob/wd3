@@ -216,7 +216,7 @@ class Subject
       tag['completed'] = false
     end
     
-    tags.sort_by{|i| [i['coords'][1].to_i, i['coords'][0].to_i]}
+    tags.reject{|t| t['note'] == {} }.sort_by{|i| [i['coords'][1].to_i, i['coords'][0].to_i]}
   end
   
   def cached_tags
