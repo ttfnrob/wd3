@@ -187,10 +187,11 @@ class Subject
     tags = self.classifications.map{|c|c.annotations}.flatten.select{|i|i["type"]}.sort_by{|i| [i['coords'][1], i['coords'][0]]}
     
     tags.each do |tag|
+      tag['note'] ||= {}
       note = tag['note']
       case tag['type']
       when 'person'
-        note['first'] = note['first'].gsub(/[\. ]+/, ' ').strip
+        note['first'] = note['first'].gsub(/[\. ]+/, ' ').strip if note['first']
         tag['label'] = "#{note['first']} #{note['surname']}"
       when 'place'
         tag['label'] = "#{note['place']}"
