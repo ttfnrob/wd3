@@ -63,6 +63,9 @@
 <% end %>
 </ul>
 <div class="info">
+  <% @p.comments.each do |c|%>
+    <p><%= c['body'] %></p>
+  <% end %>
     <ul>
         <li><span class="key">Diary</span>: <a href="/diaries/<%= @p.group_id %>"><%= @p.group_name %></a></li>
         <li><span class="key">Zooniverse ID</span>: <a href="http://talk.operationwardiary.org/#/subjects/<%= @p.zooniverse_id %>" target="_blank"><%= @p.zooniverse_id %></a></li>
@@ -76,9 +79,6 @@
         <li><span class="key">Classifications</span> <%= @p.classifications.count %></li>
         <li><span class="key">Page Type</span>: <%= @p.document_type.keys.join(', ') %></li>
     </ul>
-    <% @p.comments.each do |c|%>
-      <p><%= c['body'] %></p>
-    <% end %>
 </div>
 <table class="info">
   <thead><th>Tag type</th><th>Count</th></thead>

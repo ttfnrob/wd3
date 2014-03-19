@@ -236,7 +236,12 @@ class Subject
   end
   
   def comments
-    discussions = Discussion.where( :title => self.zooniverse_id ).first
+    # discussions = Discussion.where( :title => self.zooniverse_id ).first
+    resp = Net::HTTP.get_response(URI.parse("https://api.zooniverse.org/projects/war_diary/talk/subjects/#{self.zooniverse_id}"))
+    data = resp.body
+
+    discussions = JSON.parse(data)["discussion"]
+    puts discussions
     return discussions['comments'] unless discussions.nil?
     return []
   end
