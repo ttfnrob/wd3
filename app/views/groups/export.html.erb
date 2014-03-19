@@ -1,7 +1,8 @@
 <% 
   n = 0
   date = ''
-  place = '' 
+  place = ''
+  time = ''
 %>
 <table>
   <thead>
@@ -11,15 +12,20 @@
     <th>Count</th>
     <th>Date</th>
     <th>Place</th>
+    <th>Time</th>
     <th>Type</th>
     <th>Label</th>
     <th>Data</th>
   </thead>
+  <tbody>
   <% @tags.each do |d| %>
     <% n += 1 %>
     <% case d["type"] %>
     <% when "diaryDate" %>
     <% date = d["label"] %>
+    <% time = '' %>
+    <% when "time" %>
+    <% time = d["label"] %>
     <% when "place" %>
     <% place = d["label"] if d["votes"]["location"].keys == ['true'] %>
     <% end %>
@@ -30,6 +36,7 @@
       <td><%= d["count"] %></td>
       <td class="nowrap"><%= date %></td>
       <td><%= place %></td>
+      <td><%= time %></td>
       <td><%= d["type"] %></td>
       <td><%= d['label'] %></td>
       <td>
@@ -39,4 +46,5 @@
       </td>
     </tr>
   <% end %>
+  </tbody>
 </table>
