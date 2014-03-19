@@ -184,10 +184,9 @@ class Subject
   end
  
   def tags
-    tags = self.classifications.map{|c|c.annotations}.flatten.select{|i|i["type"]}.sort_by{|i| [i['coords'][1], i['coords'][0]]}
+    tags = self.classifications.map{|c|c.annotations}.flatten.select{|i|i["note"]}.sort_by{|i| [i['coords'][1], i['coords'][0]]}
     
     tags.each do |tag|
-      tag['note'] ||= {}
       note = tag['note']
       case tag['type']
       when 'person'
@@ -216,7 +215,7 @@ class Subject
       tag['completed'] = false
     end
     
-    tags.reject{|t| t['note'] == {} }.sort_by{|i| [i['coords'][1].to_i, i['coords'][0].to_i]}
+    tags.sort_by{|i| [i['coords'][1].to_i, i['coords'][0].to_i]}
   end
   
   def cached_tags
