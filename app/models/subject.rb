@@ -175,7 +175,7 @@ class Subject
       fields.each do |f|
         votes[f] ||= {}
         label = t['note'][f]
-        label = 'none' if label == ''
+        # label = 'none' if label == ''
         votes[ f ][ label ] ||= 0
         votes[ f ][ label ] += 1
       end
