@@ -26,12 +26,18 @@ class Group
   end
   
   def tags( n = 5, threshold = 1 )
-    @tags = []
+    @tags = {
+      'diary' => [],
+      'signals' => [],
+      'orders' => [],
+      'report' => []
+    }
     
-    if @tags.empty?
+    if @tags['diary'].empty?
       Subject.where('group.zooniverse_id' => self.zooniverse_id ).fields(:zooniverse_id, :metadata).sort('metadata.page_number').all().each do |p|
-        type = p.document_type.keys.join(',')
-        @tags.push(*p.clusterize( n, threshold )) if type == 'diary'
+        p.document_type.keys.each do |type|
+          @tags[type].push(*p.clusterize( n, threshold )) if @tags[type]
+        end
       end
     end
     

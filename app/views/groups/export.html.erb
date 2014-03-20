@@ -4,7 +4,12 @@
   place = ''
   time = ''
 %>
-<table>
+<a href="#diary">Diaries</a>
+<a href="#signals">Signals</a>
+<a href="#reports">Reports</a>
+<a href="#orders">Orders</a>
+<table id="diary">
+  <caption>Diary pages</caption>
   <thead>
     <th>Tag</th>
     <th>Page</th>
@@ -18,7 +23,7 @@
     <th>Data</th>
   </thead>
   <tbody>
-  <% @tags.each do |d| %>
+  <% @tags['diary'].each do |d| %>
     <% n += 1 %>
     <% case d["type"] %>
     <% when "diaryDate" %>
@@ -37,6 +42,99 @@
       <td class="nowrap"><%= date %></td>
       <td><%= place %></td>
       <td><%= time %></td>
+      <td><%= d["type"] %></td>
+      <td><%= d['label'] %></td>
+      <td>
+        <% d['votes'].each do |k,v| %>
+        <%= k %>: <%= v.keys.join(', ') %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<table id="signals">
+  <caption>Signals</caption>
+  <thead>
+    <th>Tag</th>
+    <th>Page</th>
+    <th>Page number</th>
+    <th>Count</th>
+    <th>Type</th>
+    <th>Label</th>
+    <th>Data</th>
+  </thead>
+  <tbody>
+  <% @tags['signals'].each do |d| %>
+    <% n += 1 %>
+    <tr>
+      <td><%= n %></td>
+      <td><%= d["page"] %></td>
+      <td><%= d["page_number"] %></td>
+      <td><%= d["count"] %></td>
+      <td><%= d["type"] %></td>
+      <td><%= d['label'] %></td>
+      <td>
+        <% d['votes'].each do |k,v| %>
+        <%= k %>: <%= v.keys.join(', ') %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<table id="reports">
+  <caption>Reports</caption>
+  <thead>
+    <th>Tag</th>
+    <th>Page</th>
+    <th>Page number</th>
+    <th>Count</th>
+    <th>Type</th>
+    <th>Label</th>
+    <th>Data</th>
+  </thead>
+  <tbody>
+  <% @tags['report'].each do |d| %>
+    <% n += 1 %>
+    <tr>
+      <td><%= n %></td>
+      <td><%= d["page"] %></td>
+      <td><%= d["page_number"] %></td>
+      <td><%= d["count"] %></td>
+      <td><%= d["type"] %></td>
+      <td><%= d['label'] %></td>
+      <td>
+        <% d['votes'].each do |k,v| %>
+        <%= k %>: <%= v.keys.join(', ') %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<table id="orders">
+  <caption>Orders</caption>
+  <thead>
+    <th>Tag</th>
+    <th>Page</th>
+    <th>Page number</th>
+    <th>Count</th>
+    <th>Type</th>
+    <th>Label</th>
+    <th>Data</th>
+  </thead>
+  <tbody>
+  <% @tags['orders'].each do |d| %>
+    <% n += 1 %>
+    <tr>
+      <td><%= n %></td>
+      <td><%= d["page"] %></td>
+      <td><%= d["page_number"] %></td>
+      <td><%= d["count"] %></td>
       <td><%= d["type"] %></td>
       <td><%= d['label'] %></td>
       <td>
