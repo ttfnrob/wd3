@@ -47,8 +47,15 @@ dl.metadata dd {
   padding-right: 3em;
 }
 .timeline {
-  background-color: #181818;
-  color: #fff;
+  margin-right: 1em;
+  float: left;
+}
+.timeline tbody {
+  max-height: 600px;
+  overflow: auto;
+}
+.timeline tr:nth-child(even){
+  background-color: #eee;
 }
 ul.timeline {
   list-style-type: none;
@@ -56,28 +63,9 @@ ul.timeline {
   padding: 0;
   text-indent: 0;
   width: 20em;
-  margin-right: 1em;
-  float: left;
-  max-height: 600px;
-  overflow: auto;
 }
 ul.timeline li {
   padding: 0.5em 1em;
-}
-.diaryDate {
-  background-color: #38674c;
-}
-.time {
-  color: #8cd6db;
-}
-.place {
-  background-color: #4ea4ad;
-}
-.person {
-  background-color: #283f45;
-}
-.activity {
-  background-color: #45815d;
 }
 .info {
   width: 30em;
