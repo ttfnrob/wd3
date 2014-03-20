@@ -108,3 +108,8 @@ ul.gallery li img {
 td.nowrap {
   white-space: nowrap;
 }
+table caption {
+  background-color: #283f45;
+  color: #fff;
+  font-weight: bold;
+}
