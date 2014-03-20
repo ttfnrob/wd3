@@ -51,17 +51,52 @@
       <% end %>
   </svg>
 </div>
-<ul class="timeline">
-<% @tags.each do |d| %>
-<li class="<%=d ["type"] %>">
-  <b><%= d["type"] %></b>:
-  <%= d['label'] %> (<%= d["count"]%>)
-  <% d['votes'].each do |k,v| %>
-  <br><%= k %>: <%= v.keys.join(', ') %>
+<% 
+  n = 0
+  date = ''
+  place = ''
+  time = ''
+%>
+<table class="timeline">
+  <thead>
+    <th>Tag</th>
+    <th>Count</th>
+    <th>Date</th>
+    <th>Place</th>
+    <th>Time</th>
+    <th>Type</th>
+    <th>Label</th>
+    <th>Data</th>
+  </thead>
+  <tbody>
+  <% @tags.each do |d| %>
+    <% n += 1 %>
+    <% case d["type"] %>
+    <% when "diaryDate" %>
+    <% date = d["label"] %>
+    <% time = '' %>
+    <% when "time" %>
+    <% time = d["label"] %>
+    <% when "place" %>
+    <% place = d["label"] if d["votes"]["location"].keys == ['true'] %>
+    <% end %>
+    <tr class="<%=d ["type"] %>">
+      <td><%= n %></td>
+      <td><%= d["count"] %></td>
+      <td class="nowrap"><%= date %></td>
+      <td><%= place %></td>
+      <td><%= time %></td>
+      <td><%= d["type"] %></td>
+      <td><%= d['label'] %></td>
+      <td>
+        <% d['votes'].each do |k,v| %>
+        <%= k %>: <%= v.keys.join(', ') %>
+        <% end %>
+      </td>
+    </tr>
   <% end %>
-</li> 
-<% end %>
-</ul>
+  </tbody>
+</table>
 <div class="info">
   <% @p.comments.each do |c|%>
     <p><%= c['body'] %></p>
