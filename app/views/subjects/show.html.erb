@@ -3,6 +3,7 @@
 <% height = 600 %>
 <% counts = {} %>
 <% types = {} %>
+<% page_type = @p.document_type.keys.join(', ') %>
 <div>
 <% unless @prev_page.nil? %>
   <a href="/pages/<%= @prev_page.zooniverse_id %>">Previous page</a>
@@ -14,7 +15,7 @@
 <div class="main">
   <dl class="metadata">
     <dt>Page type</dt>
-    <dd><%= @p.document_type.keys.join(', ') %></dd>
+    <dd><%= page_type %></dd>
     <dt>Volunteers</dt>
     <dd><%= @p.users.count %></dd>
     <dt>Classifications</dt>
@@ -61,9 +62,11 @@
   <thead>
     <th>Tag</th>
     <th>Count</th>
+  <% if page_type == 'diary' %>
     <th>Date</th>
     <th>Place</th>
     <th>Time</th>
+  <% end %>
     <th>Type</th>
     <th>Label</th>
     <th>Data</th>
@@ -83,9 +86,11 @@
     <tr class="<%=d ["type"] %>">
       <td><%= n %></td>
       <td><%= d["count"] %></td>
+    <% if page_type == 'diary' %>
       <td class="nowrap"><%= date %></td>
       <td><%= place %></td>
       <td><%= time %></td>
+    <% end %>
       <td><%= d["type"] %></td>
       <td><%= d['label'] %></td>
       <td>
