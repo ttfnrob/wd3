@@ -98,7 +98,8 @@
   </tbody>
 </table>
 <div class="info">
-  <% @p.comments.each do |c|%>
+  <h2>comments</h2>
+  <% @p.comments.reverse.each do |c|%>
     <p><%= c['body'] %></p>
   <% end %>
     <ul>
