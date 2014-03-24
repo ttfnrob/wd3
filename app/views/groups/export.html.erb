@@ -34,7 +34,7 @@
     <% time = '' %>
     <% when "time" %>
     <% time = d["label"] %>
-    <% datetime = DateTime.strptime( "#{date} #{time}", '%d %b %Y %I%M%p' )%>
+    <% datetime = DateTime.strptime( "#{date} #{time}", '%d %b %Y %I%M%p' ) if date != '' %>
     <% when "place" %>
     <% place = d["label"] if d["votes"]["location"].keys == ['true'] %>
     <% end %>
