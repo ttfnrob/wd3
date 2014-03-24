@@ -3,6 +3,7 @@
   date = ''
   place = ''
   time = ''
+  datetime = ''
 %>
 <a href="#diary">Diaries</a>
 <a href="#signals">Signals</a>
@@ -15,6 +16,7 @@
     <th>Page</th>
     <th>Page number</th>
     <th>Count</th>
+    <th>DateTime</th>
     <th>Date</th>
     <th>Place</th>
     <th>Time</th>
@@ -28,9 +30,11 @@
     <% case d["type"] %>
     <% when "diaryDate" %>
     <% date = d["label"] %>
+    <% datetime = Date.strptime( date, '%d %b %Y' )%>
     <% time = '' %>
     <% when "time" %>
     <% time = d["label"] %>
+    <% datetime = DateTime.strptime( "#{date} #{time}", '%d %b %Y %I%M%p' )%>
     <% when "place" %>
     <% place = d["label"] if d["votes"]["location"].keys == ['true'] %>
     <% end %>
@@ -39,6 +43,7 @@
       <td><%= d["page"] %></td>
       <td><%= d["page_number"] %></td>
       <td><%= d["count"] %></td>
+      <td><%= datetime %></td>
       <td class="nowrap"><%= date %></td>
       <td><%= place %></td>
       <td><%= time %></td>

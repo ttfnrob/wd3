@@ -57,6 +57,7 @@
   date = ''
   place = ''
   time = ''
+  datetime = ''
 %>
 <table class="timeline">
   <thead>
@@ -77,9 +78,11 @@
     <% case d["type"] %>
     <% when "diaryDate" %>
     <% date = d["label"] %>
+    <% datetime = Date.strptime( date, '%d %b %Y' )%>
     <% time = '' %>
     <% when "time" %>
     <% time = d["label"] %>
+    <% datetime = DateTime.strptime( "#{date} #{time}", '%d %b %Y %I%M%p' )%>
     <% when "place" %>
     <% place = d["label"] if d["votes"]["location"].keys == ['true'] %>
     <% end %>
