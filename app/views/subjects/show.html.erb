@@ -64,6 +64,7 @@
     <th>Tag</th>
     <th>Count</th>
   <% if page_type == 'diary' %>
+    <th>DateTime</th>
     <th>Date</th>
     <th>Place</th>
     <th>Time</th>
@@ -90,6 +91,7 @@
       <td><%= n %></td>
       <td><%= d["count"] %></td>
     <% if page_type == 'diary' %>
+      <td class="nowrap"><%= datetime %></td>
       <td class="nowrap"><%= date %></td>
       <td><%= place %></td>
       <td><%= time %></td>
