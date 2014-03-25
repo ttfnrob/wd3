@@ -7,4 +7,4 @@ development:
   database: war_diary
 
 production:
-    uri: <%= ENV['MONGOHQ_URL'] %>
+    uri: <%= ENV['ZOO_URL'] %>
