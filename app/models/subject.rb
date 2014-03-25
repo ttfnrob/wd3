@@ -241,7 +241,6 @@ class Subject
     data = resp.body
 
     discussions = JSON.parse(data)["discussion"]
-    puts discussions
     return discussions['comments'] unless discussions.nil?
     return []
   end
