@@ -41,7 +41,6 @@
         types[ d["type"] ] += 1
       %>
         <% if d['type'] == 'diaryDate' %>
-          <% x = 60 %>
           <path fill="#000000" stroke="<%= color %>" d="M0,<%= y %>C0,<%= y %>,<%= width %>,<%= y %>,<%= width %>,<%= y %>" stroke-width="1" opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: <%= o %>;"></path>
           <circle cx="<%= x %>" cy="<%= y %>" r="4" fill="#000000" stroke="<%= color %>" fill-opacity="0" stroke-width="2" tabindex="0" opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: <%= o %>;"></circle>
         <% else %>

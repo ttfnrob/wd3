@@ -189,6 +189,9 @@ class Subject
     tags.each do |tag|
       note = tag['note']
       case tag['type']
+      when 'diaryDate'
+        tag['coords'][0] = 6
+        tag['label'] = note.to_s
       when 'person'
         note['first'] = note['first'].gsub(/[\. ]+/, ' ').strip if note['first']
         tag['label'] = "#{note['first']} #{note['surname']}"
