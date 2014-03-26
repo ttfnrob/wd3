@@ -44,6 +44,38 @@ class Subject
     self.metadata["page_number"]
   end
   
+  def timeline( tags=[] )
+    page_type = self.document_type.keys.join(', ')
+    return tags unless page_type == 'diary'
+    
+    date = ''
+    place = ''
+    time = ''
+    datetime = ''
+    
+    tags.each do |t|
+      case t["type"]
+      when "diaryDate"
+        date = t["label"]
+        datetime = Date.strptime( date, '%d %b %Y' )
+        time = ''
+      when "time"
+        time = t["label"]
+        datetime = DateTime.strptime( "#{date} #{time}", '%d %b %Y %I%M%p' ) if date != ''
+      when "place"
+        place = t["label"] if t["votes"]["location"].keys == ['true']
+      end
+      
+      t['datetime'] = datetime
+      t['date'] = date
+      t['time'] = time
+      t['place'] = place
+      
+    end
+    
+    tags
+  end
+  
   def clusterize(n=3, threshold = 1)
     clustered_tags = []
     completed = []

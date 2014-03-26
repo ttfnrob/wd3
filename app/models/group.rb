@@ -44,6 +44,35 @@ class Group
     @tags
   end
   
+  def timeline
+    date = ''
+    place = ''
+    time = ''
+    datetime = ''
+    
+    @tags['diary'].each do |t|
+      case t["type"]
+      when "diaryDate"
+        date = t["label"]
+        datetime = Date.strptime( date, '%d %b %Y' )
+        time = ''
+      when "time"
+        time = t["label"]
+        datetime = DateTime.strptime( "#{date} #{time}", '%d %b %Y %I%M%p' ) if date != ''
+      when "place"
+        place = t["label"] if t["votes"]["location"].keys == ['true']
+      end
+      
+      t['datetime'] = datetime
+      t['date'] = date
+      t['time'] = time
+      t['place'] = place
+      
+    end
+    
+    @tags['diary']
+  end
+  
   def completed
     completed = 100 * self.stats['complete'].to_f/self.stats['total'].to_f
     completed.round unless self.stats['total'].to_i == 0

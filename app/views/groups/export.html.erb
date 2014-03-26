@@ -1,9 +1,5 @@
 <% 
   n = 0
-  date = ''
-  place = ''
-  time = ''
-  datetime = ''
 %>
 <a href="#diary">Diaries</a>
 <a href="#signals">Signals</a>
@@ -25,28 +21,17 @@
     <th>Data</th>
   </thead>
   <tbody>
-  <% @tags['diary'].each do |d| %>
+  <% @g.timeline.each do |d| %>
     <% n += 1 %>
-    <% case d["type"] %>
-    <% when "diaryDate" %>
-    <% date = d["label"] %>
-    <% datetime = Date.strptime( date, '%d %b %Y' )%>
-    <% time = '' %>
-    <% when "time" %>
-    <% time = d["label"] %>
-    <% datetime = DateTime.strptime( "#{date} #{time}", '%d %b %Y %I%M%p' ) if date != '' %>
-    <% when "place" %>
-    <% place = d["label"] if d["votes"]["location"].keys == ['true'] %>
-    <% end %>
     <tr>
       <td><%= n %></td>
       <td><%= d["page"] %></td>
       <td><%= d["page_number"] %></td>
       <td><%= d["count"] %></td>
-      <td class="nowrap"><%= datetime %></td>
-      <td class="nowrap"><%= date %></td>
-      <td><%= place %></td>
-      <td><%= time %></td>
+      <td class="nowrap"><%= d['datetime'] %></td>
+      <td class="nowrap"><%= d['date'] %></td>
+      <td><%= d['place'] %></td>
+      <td><%= d['time'] %></td>
       <td><%= d["type"] %></td>
       <td><%= d['label'] %></td>
       <td>
