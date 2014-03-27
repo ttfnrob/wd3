@@ -69,7 +69,7 @@
     <th>Data</th>
   </thead>
   <tbody>
-  <% @p.timeline( @tags ).each do |d| %>
+  <% @tags.each do |d| %>
     <% n += 1 %>
     <tr class="<%=d ["type"] %>">
       <td><%= n %></td>
