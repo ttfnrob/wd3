@@ -10,7 +10,7 @@ class SubjectsController < ApplicationController
     threshold = params[:threshold] || 0
   	tags = @p.clusterize( n.to_i, threshold.to_i )
     @tags = @p.timeline(tags)
-    @tags = @tags.select{ |t| t['type'] == params[:filter] } if params[:filter]
+    @tags = @tags.select{ |t| t['type'].in? params[:filter].split ',' } if params[:filter]
   	@hex = {"diaryDate" => "#38674c", "person" => "#283f45", "place" => "#4ea4ad", "activity" => "#45815d", "weather" => "#00ffff"}
     @next_page = Subject.where('metadata.page_number' => @p.page_number + 1, 'group.zooniverse_id' => @p.group_id).first
     @prev_page = Subject.where('metadata.page_number' => @p.page_number - 1, 'group.zooniverse_id' => @p.group_id).first

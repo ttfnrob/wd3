@@ -15,7 +15,7 @@ class GroupsController < ApplicationController
   	@g ||= Group.find_by_zooniverse_id(params[:zoo_id])
     @tags = @g.tags n.to_i, threshold.to_i
     @timeline = @g.timeline
-    @timeline = @timeline.select{ |t| t['type'] == params[:filter] } if params[:filter]
+    @timeline = @timeline.select{ |t| t['type'].in? params[:filter].split ',' } if params[:filter]
   end
 
 end
