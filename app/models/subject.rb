@@ -50,6 +50,8 @@ class Subject
     
     date = ''
     place = ''
+    lat = ''
+    long = ''
     time = ''
     datetime = ''
     
@@ -63,13 +65,24 @@ class Subject
         time = t["label"]
         datetime = DateTime.strptime( "#{date} #{time}", '%d %b %Y %I%M%p' ) if date != ''
       when "place"
-        place = t["label"] if t["votes"]["location"].keys == ['true']
+        if t["votes"]["location"].keys == ['true']
+          place = t["label"]
+          if t["votes"]["lat"].length == 1
+            lat = t["votes"]["lat"].keys.join ','
+            long = t["votes"]["long"].keys.join ','
+          else
+            lat = ''
+            long = ''
+          end
+        end
       end
       
       t['datetime'] = datetime
       t['date'] = date
       t['time'] = time
       t['place'] = place
+      t['lat'] = lat
+      t['long'] = long
       
     end
     

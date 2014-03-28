@@ -62,6 +62,7 @@
     <th>DateTime</th>
     <th>Date</th>
     <th>Place</th>
+    <th>Lat/Lon</th>
     <th>Time</th>
   <% end %>
     <th>Type</th>
@@ -78,6 +79,7 @@
       <td class="nowrap"><%= d['datetime'] %></td>
       <td class="nowrap"><%= d['date'] %></td>
       <td><%= d['place'] %></td>
+      <td><%= d['lat'] %>, <%= d['long'] %></td>
       <td><%= d['time'] %></td>
     <% end %>
       <td><%= d["type"] %></td>
