@@ -24,9 +24,9 @@ class GroupsController < ApplicationController
     filter = params[:filter] || 'activity'
     timeline = @g.timeline.select{ |t| t['type'].in? filter.split ',' }
     
-    geojson = []
+    features = []
     timeline.reject{|t| t["lon"] == '' }.each do |t|
-      geojson << {
+      features << {
         type: 'Feature',
         geometry: {
           type: 'Point',
@@ -42,6 +42,11 @@ class GroupsController < ApplicationController
         }
       }
     end
+    
+    geojson = {
+      type: "FeatureCollection",
+      features: features
+    }
     
     render json: geojson
   end
