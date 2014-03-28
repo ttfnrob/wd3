@@ -94,7 +94,7 @@ class Subject
         votes = {}
         case tag['type']
         when 'place'
-          votes = self.gather_votes(['place', 'location', 'name', 'lat', 'long'], set)
+          votes = self.gather_votes(['place', 'location', 'name', 'lat', 'long', 'id'], set)
         when 'person'
           votes = self.gather_votes(['first', 'surname', 'rank', 'number', 'reason', 'unit'], set)
         when 'unit'
