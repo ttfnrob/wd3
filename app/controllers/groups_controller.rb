@@ -30,7 +30,7 @@ class GroupsController < ApplicationController
         type: 'Feature',
         geometry: {
           type: 'Point',
-          coordinates: [ t["long"], t["lat"]]
+          coordinates: [ t["long"].to_f, t["lat"].to_f]
         },
         properties: {
           type: t["type"],
