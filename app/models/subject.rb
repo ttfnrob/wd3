@@ -67,9 +67,11 @@ class Subject
       when "place"
         if t["votes"]["location"].keys == ['true']
           place = t["label"]
-          if t["votes"]["lat"].length == 1
-            lat = t["votes"]["lat"].keys.join ','
-            long = t["votes"]["long"].keys.join ','
+          trim_lat = t["votes"]["lat"].keys.reject( &:empty? )
+          trim_long = t["votes"]["long"].keys.reject( &:empty? )
+          if trim_lat.length == 1
+            lat = trim_lat.join ','
+            long = trim_long.join ','
           else
             lat = ''
             long = ''
