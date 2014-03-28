@@ -10,6 +10,7 @@ PageProcessor::Application.routes.draw do
   match 'diaries/' => 'groups#index'
   match 'diaries/:zoo_id' => 'groups#show'
   match 'diaries/:zoo_id/export' => 'groups#export'
+  match 'diaries/:zoo_id/map' => 'groups#map'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

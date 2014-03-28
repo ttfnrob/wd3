@@ -17,5 +17,33 @@ class GroupsController < ApplicationController
     @timeline = @g.timeline
     @timeline = @timeline.select{ |t| t['type'].in? params[:filter].split ',' } if params[:filter]
   end
+  
+  def map
+    @g ||= Group.find_by_zooniverse_id(params[:zoo_id])
+    @g.tags 5, 2
+    filter = params[:filter] || 'activity'
+    timeline = @g.timeline.select{ |t| t['type'].in? filter.split ',' }
+    
+    geojson = []
+    timeline.reject{|t| t["lon"] == '' }.each do |t|
+      geojson << {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [ t["long"], t["lat"]]
+        },
+        properties: {
+          type: t["type"],
+          label: t["label"],
+          datetime: t["datetime"],
+          :'marker-color' => '#00607d',
+          :'marker-symbol' => 'circle',
+          :'marker-size' => 'medium'
+        }
+      }
+    end
+    
+    render json: geojson
+  end
 
 end
