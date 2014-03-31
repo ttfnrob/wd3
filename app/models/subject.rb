@@ -156,7 +156,7 @@ class Subject
       end
     end
 
-    return cleaned_tags.reject{|tag| tag["count"] < threshold}
+    return self.merge_adjacent_tags cleaned_tags.reject{|tag| tag["count"] < threshold}
   end
   
   def build_set(tag, n)
