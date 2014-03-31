@@ -56,11 +56,19 @@ class Group
       case t["type"]
       when "diaryDate"
         date = t["label"]
-        datetime = Date.strptime( date, '%d %b %Y' )
+        begin
+          datetime = Date.strptime( date, '%d %b %Y' )
+        rescue
+          datetime = ''
+        end
         time = ''
       when "time"
         time = t["label"]
-        datetime = DateTime.strptime( "#{date} #{time}", '%d %b %Y %I%M%p' ) if date != ''
+        begin
+          datetime = DateTime.strptime( "#{date} #{time}", '%d %b %Y %I%M%p' ) if date != ''
+        rescue
+          datetime = ''
+        end
       when "place"
         if t["votes"]["location"].keys == ['true']
           place = t["label"]
