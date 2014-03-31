@@ -108,6 +108,8 @@ class Subject
         closest = set.sort_by{|i| (i['coords'][0].to_i-cx)**2 + (i['coords'][1].to_i-cy)**2}.reverse.first
         votes = {}
         case tag['type']
+        when 'diaryDate'
+          votes = self.gather_votes(['day', 'month', 'year'], set)
         when 'place'
           votes = self.gather_votes(['place', 'location', 'name', 'lat', 'long', 'id'], set)
         when 'person'
@@ -173,7 +175,7 @@ class Subject
       when 'diaryDate'
         t_date = tlabel.split(' ')
         tag_date = label.split(' ')
-        good = t_date[0] == tag_date[0] && t_date[1] == tag_date[1]
+        good = t_date[0] == tag_date[0]
       when 'place', 'person', 'unit'
         good = Levenshtein.distance(t['compare'], tag['compare']) < LEV_THRESHOLD
       else
@@ -239,6 +241,12 @@ class Subject
       when 'diaryDate'
         tag['coords'][0] = 6
         tag['label'] = note.to_s
+        date = tag['label'].split ' '
+        tag['note'] = {
+          "day" => date[0],
+          "month" => date[1],
+          "year" => date[2],
+        }
       when 'person'
         note['first'] = note['first'].gsub(/[\. ]+/, ' ').strip if note['first']
         tag['label'] = "#{note['first']} #{note['surname']}"
