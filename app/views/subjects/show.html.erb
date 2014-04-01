@@ -86,7 +86,7 @@
       <td><%= d['label'] %></td>
       <td>
         <% d['votes'].each do |k,v| %>
-        <%= k %>: <%= v.keys.join(', ') %>
+        <%= k %>: <%= v.join(', ') %>
         <% end %>
       </td>
     </tr>

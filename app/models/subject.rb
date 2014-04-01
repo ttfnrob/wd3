@@ -73,10 +73,10 @@ class Subject
           datetime = ''
         end
       when "place"
-        if t["votes"]["location"].keys == ['true']
+        if t["votes"]["location"] == ['true']
           place = t["label"]
-          trim_lat = t["votes"]["lat"].keys.reject( &:empty? )
-          trim_long = t["votes"]["long"].keys.reject( &:empty? )
+          trim_lat = t["votes"]["lat"].reject( &:empty? )
+          trim_long = t["votes"]["long"].reject( &:empty? )
           if trim_lat.length == 1
             lat = trim_lat.join ','
             long = trim_long.join ','
@@ -100,6 +100,25 @@ class Subject
   end
   
   def clusterize(n=3, threshold = 1)
+    clusters = []
+    Tag.all( :subject_id => self.id ).each do |t|
+      clusters << t
+    end
+    if clusters.empty?
+      clusters = self.build_clusters n, threshold
+      clusters.each do |tag|
+        tag['votes'].each do |k,v|
+          tag['votes'][k] = v.keys
+        end
+        t = Tag.new tag
+        t['subject_id'] = self.id
+        t.save
+      end
+    end
+    clusters.reject{|tag| tag["count"] < threshold}
+  end
+  
+  def build_clusters(n = 3, threshold = 1)
     clustered_tags = []
     completed = []
     user_count = self.users.count
@@ -155,8 +174,8 @@ class Subject
         t['label'] = t['tag']['label']
       end
     end
-
-    return self.merge_adjacent_tags cleaned_tags.reject{|tag| tag["count"] < threshold}
+    
+    cleaned_tags
   end
   
   def build_set(tag, n)

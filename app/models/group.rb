@@ -70,10 +70,10 @@ class Group
           datetime = ''
         end
       when "place"
-        if t["votes"]["location"].keys == ['true']
+        if t["votes"]["location"] == ['true']
           place = t["label"]
-          trim_lat = t["votes"]["lat"].keys.reject( &:empty? )
-          trim_long = t["votes"]["long"].keys.reject( &:empty? )
+          trim_lat = t["votes"]["lat"].reject( &:empty? )
+          trim_long = t["votes"]["long"].reject( &:empty? )
           if trim_lat.length == 1
             lat = trim_lat.join ','
             long = trim_long.join ','
