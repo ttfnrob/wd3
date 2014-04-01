@@ -77,6 +77,7 @@ module PageProcessor
         Group.ensure_index [[:name, 1]], :sparse => true
         Classification.ensure_index [[:subject_ids, 1]], :sparse => true
         Discussion.ensure_index [[:title, 1]], :sparse => true
+        Tag.ensure_index [[:subject_id, 1]], :sparse => true
     end
   end
 end
