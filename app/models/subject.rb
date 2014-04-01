@@ -105,7 +105,7 @@ class Subject
       clusters << t
     end
     if clusters.empty?
-      clusters = self.build_clusters n, threshold
+      clusters = self.build_clusters n
       clusters.each do |tag|
         tag['votes'].each do |k,v|
           tag['votes'][k] = v.keys
@@ -118,7 +118,7 @@ class Subject
     clusters.reject{|tag| tag["count"] < threshold}
   end
   
-  def build_clusters(n = 3, threshold = 1)
+  def build_clusters(n = 3)
     clustered_tags = []
     completed = []
     user_count = self.users.count
