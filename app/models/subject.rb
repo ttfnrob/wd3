@@ -99,7 +99,7 @@ class Subject
     tags
   end
   
-  def clusterize(n=3, threshold = 1)
+  def clusterize(n=3)
     clusters = []
     Tag.find_each( :subject_id => self.id ) do |t|
       clusters << t
@@ -115,7 +115,7 @@ class Subject
         t.save
       end
     end
-    clusters.select{|tag| tag["count"] >= threshold || (tag["page_type"] == "report" && tag["type"] == "person")}
+    clusters
   end
   
   def build_clusters(n = 3)
@@ -145,7 +145,7 @@ class Subject
           votes = self.gather_votes(['name', 'context'], set)
         end
         
-        clustered_tags << {"page" => self.zooniverse_id, "page_number" => self.page_number, "page_type" => self.document_type.keys.join(', '), "type" => tag['type'], "x" => cx, "y" => cy, "label" => closest["label"], "compare" => closest["compare"], "count" => tag_count, "hit_rate" => tag_count.to_f/user_count.to_f, "votes" => votes}
+        clustered_tags << {"group" => self.group_id, "page" => self.zooniverse_id, "page_number" => self.page_number, "page_type" => self.document_type.keys.join(', '), "type" => tag['type'], "x" => cx, "y" => cy, "label" => closest["label"], "compare" => closest["compare"], "count" => tag_count, "hit_rate" => tag_count.to_f/user_count.to_f, "votes" => votes}
       end
     end
     

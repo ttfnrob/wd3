@@ -8,7 +8,7 @@ class SubjectsController < ApplicationController
     @g ||= Group.find_by_zooniverse_id( @p.group_id )
     n = params[:n] || 5
     threshold = params[:threshold] || 0
-  	tags = @p.clusterize( n.to_i, threshold.to_i )
+  	tags = @p.clusterize( n.to_i ).select{|tag| tag["count"] >= threshold.to_i || (tag["page_type"] == "report" && tag["type"] == "person")}
     @tags = @p.timeline(tags)
     @tags = @tags.select{ |t| t['type'].in? params[:filter].split ',' } if params[:filter]
   	@hex = {"diaryDate" => "#38674c", "person" => "#283f45", "place" => "#4ea4ad", "activity" => "#45815d", "weather" => "#00ffff"}

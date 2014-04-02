@@ -5,5 +5,7 @@ class Tag
 
   key :id, ObjectId
   key :subject_id, ObjectId
+  key :group, String
+  key :page, String
 
 end
