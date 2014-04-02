@@ -101,7 +101,7 @@ class Subject
   
   def clusterize(n=3, threshold = 1)
     clusters = []
-    Tag.where( :subject_id => self.id ).each do |t|
+    Tag.find_each( :subject_id => self.id ) do |t|
       clusters << t
     end
     if clusters.empty?

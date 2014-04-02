@@ -29,7 +29,7 @@ class Group
     @tags ||= []
     
     if @tags.empty?
-      Subject.where('group.zooniverse_id' => self.zooniverse_id ).fields(:zooniverse_id, :metadata).sort('metadata.page_number').each do |p|
+      Subject.fields(:zooniverse_id, :metadata).sort('metadata.page_number').find_each('group.zooniverse_id' => self.zooniverse_id ) do |p|
         @tags.push(*p.clusterize( n, threshold ))
       end
     end
