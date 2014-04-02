@@ -18,7 +18,7 @@ class Group
   def pages
     @pages ||= []
     if @pages.empty?
-      Subject.where('group.zooniverse_id' => self.zooniverse_id ).fields(:zooniverse_id, :location).sort('metadata.page_number').limit(20).each do |g|
+      Subject.fields(:zooniverse_id, :location).sort('metadata.page_number').limit(20).find_each('group.zooniverse_id' => self.zooniverse_id ) do |g|
         @pages << g
       end
     end
