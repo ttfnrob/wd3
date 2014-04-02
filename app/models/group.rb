@@ -26,7 +26,7 @@ class Group
   end
   
   def tags( n = 5, threshold = 1 )
-    @tags = []
+    @tags ||= []
     
     if @tags.empty?
       Subject.where('group.zooniverse_id' => self.zooniverse_id ).fields(:zooniverse_id, :metadata).sort('metadata.page_number').each do |p|
