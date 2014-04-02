@@ -145,7 +145,7 @@ class Subject
           votes = self.gather_votes(['name', 'context'], set)
         end
         
-        clustered_tags << {"page" => self.zooniverse_id, "page_number" => self.page_number, "page_type" => self.document_type.keys.join(', '), "type" => tag['type'], "x" => cx, "y" => cy, "tag" => closest, "count" => tag_count, "hit_rate" => tag_count.to_f/user_count.to_f, "votes" => votes}
+        clustered_tags << {"page" => self.zooniverse_id, "page_number" => self.page_number, "page_type" => self.document_type.keys.join(', '), "type" => tag['type'], "x" => cx, "y" => cy, "label" => closest["label"], "compare" => closest["compare"], "count" => tag_count, "hit_rate" => tag_count.to_f/user_count.to_f, "votes" => votes}
       end
     end
     
@@ -170,8 +170,6 @@ class Subject
         t['label'] = "#{t['votes']['rank'].keys.join(',')} #{t['votes']['first'].keys.join(',')} #{t['votes']['surname'].keys.join(', ')}"
       when 'unit'
         t['label'] = t['votes']['name'].keys.join(', ')
-      else
-        t['label'] = t['tag']['label']
       end
     end
     
@@ -225,13 +223,13 @@ class Subject
   
   def merge_adjacent_tags(clustered_tags)
     cleaned_tags = []
-    initial_tag = {"type" => '', "tag" => {"compare" => ""}, "count" => 0, "hit_rate" => 0}
+    initial_tag = {"type" => '', "compare" => "", "count" => 0, "hit_rate" => 0}
     clustered_tags.sort_by{|i| [i['y'], i['x']]}.inject(initial_tag) do |last_tag, tag|
       case tag["type"]
       when 'person', 'place', 'unit'
-        match = Levenshtein.distance(tag['tag']['compare'], last_tag['tag']['compare']) < LEV_THRESHOLD
+        match = Levenshtein.distance(tag['compare'], last_tag['compare']) < LEV_THRESHOLD
       else
-        match = tag["tag"]["compare"] == last_tag["tag"]["compare"]
+        match = tag["compare"] == last_tag["compare"]
       end
       if tag["type"] == last_tag["type"] && match
         last_tag["count"] += tag["count"]
