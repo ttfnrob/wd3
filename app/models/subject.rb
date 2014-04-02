@@ -115,7 +115,7 @@ class Subject
         t.save
       end
     end
-    clusters.reject{|tag| tag["count"] < threshold}
+    clusters.select{|tag| tag["count"] >= threshold || (tag["page_type"] == "report" && tag["type"] == "person")}
   end
   
   def build_clusters(n = 3)
