@@ -145,7 +145,7 @@ class Subject
           votes = self.gather_votes(['name', 'context'], set)
         end
         
-        clustered_tags << {"page" => self.zooniverse_id, "page_number" => self.page_number, "type" => tag['type'], "x" => cx, "y" => cy, "tag" => closest, "count" => tag_count, "hit_rate" => tag_count.to_f/user_count.to_f, "votes" => votes}
+        clustered_tags << {"page" => self.zooniverse_id, "page_number" => self.page_number, "page_type" => self.document_type.keys.join(', '), "type" => tag['type'], "x" => cx, "y" => cy, "tag" => closest, "count" => tag_count, "hit_rate" => tag_count.to_f/user_count.to_f, "votes" => votes}
       end
     end
     

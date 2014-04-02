@@ -1,15 +1,12 @@
 <% 
   n = 0
 %>
-<a href="#diary">Diaries</a>
-<a href="#signals">Signals</a>
-<a href="#reports">Reports</a>
-<a href="#orders">Orders</a>
 <table id="diary" class="export">
-  <caption>Diary pages</caption>
+  <caption>Tags</caption>
   <thead>
     <th>Tag</th>
     <th>Page</th>
+    <th>Page type</th>
     <th>Page number</th>
     <th>Count</th>
     <th>DateTime</th>
@@ -27,6 +24,7 @@
     <tr>
       <td><%= n %></td>
       <td><%= d["page"] %></td>
+      <td><%= d["page_type"]%></td>
       <td><%= d["page_number"] %></td>
       <td><%= d["count"] %></td>
       <td class="nowrap"><%= d['datetime'] %></td>
@@ -34,99 +32,6 @@
       <td><%= d['place'] %></td>
       <td><%= d['lat'] %>, <%= d['long'] %></td>
       <td><%= d['time'] %></td>
-      <td><%= d["type"] %></td>
-      <td><%= d['label'] %></td>
-      <td>
-        <% d['votes'].each do |k,v| %>
-        <%= k %>: <%= v.join(', ') %>
-        <% end %>
-      </td>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
-
-<table id="signals" class="export">
-  <caption>Signals</caption>
-  <thead>
-    <th>Tag</th>
-    <th>Page</th>
-    <th>Page number</th>
-    <th>Count</th>
-    <th>Type</th>
-    <th>Label</th>
-    <th>Data</th>
-  </thead>
-  <tbody>
-  <% @tags['signals'].each do |d| %>
-    <% n += 1 %>
-    <tr>
-      <td><%= n %></td>
-      <td><%= d["page"] %></td>
-      <td><%= d["page_number"] %></td>
-      <td><%= d["count"] %></td>
-      <td><%= d["type"] %></td>
-      <td><%= d['label'] %></td>
-      <td>
-        <% d['votes'].each do |k,v| %>
-        <%= k %>: <%= v.join(', ') %>
-        <% end %>
-      </td>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
-
-<table id="reports" class="export">
-  <caption>Reports</caption>
-  <thead>
-    <th>Tag</th>
-    <th>Page</th>
-    <th>Page number</th>
-    <th>Count</th>
-    <th>Type</th>
-    <th>Label</th>
-    <th>Data</th>
-  </thead>
-  <tbody>
-  <% @tags['report'].each do |d| %>
-    <% n += 1 %>
-    <tr>
-      <td><%= n %></td>
-      <td><%= d["page"] %></td>
-      <td><%= d["page_number"] %></td>
-      <td><%= d["count"] %></td>
-      <td><%= d["type"] %></td>
-      <td><%= d['label'] %></td>
-      <td>
-        <% d['votes'].each do |k,v| %>
-        <%= k %>: <%= v.join(', ') %>
-        <% end %>
-      </td>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
-
-<table id="orders" class="export">
-  <caption>Orders</caption>
-  <thead>
-    <th>Tag</th>
-    <th>Page</th>
-    <th>Page number</th>
-    <th>Count</th>
-    <th>Type</th>
-    <th>Label</th>
-    <th>Data</th>
-  </thead>
-  <tbody>
-  <% @tags['orders'].each do |d| %>
-    <% n += 1 %>
-    <tr>
-      <td><%= n %></td>
-      <td><%= d["page"] %></td>
-      <td><%= d["page_number"] %></td>
-      <td><%= d["count"] %></td>
       <td><%= d["type"] %></td>
       <td><%= d['label'] %></td>
       <td>

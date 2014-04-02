@@ -26,21 +26,14 @@ class Group
   end
   
   def tags( n = 5, threshold = 1 )
-    @tags = {
-      'diary' => [],
-      'signals' => [],
-      'orders' => [],
-      'report' => []
-    }
+    @tags = []
     
-    if @tags['diary'].empty?
-      Subject.where('group.zooniverse_id' => self.zooniverse_id ).fields(:zooniverse_id, :metadata).sort('metadata.page_number').all().each do |p|
-        p.document_type.keys.each do |type|
-          @tags[type].push(*p.clusterize( n, threshold )) if @tags[type]
-        end
+    if @tags.empty?
+      Subject.where('group.zooniverse_id' => self.zooniverse_id ).fields(:zooniverse_id, :metadata).sort('metadata.page_number').each do |p|
+        @tags.push(*p.clusterize( n, threshold ))
       end
     end
-    
+
     @tags
   end
   
@@ -52,48 +45,51 @@ class Group
     time = ''
     datetime = ''
     
-    @tags['diary'].each do |t|
-      case t["type"]
-      when "diaryDate"
-        date = t["label"]
-        begin
-          datetime = Date.strptime( date, '%d %b %Y' )
-        rescue
-          datetime = ''
-        end
-        time = ''
-      when "time"
-        time = t["label"]
-        begin
-          datetime = DateTime.strptime( "#{date} #{time}", '%d %b %Y %I%M%p' ) if date != ''
-        rescue
-          datetime = ''
-        end
-      when "place"
-        if t["votes"]["location"] == ['true']
-          place = t["label"]
-          trim_lat = t["votes"]["lat"].reject( &:empty? )
-          trim_long = t["votes"]["long"].reject( &:empty? )
-          if trim_lat.length == 1
-            lat = trim_lat.join ','
-            long = trim_long.join ','
-          else
-            lat = ''
-            long = ''
+    @tags.each do |t|
+      if t["page_type"] == "diary"
+        case t["type"]
+        when "diaryDate"
+          date = t["label"]
+          begin
+            datetime = Date.strptime( date, '%d %b %Y' )
+          rescue
+            datetime = ''
+          end
+          time = ''
+        when "time"
+          time = t["label"]
+          begin
+            datetime = DateTime.strptime( "#{date} #{time}", '%d %b %Y %I%M%p' ) if date != ''
+          rescue
+            datetime = ''
+          end
+        when "place"
+          if t["votes"]["location"] == ['true']
+            place = t["label"]
+            trim_lat = t["votes"]["lat"].reject( &:empty? )
+            trim_long = t["votes"]["long"].reject( &:empty? )
+            if trim_lat.length == 1
+              lat = trim_lat.join ','
+              long = trim_long.join ','
+            else
+              lat = ''
+              long = ''
+            end
           end
         end
+        
+        t['datetime'] = datetime
+        t['date'] = date
+        t['time'] = time
+        t['place'] = place
+        t['lat'] = lat
+        t['long'] = long
+        
       end
-      
-      t['datetime'] = datetime
-      t['date'] = date
-      t['time'] = time
-      t['place'] = place
-      t['lat'] = lat
-      t['long'] = long
       
     end
     
-    @tags['diary']
+    @tags
   end
   
   def completed
