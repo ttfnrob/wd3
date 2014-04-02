@@ -25,7 +25,7 @@ class GroupsController < ApplicationController
     timeline = @g.timeline.select{ |t| t['type'].in? filter.split ',' }
     
     features = []
-    timeline.reject{|t| t["lat"] == '' }.each do |t|
+    timeline.reject{|t| t["lat"] == '' || t['lat'].nil? }.each do |t|
       features << {
         type: 'Feature',
         geometry: {
