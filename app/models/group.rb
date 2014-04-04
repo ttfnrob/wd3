@@ -28,14 +28,8 @@ class Group
   def tags( n = 5, threshold = 1 )
     @tags ||= []
     
-    Tag.sort(:page_number).find_each( :group => self.zooniverse_id ) do |t|
-      @tags << t
-    end
-    
-    if @tags.empty?
-      Subject.fields(:zooniverse_id, :metadata, :group).sort('metadata.page_number').find_each('group.zooniverse_id' => self.zooniverse_id ) do |p|
-        @tags.push(*p.clusterize( n ))
-      end
+    Subject.fields(:zooniverse_id, :metadata, :group).sort('metadata.page_number').find_each('group.zooniverse_id' => self.zooniverse_id ) do |p|
+      @tags.push(*p.clusterize( n ))
     end
 
     @tags = @tags.select{|tag| tag["count"] >= threshold || (tag["page_type"] == "report" && tag["type"] == "person")}
