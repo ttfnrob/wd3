@@ -105,14 +105,14 @@ class Subject
       clusters << t
     end
     if clusters.empty?
-      clusters = self.build_clusters n
-      clusters.each do |tag|
+      self.build_clusters( n ).each do |tag|
         tag['votes'].each do |k,v|
           tag['votes'][k] = v.keys
         end
         t = Tag.new tag
         t['subject_id'] = self.id
         t.save
+        clusters << t
       end
     end
     clusters
