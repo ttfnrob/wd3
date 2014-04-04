@@ -1,5 +1,6 @@
 class Timeline
   include MongoMapper::Document
+  plugin GeoSpatial
 
   set_collection_name "war_diary_timelines"
   belongs_to :subject
@@ -9,6 +10,6 @@ class Timeline
   key :group, String
   key :page, String
   key :datetime, Time
-  key :coords, Array
+  geo_key :coords, Array
 
 end
