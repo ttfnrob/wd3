@@ -86,11 +86,11 @@ class Group
         t['date'] = date
         t['time'] = time
         t['place'] = place
-        t['lat'] = lat
-        t['long'] = long
+        t['coords'] = [long.to_f, lat.to_f]
         
       end
       
+      Timeline.new( t.attributes ).save()
     end
     
     @tags

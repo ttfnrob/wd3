@@ -12,25 +12,45 @@ class GroupsController < ApplicationController
   def export
     n = params[:n] || 5
     threshold = params[:threshold] || 2
-  	g = Group.find_by_zooniverse_id(params[:zoo_id])
-    g.tags n.to_i, threshold.to_i
-    @timeline = g.timeline
+    
+    @timeline ||= []
+    
+    Timeline.sort(:page_number).find_each( :group => params[:zoo_id] ) do |t|
+      @timeline << t
+    end
+    
+    if @timeline.empty?
+      g = Group.find_by_zooniverse_id(params[:zoo_id])
+      g.tags n.to_i, threshold.to_i
+      @timeline = g.timeline
+    end
+    
     @timeline = @timeline.select{ |t| t['type'].in? params[:filter].split ',' } if params[:filter]
   end
   
   def map
-    @g ||= Group.find_by_zooniverse_id(params[:zoo_id])
-    @g.tags 5, 2
     filter = params[:filter] || 'activity'
-    timeline = @g.timeline.select{ |t| t['type'].in? filter.split ',' }
+    
+    timeline ||= []
+    
+    Timeline.sort(:page_number).find_each( :group => params[:zoo_id] ) do |t|
+      timeline << t
+    end
+    
+    if timeline.empty?
+      g = Group.find_by_zooniverse_id(params[:zoo_id])
+      g.tags 5, 2
+      timeline = g.timeline
+    end
+    timeline = timeline.select{ |t| t['type'].in? filter.split ',' }
     
     features = []
-    timeline.reject{|t| t["lat"] == '' || t['lat'].nil? }.each do |t|
+    timeline.reject{|t| t["coords"].nil? || t['coords'].empty? || t["coords"][0] == 0 }.each do |t|
       features << {
         type: 'Feature',
         geometry: {
           type: 'Point',
-          coordinates: [ t["long"].to_f, t["lat"].to_f]
+          coordinates: t['coords']
         },
         properties: {
           type: t["type"],
