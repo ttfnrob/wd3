@@ -9,7 +9,7 @@ gem 'rails', '3.2.11'
 
 gem 'mysql2'
 gem 'mongo_mapper'
-gem 'mongo_geo', :git => "git://github.com/eatyourgreens/mongo_geo"
+gem 'mongo_geo'
 gem 'bson_ext'
 gem 'd3_rails'
 gem "levenshtein", "~> 0.2.2"
