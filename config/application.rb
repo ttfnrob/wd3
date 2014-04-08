@@ -86,6 +86,8 @@ module PageProcessor
         Timeline.ensure_index [[:group, 1]], :sparse => true
         Timeline.ensure_index [[:page_number, 1]], :sparse => true
         Timeline.ensure_index [[:coords, '2d']], :sparse => true
+        Timeline.ensure_index [[:date, 1]], :sparse => true
+        Timeline.ensure_index [[:type, 1]], :sparse => true
     end
   end
 end

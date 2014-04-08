@@ -70,5 +70,48 @@ class GroupsController < ApplicationController
     
     render json: geojson
   end
+  
+  def full_map
+    filter = params[:filter] || 'casualties'
+    
+    timeline ||= []
+    
+    Timeline.sort(:date).find_each( :type => filter ) do |t|
+      timeline << t
+    end
+    
+    if timeline.empty?
+      g = Group.find_by_zooniverse_id(params[:zoo_id])
+      g.tags 5, 2
+      timeline = g.timeline
+    end
+    # timeline = timeline.select{ |t| t['type'].in? filter.split ',' }
+    
+    features = []
+    timeline.reject{|t| t["coords"].nil? || t['coords'].empty? || t["coords"][0] == 0 }.each do |t|
+      features << {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: t['coords']
+        },
+        properties: {
+          type: t["type"],
+          label: t["label"],
+          datetime: t["datetime"],
+          :'marker-color' => '#00607d',
+          :'marker-symbol' => 'circle',
+          :'marker-size' => 'medium'
+        }
+      }
+    end
+    
+    geojson = {
+      type: "FeatureCollection",
+      features: features
+    }
+    
+    render json: geojson
+  end
 
 end
