@@ -9,7 +9,7 @@ Group.each do |g|
   
   timeline = []
   
-  Timeline.sort(:page_number).find_each( :group => g.zooniverse_id ) do |t|
+  Timeline.sort(:page_number).limit(1).find_each( :group => g.zooniverse_id ) do |t|
     timeline << t
   end
   
