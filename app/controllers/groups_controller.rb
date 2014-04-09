@@ -73,18 +73,20 @@ class GroupsController < ApplicationController
   
   def full_map
     filter = params[:filter] || 'casualties'
+    start_date = Time.parse('01/01/1915')
+    end_date = Time.parse('31/12/1915')
     
     timeline ||= []
     
-    Timeline.sort(:date).find_each( :type => filter ) do |t|
+    Timeline.limit(10000).sort(:date).find_each( :type => filter, :datetime.gte => start_date, :datetime.lte => end_date ) do |t|
       timeline << t
     end
     
-    if timeline.empty?
-      g = Group.find_by_zooniverse_id(params[:zoo_id])
-      g.tags 5, 2
-      timeline = g.timeline
-    end
+    # if timeline.empty?
+#       g = Group.find_by_zooniverse_id(params[:zoo_id])
+#       g.tags 5, 2
+#       timeline = g.timeline
+#     end
     # timeline = timeline.select{ |t| t['type'].in? filter.split ',' }
     
     features = []
