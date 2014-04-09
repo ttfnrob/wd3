@@ -1,5 +1,5 @@
 place = ARGV[0] || 'Ypres'
-fields = ['name']
+fields = ['name', 'lat', 'long', 'id']
 votes = {}
 
 Tag.find_each( :type => 'place', :compare => place.upcase.gsub(/[^A-Z0-9]/, '') ) do |t|
