@@ -3,7 +3,6 @@ class Classification
   set_collection_name "war_diary_classifications"
   belongs_to :subject
 
-  key :id, ObjectId
   key :workflow_id, ObjectId
   key :user_id, ObjectId, :optional
   key :user_name, String, :optional
