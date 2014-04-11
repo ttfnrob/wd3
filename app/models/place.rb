@@ -8,7 +8,7 @@ class Place
   key :label, String
   key :name, String
   key :compare, String
-  key :id, Integer
+  key :geoid, Integer
   geo_key :coords, Array
 
 end
