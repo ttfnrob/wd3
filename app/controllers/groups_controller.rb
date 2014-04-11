@@ -73,14 +73,43 @@ class GroupsController < ApplicationController
   
   def full_map
     filter = params[:filter] || 'casualties'
-    start_date = Time.parse('01/01/1915')
-    end_date = Time.parse('31/12/1915')
+    start_date = Time.parse('01/01/1916')
+    end_date = Time.parse('31/12/1916')
     
-    timeline ||= []
+    features = []
+    places = Place.all()
     
     Timeline.limit(10000).sort(:date).find_each( :type => filter, :datetime.gte => start_date, :datetime.lte => end_date ) do |t|
-      timeline << t
+      places.select{|p| p['label'] == t['place'] }.each do |p|
+        puts p['place']
+        features << {
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: p['coords']
+          },
+          properties: {
+            type: t["type"],
+            label: t["label"],
+            datetime: t["datetime"],
+            :'marker-color' => '#00607d',
+            :'marker-symbol' => 'circle',
+            :'marker-size' => 'medium'
+          }
+        }
+      end
     end
+  
+    
+    geojson = {
+      type: "FeatureCollection",
+      features: features
+    }
+    
+    render json: geojson
+  end
+  
+  def place_map
     
     # if timeline.empty?
 #       g = Group.find_by_zooniverse_id(params[:zoo_id])
@@ -90,7 +119,7 @@ class GroupsController < ApplicationController
     # timeline = timeline.select{ |t| t['type'].in? filter.split ',' }
     
     features = []
-    timeline.reject{|t| t["coords"].nil? || t['coords'].empty? || t["coords"][0] == 0 }.each do |t|
+    Place.each do |t|
       features << {
         type: 'Feature',
         geometry: {
@@ -98,9 +127,8 @@ class GroupsController < ApplicationController
           coordinates: t['coords']
         },
         properties: {
-          type: t["type"],
           label: t["label"],
-          datetime: t["datetime"],
+          name: t["name"],
           :'marker-color' => '#00607d',
           :'marker-symbol' => 'circle',
           :'marker-size' => 'medium'
