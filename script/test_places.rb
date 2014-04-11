@@ -51,7 +51,7 @@ place_names.each do |place|
       :compare => place[:compare],
       :name => votes['name'].keys.join(','),
       :coords => [votes['long'].keys.join(',').to_f, votes['lat'].keys.join(',').to_f],
-      :id => votes['id'].keys.join(',').to_i
+      :geoid => votes['id'].keys.join(',').to_i
     }
     Place.new(p).save()
     count += 1
