@@ -79,7 +79,7 @@ class GroupsController < ApplicationController
     features = []
     places = Place.all()
     
-    Timeline.limit(10000).sort(:date).find_each( :type => filter, :datetime.gte => start_date, :datetime.lte => end_date ) do |t|
+    Timeline.limit(10000).sort(:datetime).find_each( :type => filter, :datetime.gte => start_date, :datetime.lte => end_date ) do |t|
       places.select{|p| p['label'] == t['place'] }.each do |p|
         puts t['place']
         features << {
