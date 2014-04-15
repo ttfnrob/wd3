@@ -73,13 +73,17 @@ class GroupsController < ApplicationController
   
   def full_map
     filter = params[:filter] || 'casualties'
-    start_date = Time.parse('01/01/1916')
-    end_date = Time.parse('31/12/1916')
+    start_date = Time.parse('01/01/1914')
+    end_date = Time.parse('31/12/1919')
     
     features = []
     places = Place.all()
+    timeline = []
+    Timeline.limit(10000).find_each( :type => filter, :datetime.gte => start_date, :datetime.lte => end_date ) do |t|
+      timeline << t
+    end
     
-    Timeline.limit(10000).sort(:datetime).find_each( :type => filter, :datetime.gte => start_date, :datetime.lte => end_date ) do |t|
+    timeline.each do |t|
       places.select{|p| p['label'] == t['place'] }.each do |p|
         puts t['place']
         features << {
@@ -89,12 +93,9 @@ class GroupsController < ApplicationController
             coordinates: p['coords']
           },
           properties: {
-            type: t["type"],
+            place: t["place"],
             label: t["label"],
-            datetime: t["datetime"],
-            :'marker-color' => '#00607d',
-            :'marker-symbol' => 'circle',
-            :'marker-size' => 'medium'
+            datetime: t["datetime"]
           }
         }
       end
