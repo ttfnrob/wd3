@@ -83,7 +83,7 @@ class Group
         
       end
       
-      Timeline.new( t.attributes ).save()
+      Timeline.new( t.attributes ).save() if self.state = 'complete'
     end
     
     @tags

@@ -111,7 +111,7 @@ class Subject
         end
         t = Tag.new tag
         t['subject_id'] = self.id
-        t.save
+        t.save if self.state == 'complete'
         clusters << t
       end
     end
