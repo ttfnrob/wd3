@@ -14,13 +14,15 @@ class GroupsController < ApplicationController
     threshold = params[:threshold] || 2
     g = Group.find_by_zooniverse_id(params[:zoo_id])
     
+    Timeline.destroy_all( :group => params[:zoo_id] ) unless g.state == 'complete'
+    
     @timeline ||= []
     
     Timeline.find_each( :group => params[:zoo_id] ) do |t|
       @timeline << t
     end
     
-    if g.state != 'complete' || @timeline.empty?
+    if @timeline.empty?
       g.tags n.to_i, threshold.to_i
       @timeline = g.timeline
     end
@@ -32,13 +34,15 @@ class GroupsController < ApplicationController
     filter = params[:filter] || 'activity'
     g = Group.find_by_zooniverse_id(params[:zoo_id])
     
+    Timeline.destroy_all( :group => params[:zoo_id] ) unless g.state == 'complete'
+    
     timeline ||= []
     
     Timeline.find_each( :group => params[:zoo_id] ) do |t|
       timeline << t
     end
     
-    if  g.state != 'complete' || @timeline.empty?
+    if @timeline.empty?
       g.tags 5, 2
       timeline = g.timeline
     end
