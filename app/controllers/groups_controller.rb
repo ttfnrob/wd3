@@ -79,7 +79,7 @@ class GroupsController < ApplicationController
     features = []
     places = Place.all()
     timeline = []
-    Timeline.limit(10000).find_each( :type => filter, :datetime.gte => start_date, :datetime.lte => end_date ) do |t|
+    Timeline.find_each( :type => filter, :datetime.gte => start_date, :datetime.lte => end_date ) do |t|
       timeline << t
     end
     
