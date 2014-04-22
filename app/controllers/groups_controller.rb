@@ -42,7 +42,7 @@ class GroupsController < ApplicationController
       timeline << t
     end
     
-    if @timeline.empty?
+    if timeline.empty?
       g.tags 5, 2
       timeline = g.timeline
     end
