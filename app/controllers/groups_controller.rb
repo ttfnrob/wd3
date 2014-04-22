@@ -12,6 +12,7 @@ class GroupsController < ApplicationController
   def export
     n = params[:n] || 5
     threshold = params[:threshold] || 2
+    g = Group.find_by_zooniverse_id(params[:zoo_id])
     
     @timeline ||= []
     
@@ -19,8 +20,7 @@ class GroupsController < ApplicationController
       @timeline << t
     end
     
-    if @timeline.empty?
-      g = Group.find_by_zooniverse_id(params[:zoo_id])
+    if g.state != 'complete' || @timeline.empty?
       g.tags n.to_i, threshold.to_i
       @timeline = g.timeline
     end
@@ -30,6 +30,7 @@ class GroupsController < ApplicationController
   
   def map
     filter = params[:filter] || 'activity'
+    g = Group.find_by_zooniverse_id(params[:zoo_id])
     
     timeline ||= []
     
@@ -37,8 +38,7 @@ class GroupsController < ApplicationController
       timeline << t
     end
     
-    if timeline.empty?
-      g = Group.find_by_zooniverse_id(params[:zoo_id])
+    if  g.state != 'complete' || @timeline.empty?
       g.tags 5, 2
       timeline = g.timeline
     end
