@@ -1,6 +1,6 @@
 class GroupsController < ApplicationController
   def index
-    @diaries = Group.all
+    @diaries = Group.where( :state => 'complete' )
   end
 
   def show
