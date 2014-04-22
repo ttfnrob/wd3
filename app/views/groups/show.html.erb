@@ -1,5 +1,6 @@
 <h1><a href="/">War Diaries Data Digger</a>: <%= @g.name %> (<%= @g.start_date.strftime('%-d %b %Y') %> — <%= @g.end_date.strftime('%-d %b %Y') %>)</h1>
 <p><%= @g.stats['complete'] %>/<%= @g.stats['total'] %> pages complete.</p>
+<p>Status: <%= @g.state %></p>
 <ul class="gallery">
   <% @g.pages.each do |subject| %>
   <li><a href="/pages/<%= subject["zooniverse_id"] %>"><img src="<%= subject["location"]["standard"] %>"></a></li>
