@@ -90,6 +90,7 @@ class GroupsController < ApplicationController
     timeline.each do |t|
       places.select{|p| p['label'] == t['place'] }.each do |p|
         puts t['place']
+        puts t['label']
         features << {
           type: 'Feature',
           geometry: {
