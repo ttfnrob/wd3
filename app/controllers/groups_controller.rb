@@ -11,19 +11,19 @@ class GroupsController < ApplicationController
   
   def export
     n = params[:n] || 5
-    threshold = params[:threshold] || 2
+    threshold = params[:threshold].to_i || 2
     g = Group.find_by_zooniverse_id(params[:zoo_id])
     
     Timeline.destroy_all( :group => params[:zoo_id] ) unless g.state == 'complete'
     
     @timeline ||= []
     
-    Timeline.find_each( :group => params[:zoo_id] ) do |t|
+    Timeline.find_each( :group => params[:zoo_id], :count.gte => threshold ) do |t|
       @timeline << t
     end
     
     if @timeline.empty?
-      g.tags n.to_i, threshold.to_i
+      g.tags n.to_i, threshold
       @timeline = g.timeline
     end
     
