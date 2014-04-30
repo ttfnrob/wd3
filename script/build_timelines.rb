@@ -1,6 +1,6 @@
 counter = 0
 
-Group.each do |g|
+Group.find_each( :state => 'complete' ) do |g|
   counter += 1
   puts "#{counter} #{g.zooniverse_id} #{g.name}"
   
@@ -8,6 +8,8 @@ Group.each do |g|
   threshold = 2
   
   timeline = []
+  
+  Timeline.destroy_all( :group => g.zooniverse_id ) unless g.state == 'complete'
   
   Timeline.sort(:page_number).limit(1).find_each( :group => g.zooniverse_id ) do |t|
     timeline << t
