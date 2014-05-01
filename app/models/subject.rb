@@ -286,6 +286,9 @@ class Subject
       when 'casualties'
         labels = note.reject{|k,v| v.to_i == 0}.map{|k,v| "#{k}: #{v}"}
         tag['label'] = labels.empty? ? 'casualties: 0' : labels.join(', ')
+      when 'strength'
+        labels = note.reject{|k,v| v.to_i == 0}.map{|k,v| "#{k}: #{v}"}
+        tag['label'] = labels.empty? ? 'strength: 0' : labels.join(', ')
       when 'gridRef'
         labels = note.reject{|k,v| v == ''}.values
         tag['label'] = labels.empty? ? '' : labels.join(' ')
