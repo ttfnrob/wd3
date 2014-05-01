@@ -13,6 +13,7 @@ gem 'mongo_geo'
 gem 'bson_ext'
 gem 'd3_rails'
 gem "levenshtein", "~> 0.2.2"
+gem 'rack-wwwhisper', '~> 1.0'
 
 group :development do
   gem "better_errors"
