@@ -27,7 +27,7 @@ class Group
   def tags( n = 5, threshold = 1 )
     @tags ||= []
     
-    Subject.fields(:zooniverse_id, :metadata, :group).sort('metadata.page_number').find_each('group.zooniverse_id' => self.zooniverse_id ) do |p|
+    Subject.fields(:zooniverse_id, :metadata, :group, :state).sort('metadata.page_number').find_each('group.zooniverse_id' => self.zooniverse_id ) do |p|
       @tags.push(*p.clusterize( n ))
     end
 
