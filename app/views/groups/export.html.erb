@@ -4,6 +4,7 @@
 <table id="diary" class="export">
   <caption>Tags</caption>
   <thead>
+    <th>Order</th>
     <th>Tag</th>
     <th>Page</th>
     <th>Page type</th>
@@ -22,6 +23,7 @@
   <% @timeline.each do |d| %>
     <% n += 1 %>
     <tr>
+      <td><%= d["order"] %></td>
       <td><%= n %></td>
       <td><%= d["page"] %></td>
       <td><%= d["page_type"]%></td>

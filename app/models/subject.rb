@@ -101,6 +101,8 @@ class Subject
   
   def clusterize(n=3)
     clusters = []
+    order = 0
+    
     Tag.find_each( :subject_id => self.id ) do |t|
       clusters << t
     end
@@ -109,8 +111,10 @@ class Subject
         tag['votes'].each do |k,v|
           tag['votes'][k] = v.keys
         end
+        order += 1
         t = Tag.new tag
         t['subject_id'] = self.id
+        t['order'] = order
         t.save if self.state == 'complete'
         clusters << t
       end
