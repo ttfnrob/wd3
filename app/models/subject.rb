@@ -118,6 +118,7 @@ class Subject
         t.save if self.state == 'complete'
         clusters << t
       end
+      puts self.page_number, self.state
     end
     clusters
   end
