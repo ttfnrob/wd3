@@ -18,7 +18,7 @@ class GroupsController < ApplicationController
     
     @timeline ||= []
     
-    Timeline.find_each( :group => params[:zoo_id], :count.gte => threshold ) do |t|
+    Timeline.sort( :page_number, :id ).find_each( :group => params[:zoo_id] ) do |t|
       @timeline << t
     end
     
@@ -27,6 +27,7 @@ class GroupsController < ApplicationController
       @timeline = g.timeline
     end
     
+    @timeline = @timeline.select{ |t| t['count'] >= threshold }
     @timeline = @timeline.select{ |t| t['type'].in? params[:filter].split ',' } if params[:filter]
   end
   
