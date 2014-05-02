@@ -73,7 +73,7 @@
   <% @tags.each do |d| %>
     <% n += 1 %>
     <tr class="<%=d ["type"] %>">
-      <td><%= d['order'] %></td>
+      <td><%= d['page_order'] %></td>
       <td><%= d["count"] %></td>
     <% if d['datetime'] %>
       <td class="nowrap"><%= d['datetime'] %></td>
