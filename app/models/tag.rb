@@ -6,5 +6,6 @@ class Tag
   key :subject_id, ObjectId
   key :group, String
   key :page, String
+  key :page_order, Integer
 
 end

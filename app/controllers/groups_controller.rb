@@ -18,7 +18,7 @@ class GroupsController < ApplicationController
     
     @timeline ||= []
     
-    Timeline.sort( :page_number, :id ).find_each( :group => params[:zoo_id] ) do |t|
+    Timeline.sort( :page_number, :page_order ).find_each( :group => params[:zoo_id] ) do |t|
       @timeline << t
     end
     

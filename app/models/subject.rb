@@ -114,7 +114,7 @@ class Subject
         order += 1
         t = Tag.new tag
         t['subject_id'] = self.id
-        t['order'] = order
+        t['page_order'] = order
         t.save if self.state == 'complete'
         clusters << t
       end

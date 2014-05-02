@@ -10,6 +10,7 @@ class Timeline
   key :page, String
   key :datetime, Time
   key :page_number, Integer
+  key :page_order, Integer
   geo_key :coords, Array
 
 end
