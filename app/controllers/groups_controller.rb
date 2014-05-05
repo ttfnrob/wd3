@@ -1,4 +1,6 @@
 class GroupsController < ApplicationController
+  before_filter :authenticate
+  
   def index
     @diaries = Group.all
   end
