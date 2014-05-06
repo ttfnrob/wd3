@@ -52,22 +52,26 @@ class GroupsController < ApplicationController
     timeline = timeline.select{ |t| t['type'].in? filter.split ',' }
     
     features = []
-    timeline.reject{|t| t["coords"].nil? || t['coords'].empty? || t["coords"][0] == 0 }.each do |t|
-      features << {
-        type: 'Feature',
-        geometry: {
-          type: 'Point',
-          coordinates: t['coords']
-        },
-        properties: {
-          type: t["type"],
-          label: t["label"],
-          datetime: t["datetime"],
-          :'marker-color' => '#00607d',
-          :'marker-symbol' => 'circle',
-          :'marker-size' => 'medium'
+    timeline.each do |t|
+      Place.find_each( :label => t['place'] ) do |p|
+        features << {
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: p['coords']
+          },
+          properties: {
+            type: t["type"],
+            label: t["label"],
+            place: t['place'],
+            geonames: p['name'],
+            datetime: t["datetime"],
+            :'marker-color' => '#00607d',
+            :'marker-symbol' => 'circle',
+            :'marker-size' => 'medium'
+          }
         }
-      }
+      end
     end
     
     geojson = {
@@ -103,7 +107,8 @@ class GroupsController < ApplicationController
           properties: {
             place: t["place"],
             label: t["label"],
-            datetime: t["datetime"]
+            datetime: t["datetime"],
+            diary: t["group"]
           }
         }
       end
