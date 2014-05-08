@@ -88,16 +88,16 @@ class GroupsController < ApplicationController
     end_date = Time.parse('31/12/1919')
     
     features = []
-    places = Place.all()
-    timeline = []
-    Timeline.find_each( :type => filter, :datetime.gte => start_date, :datetime.lte => end_date ) do |t|
-      timeline << t
-    end
+    count = 0
+    # timeline = []
+#     Timeline.find_each( :type => filter, :datetime.gte => start_date, :datetime.lte => end_date ) do |t|
+#       timeline << t
+#     end
     
-    timeline.each do |t|
-      places.select{|p| p['label'] == t['place'] }.each do |p|
-        puts t['place']
-        puts t['label']
+    Place.find_each do |p|
+      count += 1
+      puts "#{count} #{p['label']}"
+      Timeline.find_each( :type => filter, :place => p['label'], :datetime.gte => start_date, :datetime.lte => end_date ) do |t|
         features << {
           type: 'Feature',
           geometry: {
