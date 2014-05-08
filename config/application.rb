@@ -89,6 +89,7 @@ module PageProcessor
         Timeline.ensure_index [[:coords, '2d']], :sparse => true
         Timeline.ensure_index [[:datetime, 1]], :sparse => true
         Timeline.ensure_index [[:type, 1]], :sparse => true
+        Timeline.ensure_index [[:place,1]], :sparse => true
         Place.ensure_index [[:coords, '2d']], :sparse => true
         Place.ensure_index [[:label, 1]], :sparse => true
         Place.ensure_index [[:compare, 1]], :sparse => true
