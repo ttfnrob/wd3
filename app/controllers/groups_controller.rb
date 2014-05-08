@@ -94,7 +94,7 @@ class GroupsController < ApplicationController
 #       timeline << t
 #     end
     
-    Place.find_each do |p|
+    Place.all().each do |p|
       count += 1
       puts "#{count} #{p['label']}"
       Timeline.find_each( :type => filter, :place => p['label'], :datetime.gte => start_date, :datetime.lte => end_date ) do |t|
