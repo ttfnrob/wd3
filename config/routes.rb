@@ -13,6 +13,7 @@ PageProcessor::Application.routes.draw do
   match 'diaries/:zoo_id' => 'groups#show'
   match 'diaries/:zoo_id/export' => 'groups#export'
   match 'diaries/:zoo_id/map' => 'groups#map'
+  match 'diaries/:zoo_id/csv' => 'groups#csv'
   
   match 'places/' => 'groups#place_map'
 
