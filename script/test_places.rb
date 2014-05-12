@@ -1,4 +1,4 @@
-
+#  drop and rewrite the places collection from the tags collection.
 fields = ['name', 'lat', 'long', 'id']
 place_names = []
 places = []
@@ -17,6 +17,7 @@ end
 puts place_names.length
 
 count = 0
+Place.destroy_all
 
 place_names.each do |place|
   votes = {}
