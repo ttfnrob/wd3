@@ -117,8 +117,17 @@ class GroupsController < ApplicationController
     timeline = timeline.select{ |t| t['type'].in? filter.split ',' }
     
     features = []
+    place_cache = {}
     timeline.each do |t|
-      Place.find_each( :label => t['place'] ) do |p|
+      
+      unless place_cache.has_key? t['place']
+        place_cache[ t['place'] ] = []
+        Place.find_each( :label => t['place'] ) do |p|
+          place_cache[ t['place'] ] << {:id => p['geoid'], :name => p['name'], :coords => p['coords'] }
+        end
+      end
+      
+      place_cache[ t['place'] ].each do |p|
         features << {
           type: 'Feature',
           geometry: {
