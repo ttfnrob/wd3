@@ -1,0 +1,8 @@
+<h1><a href="/">War Diaries Data Digger</a>: Diaries</h1>
+  <h2>Complete</h2>
+  <ol>
+  <% @diaries.each do |diary| %>
+    <li><a href="/diaries/<%= diary.zooniverse_id %>/csv"><%= diary.name %></a> (<%= diary.completed %>%)</li>
+  <% end %>
+  </ol>
+</div>
