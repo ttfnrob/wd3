@@ -13,9 +13,11 @@ PageProcessor::Application.routes.draw do
   match 'diaries/:zoo_id' => 'groups#show'
   match 'diaries/:zoo_id/export' => 'groups#export'
   match 'diaries/:zoo_id/map' => 'groups#map'
-  match 'diaries/:zoo_id/csv' => 'groups#csv'
+  match 'diaries/:zoo_id/csv' => 'public#csv'
   
   match 'places/' => 'groups#place_map'
+  
+  match 'public/' => 'public#index'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
