@@ -2,7 +2,13 @@
   <h2>Complete</h2>
   <ol>
   <% @diaries.each do |diary| %>
-    <li><a href="/diaries/<%= diary.zooniverse_id %>/csv"><%= diary.name %></a> (<%= diary.completed %>%)</li>
+    <li>
+      <%= diary.metadata['source'].upcase %><br>
+      <%= diary.name %> (<%= diary.completed %>%)<br>
+      (<%= diary.start_date.strftime('%-d %b %Y') %> — <%= diary.end_date.strftime('%-d %b %Y') %>)<br>
+      <a href="/diaries/<%= diary.zooniverse_id %>/csv">Download tag data (CSV)</a><br>
+      <a href="http://discovery.nationalarchives.gov.uk/SearchUI/details?Uri=<%= diary.metadata['id'] %>">Download diary from the National Archives</a>
+    </li>
   <% end %>
   </ol>
 </div>
