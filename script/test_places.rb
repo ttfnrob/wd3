@@ -4,7 +4,7 @@ place_names = []
 places = []
 count = 0
 
-Tag.fields( :label, :compare, :votes ).find_each( :type => 'place' ) do |p|
+Tag.fields( :label, :compare, :votes ).sort( :compare ).find_each( :type => 'place' ) do |p|
   count += 1
   places << {:label => p['label'], :compare => p['compare'], :votes => p['votes']} unless p['votes']['id'] == ''
   puts count
