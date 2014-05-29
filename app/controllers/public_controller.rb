@@ -1,7 +1,8 @@
 class PublicController < ApplicationController
   
   def index
-    @diaries = Group.where :state => 'complete'
+    @diaries = Group.all
+    @diaries = @diaries.select{|t| t['state'] == 'complete' }
   end
   
   def csv
