@@ -84,6 +84,7 @@ module PageProcessor
         Tag.ensure_index [[:page, 1]], :sparse => true
         Tag.ensure_index [[:group, 1]], :sparse => true
         Tag.ensure_index [[:page_number, 1]], :sparse => true
+        Tag.ensure_index [[:compare, 1]], :sparse => true
         Timeline.ensure_index [[:subject_id, 1]], :sparse => true
         Timeline.ensure_index [[:page, 1]], :sparse => true
         Timeline.ensure_index [[:group, 1]], :sparse => true
