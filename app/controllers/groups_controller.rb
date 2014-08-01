@@ -7,8 +7,11 @@ class GroupsController < ApplicationController
 
   def show
     n = params[:n] || 5
+    @page = params[:page].to_i
     threshold = params[:threshold] || 0
   	@g ||= Group.find_by_zooniverse_id(params[:zoo_id])
+    @next_page = @page + 1
+    @prev_page = @page - 1
   end
   
   def export

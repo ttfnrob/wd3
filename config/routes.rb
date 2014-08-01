@@ -10,7 +10,7 @@ PageProcessor::Application.routes.draw do
   match 'diaries/' => 'groups#index'
   match 'diaries/map' => 'groups#full_map'
   match 'diaries/casualties' => 'groups#casualty_map'
-  match 'diaries/:zoo_id' => 'groups#show'
+  match 'diaries/:zoo_id(/:page)' => 'groups#show', defaults: { page: 1 }
   match 'diaries/:zoo_id/export' => 'groups#export'
   match 'diaries/:zoo_id/map' => 'groups#map'
   match 'diaries/:zoo_id/csv' => 'public#csv'

@@ -14,10 +14,11 @@ class Group
     Time.at self.metadata["end_date"]
   end
   
-  def pages
+  def pages( page = 0 )
     @pages ||= []
+    offset = (page - 1) * 20
     if @pages.empty?
-      Subject.fields(:zooniverse_id, :location).sort('metadata.page_number').limit(20).find_each('group.zooniverse_id' => self.zooniverse_id ) do |g|
+      Subject.fields(:zooniverse_id, :location).sort('metadata.page_number').limit(20).skip( offset ).find_each('group.zooniverse_id' => self.zooniverse_id ) do |g|
         @pages << g
       end
     end
