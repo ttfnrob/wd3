@@ -3,7 +3,7 @@
   <h2>Complete</h2>
   <ol>
   <% @diaries.select{|t| t['state'] == 'complete' }.each do |diary| %>
-    <li><a href="/diaries/<%= diary.zooniverse_id %>"><%= diary.name %></a> (<%= diary.completed %>%)</li>
+    <li><a href="/diaries/<%= diary.zooniverse_id %>"><%= diary.name %></a> (<%= diary.completed %>%) <b>(<%= diary.classifications_per_page %>)</b></li>
   <% end %>
   </ol>
 </div>
@@ -11,7 +11,7 @@
   <h2>Active</h2>
   <ol>
   <% @diaries.select{|t| t['state'] == 'active' }.each do |diary| %>
-    <li><a href="/diaries/<%= diary.zooniverse_id %>"><%= diary.name %></a> (<%= diary.completed %>%)</li>
+    <li><a href="/diaries/<%= diary.zooniverse_id %>"><%= diary.name %></a> (<%= diary.completed %>%) <b>(<%= diary.classifications_per_page %>)</b></li>
   <% end %>
   </ol>
 </div>
@@ -19,7 +19,7 @@
   <h2>Inactive</h2>
   <ol>
   <% @diaries.select{|t| t['state'] == 'inactive' }.each do |diary| %>
-    <li><a href="/diaries/<%= diary.zooniverse_id %>"><%= diary.name %></a> (<%= diary.completed %>%)</li>
+    <li><a href="/diaries/<%= diary.zooniverse_id %>"><%= diary.name %></a> (<%= diary.completed %>%) <b>(<%= diary.classifications_per_page %>)</b></li>
   <% end %>
   </ol>
 </div>

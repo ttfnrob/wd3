@@ -94,4 +94,9 @@ class Group
     completed = 100 * self.stats['complete'].to_f/self.stats['total'].to_f
     completed.round unless self.stats['total'].to_i == 0
   end
+  
+  def classifications_per_page
+    cpp = self.classification_count.to_f / self.stats['total'].to_f
+    cpp.round 1
+  end
 end
