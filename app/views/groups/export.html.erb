@@ -41,7 +41,7 @@
       <td><%= d['label'] %></td>
       <td>
         <% d['votes'].each do |k,v| %>
-        <%= k %>: <%= v.join(', ') %>
+        <b><%= k %></b>: <%= v.join(', ') %>
         <% end %>
       </td>
       <td><%= d['geoid'] %></td>
