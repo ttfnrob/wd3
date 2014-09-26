@@ -34,6 +34,24 @@ class GroupsController < ApplicationController
     
     @timeline = @timeline.select{ |t| t['count'] >= threshold }
     @timeline = @timeline.select{ |t| t['type'].in? params[:filter].split ',' } if params[:filter]
+    
+    place_cache = {}
+    @timeline.each do |t|
+      
+      unless place_cache.has_key? t['place']
+        place_cache[ t['place'] ] = []
+        Place.find_each( :label => t['place'] ) do |p|
+          place_cache[ t['place'] ] << {:id => p['geoid'], :name => p['name'], :coords => p['coords'] }
+        end
+      end
+      
+      place_cache[ t['place'] ].each do |p|
+        t["geoid"] = p[:id]
+        t['geoname'] = p[:name]
+        t['geocoords'] = p[:coords]
+      end
+    end
+    
   end
   
   def map

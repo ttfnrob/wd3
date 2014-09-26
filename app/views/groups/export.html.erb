@@ -18,6 +18,9 @@
     <th>Type</th>
     <th>Label</th>
     <th>Data</th>
+    <th>geoID</th>
+    <th>geoname</th>
+    <th>geocoords</th>
   </thead>
   <tbody>
   <% @timeline.each do |d| %>
@@ -41,6 +44,9 @@
         <%= k %>: <%= v.join(', ') %>
         <% end %>
       </td>
+      <td><%= d['geoid'] %></td>
+      <td><%= d['geoname'] %></td>
+      <td><%= d['geocoords'].to_s %></td>
     </tr>
   <% end %>
   </tbody>
