@@ -3,6 +3,7 @@ class GroupsController < ApplicationController
   
   def index
     @diaries = Group.all
+    @counts = Subject.counts
   end
 
   def show

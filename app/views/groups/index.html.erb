@@ -1,4 +1,9 @@
 <h1><a href="/">War Diaries Data Digger</a>: Diaries</h1>
+<ul>
+  <% @counts.each do |key, value| %>
+  <li><b><%= key %> pages</b>: <%= value %></li>
+  <% end %>
+</ul>
 <div style="width: 33%; float:left;">
   <h2>Complete</h2>
   <ol>

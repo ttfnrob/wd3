@@ -13,6 +13,15 @@ class Subject
   key :group, Hash
   
   LEV_THRESHOLD = 4
+  STATUSES = ['active', 'inactive', 'complete', 'disabled']
+  
+  def self.counts
+    c = {}
+    for status in STATUSES
+      c[status] = Subject.count(:state => status)
+    end
+    c
+  end
   
   def classifications
     @classifications ||= []
