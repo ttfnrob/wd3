@@ -23,3 +23,11 @@
   <% end %>
   </ol>
 </div>
+<div style="width: 33%; float:left;">
+  <h2>Disabled</h2>
+  <ol>
+  <% @diaries.select{|t| t['state'] == 'disabled' }.each do |diary| %>
+    <li><a href="/diaries/<%= diary.zooniverse_id %>"><%= diary.name %></a> (<%= diary.completed %>%) <b>(<%= diary.classifications_per_page %>)</b></li>
+  <% end %>
+  </ol>
+</div>
